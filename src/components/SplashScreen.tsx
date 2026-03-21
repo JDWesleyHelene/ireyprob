@@ -1,0 +1,113 @@
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+
+export default function SplashScreen() {
+  const [visible, setVisible] = useState(false);
+  const [hiding, setHiding] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Only show on first visit
+    if (typeof window === "undefined") return;
+    const isAdmin = pathname?.startsWith("/admin");
+    if (isAdmin) return;
+
+    const shown = sessionStorage.getItem("splash_shown");
+    if (shown) return;
+
+    sessionStorage.setItem("splash_shown", "1");
+    setVisible(true);
+
+    const hideTimer = setTimeout(() => {
+      setHiding(true);
+      setTimeout(() => setVisible(false), 900);
+    }, 2800);
+
+    return () => clearTimeout(hideTimer);
+  }, [pathname]);
+
+  if (!visible) return null;
+
+  return (
+    <div
+      ref={ref}
+      className={`fixed inset-0 z-[9999] bg-[#060606] flex flex-col items-center justify-center transition-opacity duration-900 ${hiding ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+      style={{ transition: "opacity 0.9s cubic-bezier(0.4,0,0.2,1)" }}
+    >
+      {/* Noise overlay */}
+      <div className="absolute inset-0 noise pointer-events-none opacity-40" />
+
+      {/* Vertical beam lines */}
+      <div className="absolute inset-0 pointer-events-none flex justify-between px-8 md:px-24">
+        <div className="relative w-px h-full bg-white/[0.03] overflow-hidden">
+          <div className="beam beam-d1" />
+        </div>
+        <div className="relative w-px h-full bg-white/[0.03] overflow-hidden hidden md:block">
+          <div className="beam beam-d2" />
+        </div>
+        <div className="relative w-px h-full bg-white/[0.03] overflow-hidden">
+          <div className="beam beam-d3" />
+        </div>
+      </div>
+
+      {/* Center content */}
+      <div className="relative z-10 flex flex-col items-center gap-6 text-center px-8">
+        {/* Logo mark */}
+        <div
+          className="w-16 h-16 bg-foreground rounded-sm flex items-center justify-center splash-logo"
+          style={{ animation: "splashLogoIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s both" }}
+        >
+          <span className="text-background text-xl font-bold tracking-wider font-display italic">IP</span>
+        </div>
+
+        {/* Brand name */}
+        <div
+          className="overflow-hidden"
+          style={{ animation: "splashTextIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.6s both" }}
+        >
+          <h1 className="font-display text-[2.5rem] sm:text-[3.5rem] font-light italic text-foreground tracking-tight leading-none">
+            IREY PROD
+          </h1>
+        </div>
+
+        {/* Tagline */}
+        <div
+          style={{ animation: "splashTextIn 0.9s cubic-bezier(0.22,1,0.36,1) 1s both" }}
+        >
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-foreground/30">
+            Booking Agency · Mauritius Island
+          </p>
+        </div>
+
+        {/* Loading bar */}
+        <div
+          className="w-32 h-px bg-foreground/10 overflow-hidden rounded-full mt-4"
+          style={{ animation: "splashTextIn 0.6s ease 1.2s both" }}
+        >
+          <div
+            className="h-full bg-foreground/50 rounded-full"
+            style={{ animation: "splashBar 1.4s cubic-bezier(0.4,0,0.2,1) 1.2s both" }}
+          />
+        </div>
+      </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes splashLogoIn {
+          from { opacity: 0; transform: scale(0.7) rotate(-8deg); }
+          to { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+        @keyframes splashTextIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes splashBar {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+      `}} />
+    </div>
+  );
+}
