@@ -7,6 +7,7 @@ import AppImage from "@/components/ui/AppImage";
 import { artists as allArtists } from "@/lib/data";
 import { useArtists } from "@/lib/useLiveData";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface FormErrors { fullName?: string; email?: string; address?: string; dateTime?: string; }
 
@@ -39,7 +40,7 @@ function BookingModal({ artist, onClose }: { artist: typeof allArtists[0]; onClo
     setLoading(true);
     setSubmitError(null);
     try {
-      const res = await fetch("/api/bookings.php", {
+      const res = await fetch(apiUrl(""/api/bookings.php", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ artist_name: artist.name, ...formData }),
       });

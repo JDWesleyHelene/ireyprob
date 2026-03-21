@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface SEOSettings {
   site_title: string;
@@ -30,7 +31,7 @@ export default function AdminSEOPage() {
   const [saved, setSaved]     = useState(false);
 
   useEffect(() => {
-    fetch("/api/admin/get-settings.php")
+    fetch(apiUrl("/api/admin/get-settings.php"))
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         if (data && data.site_title) setSeo(prev => ({ ...prev, ...data }));
@@ -56,7 +57,7 @@ export default function AdminSEOPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const res = await fetch("/api/admin/save-settings.php", {
+      const res = await fetch(apiUrl("/api//api/admin/save-settings.php"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(seo),

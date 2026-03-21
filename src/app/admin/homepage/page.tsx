@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface SiteSettings {
   hero_headline_1: string;
@@ -49,7 +50,7 @@ export default function AdminHomepagePage() {
 
   // Load saved settings on mount
   useEffect(() => {
-    fetch("/api/admin/get-settings.php")
+    fetch(apiUrl("/api/admin/get-settings.php"))
       .then(r => r.ok ? r.json() : null)
       .then(data => { if (data && typeof data === "object" && Object.keys(data).length > 0) {
         setSettings(prev => ({ ...prev, ...data }));
@@ -65,7 +66,7 @@ export default function AdminHomepagePage() {
   const handleSave = async () => {
     setSaving(true); setSaveError(false);
     try {
-      const res = await fetch("/api/admin/save-settings.php", {
+      const res = await fetch(apiUrl("/api//api/admin/save-settings.php"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(settings),

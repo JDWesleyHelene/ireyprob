@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface Booking { id?: number; artist_name: string; full_name: string; email: string; address: string; date_time: string; message?: string; created_at: string; }
 
@@ -8,7 +9,7 @@ export default function AdminBookingsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/admin/get-bookings.php")
+    fetch(apiUrl("/api/admin/get-bookings.php"))
       .then(r => r.ok ? r.json() : [])
       .then(data => { setBookings(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => setLoading(false));

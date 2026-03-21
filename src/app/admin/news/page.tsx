@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import ImageUpload from "@/components/admin/ImageUpload";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface NewsArticle {
   id: string;
@@ -36,7 +37,7 @@ export default function AdminNewsPage() {
 
   const fetchArticles = async () => {
     try {
-      const res = await fetch("/api/admin/get-news.php");
+      const res = await fetch(apiUrl("/api/admin/get-news.php"));
       if (res.ok) {
         const data = await res.json();
         setArticles(Array.isArray(data) ? data : []);
@@ -69,7 +70,7 @@ export default function AdminNewsPage() {
 
     let saveError = false;
     try {
-      const res = await fetch("/api/admin/save-news.php", {
+      const res = await fetch(apiUrl(""/api/admin/save-news.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -86,7 +87,7 @@ export default function AdminNewsPage() {
   const toggleStatus = async (id: string, current: string) => {
     const newStatus = current === "published" ? "draft" : "published";
     try {
-      await fetch("/api/admin/save-news.php", {
+      await fetch(apiUrl(""/api/admin/save-news.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status: newStatus, published_at: newStatus === "published" ? new Date().toISOString() : null, _action: "toggle_status" }),
@@ -99,7 +100,7 @@ export default function AdminNewsPage() {
   const deleteArticle = async (id: string) => {
     if (!confirm("Delete this article?")) return;
     try {
-      await fetch("/api/admin/save-news.php", {
+      await fetch(apiUrl(""/api/admin/save-news.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, _action: "delete" }),

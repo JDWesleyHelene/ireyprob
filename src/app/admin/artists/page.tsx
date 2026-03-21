@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AppImage from "@/components/ui/AppImage";
 import { artists as staticArtists } from "@/lib/data";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface Artist { id: string; name: string; genre: string; origin: string; image: string; slug: string; featured: boolean; _source?: string; }
 
@@ -12,7 +13,7 @@ export default function AdminArtistsPage() {
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/admin/get-artists.php")
+    fetch(apiUrl("/api/admin/get-artists.php"))
       .then(r => r.ok ? r.json() : [])
       .then(data => setDynamicArtists(Array.isArray(data) ? data.map((a: Artist) => ({ ...a, _source: "db" })) : []))
       .catch(() => {});
@@ -24,7 +25,7 @@ export default function AdminArtistsPage() {
     if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
     setDeleting(id);
     try {
-      await fetch("/api/admin/save-artist.php", {
+      await fetch(apiUrl(""/api/admin/save-artist.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, _action: "delete" }),

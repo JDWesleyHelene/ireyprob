@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { events as staticEvents } from "@/lib/data";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface EventRow { id: string; title: string; venue: string; city: string; genre: string; event_date: string; featured: boolean; sold_out: boolean; _source?: string; }
 
@@ -11,7 +12,7 @@ export default function AdminEventsPage() {
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/admin/get-events.php")
+    fetch(apiUrl("/api/admin/get-events.php"))
       .then(r => r.ok ? r.json() : [])
       .then(data => setDynamicEvents(Array.isArray(data) ? data.map((e: EventRow) => ({ ...e, _source: "db" })) : []))
       .catch(() => {});
@@ -23,7 +24,7 @@ export default function AdminEventsPage() {
     if (!confirm(`Delete "${title}"?`)) return;
     setDeleting(id);
     try {
-      await fetch("/api/admin/save-event.php", {
+      await fetch(apiUrl(""/api/admin/save-event.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, _action: "delete" }),

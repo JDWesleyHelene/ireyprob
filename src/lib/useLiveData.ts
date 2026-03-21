@@ -5,6 +5,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import {
+import { apiUrl } from "@/lib/apiConfig";
   artists as staticArtists,
   events as staticEvents,
   news as staticNews,
@@ -22,7 +23,7 @@ export function useArtists() {
   const [artists, setArtists] = useState<Artist[]>(staticArtists);
 
   useEffect(() => {
-    fetch("/api/data.php?type=artists")
+    fetch(apiUrl("/api/data.php?type=artists"))
       .then(r => r.ok ? r.json() : null)
       .then((dynamic: Artist[] | null) => {
         if (dynamic && dynamic.length > 0) setArtists(mergeById(dynamic, staticArtists));
@@ -37,7 +38,7 @@ export function useEvents() {
   const [events, setEvents] = useState<EventData[]>(staticEvents);
 
   useEffect(() => {
-    fetch("/api/data.php?type=events")
+    fetch(apiUrl("/api/data.php?type=events"))
       .then(r => r.ok ? r.json() : null)
       .then((dynamic: EventData[] | null) => {
         if (dynamic && dynamic.length > 0) {
@@ -59,7 +60,7 @@ export function useNews() {
   );
 
   useEffect(() => {
-    fetch("/api/data.php?type=news")
+    fetch(apiUrl("/api/data.php?type=news"))
       .then(r => r.ok ? r.json() : null)
       .then((dynamic: NewsArticle[] | null) => {
         if (dynamic && dynamic.length > 0) {
@@ -83,7 +84,7 @@ export function useSettings(): Record<string, string> {
 
   useEffect(() => {
     // 1. Try PHP (production on cPanel)
-    fetch("/api/data.php?type=settings")
+    fetch(apiUrl("/api/data.php?type=settings"))
       .then(r => r.ok ? r.json() : null)
       .then((data: Record<string, string> | null) => {
         if (data && typeof data === "object" && Object.keys(data).length > 0) {

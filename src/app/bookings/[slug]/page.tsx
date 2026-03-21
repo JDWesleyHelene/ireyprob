@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
 import Link from "next/link";
 import { artists } from "@/lib/data";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface FormErrors { fullName?: string; email?: string; address?: string; dateTime?: string; }
 
@@ -43,7 +44,7 @@ function BookingModal({ artistName, artistImage, onClose }: { artistName: string
     if (!validate()) return;
     setLoading(true);
     try {
-      await fetch("/api/bookings.php", {
+      await fetch(apiUrl(""/api/bookings.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ artist_name: artistName, ...formData }),

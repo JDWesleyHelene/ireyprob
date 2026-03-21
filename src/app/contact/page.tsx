@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
 import { useSettings } from "@/lib/useLiveData";
+import { apiUrl } from "@/lib/apiConfig";
 
 const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/ireyprod/", handle: "@ireyprod" },
@@ -60,7 +61,7 @@ export default function ContactPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      await fetch("/api/contact.php", {
+      await fetch(apiUrl(""/api/contact.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

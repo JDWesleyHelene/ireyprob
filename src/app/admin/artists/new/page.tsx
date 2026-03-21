@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ImageUpload from "@/components/admin/ImageUpload";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface ArtistForm {
   name: string; genre: string; origin: string; bio: string;
@@ -33,7 +34,7 @@ export default function AdminArtistNewPage() {
     if (!form.name.trim()) { setError("Name is required"); return; }
     setSaving(true); setError(null);
     try {
-      const res = await fetch("/api/admin/save-artist.php", {
+      const res = await fetch(apiUrl(""/api/admin/save-artist.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, tags: form.tags.split(",").map(t => t.trim()).filter(Boolean), slug: form.slug || slugify(form.name) }),

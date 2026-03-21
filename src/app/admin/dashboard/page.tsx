@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { artists, events, news, services } from "@/lib/data";
+import { apiUrl } from "@/lib/apiConfig";
 
 interface Submission { id: number; name: string; email: string; artist?: string; created_at: string; type: string; }
 
@@ -25,8 +26,8 @@ export default function AdminDashboard() {
     const load = async () => {
       try {
         const [b, c] = await Promise.all([
-          fetch("/api/admin/get-bookings.php").then(r => r.ok ? r.json() : []),
-          fetch("/api/admin/get-contacts.php").then(r => r.ok ? r.json() : []),
+          fetch(apiUrl("/api/admin/get-bookings.php")).then(r => r.ok ? r.json() : []),
+          fetch(apiUrl("/api/admin/get-contacts.php")).then(r => r.ok ? r.json() : []),
         ]);
         const all = [
           ...(Array.isArray(b) ? b.map((x: any) => ({ ...x, type: "booking" })) : []),
