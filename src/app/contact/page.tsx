@@ -61,7 +61,7 @@ export default function ContactPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      await fetch(apiUrl(""/api/contact.php", {
+      await fetch(apiUrl("/api/contact.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

@@ -16,7 +16,8 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
   weight: ['300', '400', '500', '600'],
   style: ['normal', 'italic'],
-  preload: true,
+  preload: false,
+  adjustFontFallback: false,
 });
 
 const fraunces = Fraunces({
@@ -25,7 +26,8 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
   style: ['normal', 'italic'],
   weight: ['300', '400', '500', '600', '700', '900'],
-  preload: true,
+  preload: false,
+  adjustFontFallback: false,
 });
 
 export const viewport: Viewport = {

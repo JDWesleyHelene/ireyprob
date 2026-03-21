@@ -33,7 +33,7 @@ export default function AdminEventNewPage() {
     if (!form.title.trim() || !form.event_date) { setError("Title and date are required"); return; }
     setSaving(true); setError(null);
     try {
-      const res = await fetch(apiUrl(""/api/admin/save-event.php", {
+      const res = await fetch(apiUrl("/api/admin/save-event.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, artists: form.artists.split(",").map(a => a.trim()).filter(Boolean), slug: form.slug || slugify(form.title) }),

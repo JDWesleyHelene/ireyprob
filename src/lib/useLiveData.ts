@@ -4,8 +4,8 @@
  */
 "use client";
 import { useState, useEffect } from "react";
-import {
 import { apiUrl } from "@/lib/apiConfig";
+import {
   artists as staticArtists,
   events as staticEvents,
   news as staticNews,

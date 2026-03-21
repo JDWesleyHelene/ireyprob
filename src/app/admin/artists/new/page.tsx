@@ -34,7 +34,7 @@ export default function AdminArtistNewPage() {
     if (!form.name.trim()) { setError("Name is required"); return; }
     setSaving(true); setError(null);
     try {
-      const res = await fetch(apiUrl(""/api/admin/save-artist.php", {
+      const res = await fetch(apiUrl("/api/admin/save-artist.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, tags: form.tags.split(",").map(t => t.trim()).filter(Boolean), slug: form.slug || slugify(form.name) }),

@@ -24,7 +24,7 @@ export default function AdminEventsPage() {
     if (!confirm(`Delete "${title}"?`)) return;
     setDeleting(id);
     try {
-      await fetch(apiUrl(""/api/admin/save-event.php", {
+      await fetch(apiUrl("/api/admin/save-event.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, _action: "delete" }),

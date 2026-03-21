@@ -44,7 +44,7 @@ function BookingModal({ artistName, artistImage, onClose }: { artistName: string
     if (!validate()) return;
     setLoading(true);
     try {
-      await fetch(apiUrl(""/api/bookings.php", {
+      await fetch(apiUrl("/api/bookings.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ artist_name: artistName, ...formData }),

@@ -40,7 +40,7 @@ function BookingModal({ artist, onClose }: { artist: typeof allArtists[0]; onClo
     setLoading(true);
     setSubmitError(null);
     try {
-      const res = await fetch(apiUrl(""/api/bookings.php", {
+      const res = await fetch(apiUrl("/api/bookings.php", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ artist_name: artist.name, ...formData }),
       });

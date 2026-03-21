@@ -25,7 +25,7 @@ export default function AdminArtistsPage() {
     if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
     setDeleting(id);
     try {
-      await fetch(apiUrl(""/api/admin/save-artist.php", {
+      await fetch(apiUrl("/api/admin/save-artist.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, _action: "delete" }),
