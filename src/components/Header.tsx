@@ -7,8 +7,7 @@ import AppImage from "@/components/ui/AppImage";
 
 const navLinks = [
   { label: "Events",   href: "/events" },
-  { label: "Bookings", href: "/bookings" },
-  { label: "News",     href: "/news" },
+  { label: "Artists",  href: "/bookings" },
   { label: "Services", href: "/services" },
   { label: "About",    href: "/about" },
   { label: "Contact",  href: "/contact" },

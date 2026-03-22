@@ -1,17 +1,15 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
-import { artists as allArtists } from "@/lib/data";
 import { useArtists } from "@/lib/useLiveData";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { apiUrl } from "@/lib/apiConfig";
 
 interface FormErrors { fullName?: string; email?: string; address?: string; dateTime?: string; }
 
-function BookingModal({ artist, onClose }: { artist: typeof allArtists[0]; onClose: () => void }) {
+function BookingModal({ artist, onClose }: { artist: any; onClose: () => void }) {
   const [formData, setFormData] = useState({ fullName: "", email: "", address: "", dateTime: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
@@ -40,7 +38,7 @@ function BookingModal({ artist, onClose }: { artist: typeof allArtists[0]; onClo
     setLoading(true);
     setSubmitError(null);
     try {
-      const res = await fetch(apiUrl("/api/bookings.php", {
+      const res = await fetch("/api/admin/bookings", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ artist_name: artist.name, ...formData }),
       });
@@ -113,17 +111,11 @@ function BookingModal({ artist, onClose }: { artist: typeof allArtists[0]; onClo
 }
 
 export default function BookingsPage() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [selectedArtist, setSelectedArtist] = useState<typeof allArtists[0] | null>(null);
+  const [selectedArtist, setSelectedArtist] = useState<any | null>(null);
   const { t } = useLanguage();
-  const { artists: liveArtists } = useArtists();
+  const { artists: liveArtists, loading: artistsLoading } = useArtists();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add("visible"); }); }, { threshold: 0.06, rootMargin: "0px 0px -5% 0px" });
-    const reveals = sectionRef.current?.querySelectorAll(".reveal");
-    reveals?.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+
 
 
 
@@ -146,10 +138,22 @@ export default function BookingsPage() {
           </div>
         </section>
 
-        <section ref={sectionRef} className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pb-24">
+        <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pb-24">
+          {artistsLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {[1,2,3,4,5,6].map(i => (
+                <div key={i} className="h-[380px] bg-foreground/5 rounded-sm animate-pulse"/>
+              ))}
+            </div>
+          ) : liveArtists.length === 0 ? (
+            <div className="py-20 text-center border border-foreground/5 rounded-sm col-span-3">
+              <p className="text-foreground/30 text-[13px] mb-2">No artists yet.</p>
+              <p className="text-foreground/20 text-[11px]">Add artists from the admin dashboard.</p>
+            </div>
+          ) : (
           <div className="artists-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {liveArtists.map((artist, i) => (
-              <div key={artist.id} className={`artist-card reveal delay-${Math.min(i % 3 * 100, 300)}`}>
+              <div key={artist.id} className="artist-card">
                 <div className="group relative overflow-hidden rounded-sm bg-[#040404] border border-foreground/5 hover:border-foreground/15 transition-all duration-500">
                   <Link href={`/bookings/${artist.slug}`} className="block">
                     <div className="relative h-[260px] sm:h-[300px] overflow-hidden img-zoom-wrap cursor-pointer">
@@ -176,6 +180,7 @@ export default function BookingsPage() {
               </div>
             ))}
           </div>
+          )}
           <div className="mt-12 pt-10 border-t border-foreground/5 text-center">
             <p className="text-[13px] text-foreground/30 font-light mb-2">Don't see who you're looking for?</p>
             <a href="mailto:booking@ireyprod.com" className="text-[12px] font-semibold tracking-[0.15em] uppercase text-foreground/50 hover:text-accent transition-colors duration-300 border-b border-foreground/20 hover:border-accent pb-0.5">Contact us directly →</a>

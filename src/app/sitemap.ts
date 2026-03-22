@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
-import { artists, events, news } from '@/lib/data';
+const artists: any[] = [];
+const events: any[] = [];
+const news: any[] = [];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://new.ireyprod.com';

@@ -256,3 +256,13 @@ body {
 .reveal-left.visible {
   animation: slideInLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* Hide scrollbar (filters carousel) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

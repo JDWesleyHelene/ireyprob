@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { apiUrl } from "@/lib/apiConfig";
 
 interface Contact { id?: number; name: string; email: string; budget?: string; timeframe?: string; project: string; created_at: string; }
 
@@ -10,7 +9,7 @@ export default function AdminContactPage() {
   const [selected, setSelected] = useState<Contact | null>(null);
 
   useEffect(() => {
-    fetch(apiUrl("/api/admin/get-contacts.php"))
+    fetch("/api/admin/contacts")
       .then(r => r.ok ? r.json() : [])
       .then(data => { setContacts(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => setLoading(false));

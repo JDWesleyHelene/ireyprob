@@ -57,12 +57,12 @@ export default function ServicesPage() {
       <Header />
       <main ref={sectionRef} className="min-h-screen bg-background">
         {/* Page Hero */}
-        <section className="relative pt-24 pb-12 overflow-hidden">
+        <section className="relative pt-28 pb-16 overflow-hidden">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(240,237,232,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(240,237,232,0.015)_1px,transparent_1px)] bg-[size:10rem_20rem] pointer-events-none" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent" />
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">— Services</span>
-            <h1 className="services-hero-title font-display text-[2.8rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-light italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">Our Expertise</h1>
+            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">— Services</span>
+            <h1 className="reveal font-display text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-light italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">What We Do</h1>
             <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">
               IREY PROD is a multi-faceted agency operating in the entertainment and events industry, with a focus on music and performing arts. Four core service pillars — Bookings, Tours, Events, and Productions.
             </p>
@@ -75,10 +75,14 @@ export default function ServicesPage() {
             {allServices.map((service, i) => (
               <div key={service.id} className={`service-block-${i} reveal grid grid-cols-1 lg:grid-cols-2 gap-0 border-t border-white/5 py-12 sm:py-20`}>
                 {/* Image */}
-                <div className={`relative overflow-hidden rounded-sm h-[260px] sm:h-[340px] lg:h-[400px] img-zoom-wrap ${i % 2 === 1 ? "lg:order-2" : ""}`}>
-                  <AppImage src={service.image} alt={service.image_alt} fill
-                    className="img-zoom object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-700"
-                    sizes="(max-width: 1024px) 100vw, 50vw" />
+                <div className={`relative overflow-hidden rounded-sm h-[260px] sm:h-[340px] lg:h-[400px] img-zoom-wrap bg-foreground/5 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
+                  {service.image ? (
+                    <AppImage src={service.image} alt={service.image_alt || service.title} fill
+                      className="img-zoom object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-700"
+                      sizes="(max-width: 1024px) 100vw, 50vw" />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-foreground/5 to-transparent" />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute top-6 left-6">
                     <span className="font-display text-[3rem] sm:text-[4rem] font-light italic text-white/10">{service.service_number}</span>

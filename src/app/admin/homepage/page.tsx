@@ -1,97 +1,84 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
-import { apiUrl } from "@/lib/apiConfig";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
-interface SiteSettings {
-  hero_headline_1: string;
-  hero_headline_2: string;
-  hero_subtext: string;
-  contact_email: string;
-  phone: string;
-  office_hours: string;
-  location: string;
-  instagram: string;
-  facebook: string;
-  youtube: string;
-  tiktok: string;
-  stats_label_1: string;
-  stats_label_2: string;
-  stats_label_3: string;
-  stats_label_4: string;
-}
+interface Settings { hero_headline_1:string; hero_headline_2:string; hero_subtext:string; slider_images:string; }
+interface Img { src:string; alt:string; }
 
-const defaultSettings: SiteSettings = {
+const DEFAULT_IMGS: Img[] = [
+  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg",         alt:"IREY PROD live event" },
+  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1597-scaled.jpg",         alt:"IREY PROD concert" },
+  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1696-scaled.jpg",         alt:"IREY PROD artist on stage" },
+  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg",         alt:"IREY PROD event production" },
+  { src:"https://ireyprod.com/wp-content/uploads/2023/12/319291225_674505520974726_3683712000139163132_n.jpg", alt:"IREY PROD live music" },
+  { src:"https://ireyprod.com/wp-content/uploads/2024/02/278388810_500716275105749_2200913393930678727_n.jpg", alt:"IREY PROD outdoor concert" },
+  { src:"https://ireyprod.com/wp-content/uploads/2024/02/413834455_10229244000198578_5400677520275640617_n.jpg", alt:"IREY PROD festival" },
+  { src:"https://ireyprod.com/wp-content/uploads/2023/11/311725226_1304185260318364_1025836846759200407_n.jpg", alt:"IREY PROD artist" },
+  { src:"https://ireyprod.com/wp-content/uploads/2023/11/136994801_10222394642048905_677808425090284716_n.jpg", alt:"IREY PROD production" },
+  { src:"https://ireyprod.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-21-at-12.32.07_43897a31.jpg",  alt:"IREY PROD backstage" },
+];
+
+const DEF: Settings = {
   hero_headline_1: "Your Gateway to",
   hero_headline_2: "Unforgettable Experiences.",
   hero_subtext: "IREY PROD — A dynamic agency specialising in Digital Marketing, Stage & Artist Management, and Event Coordination. Based in Mauritius Island.",
-  contact_email: "booking@ireyprod.com",
-  phone: "+230 5 788 20 14",
-  office_hours: "Mon – Fri · 10am – 5pm",
-  location: "Mauritius Island, Indian Ocean",
-  instagram: "https://www.instagram.com/ireyprod/",
-  facebook: "https://www.facebook.com/IreyProd",
-  youtube: "https://www.youtube.com/@IreyProd",
-  tiktok: "https://www.tiktok.com/@ireyprod",
-  stats_label_1: "Core Services",
-  stats_label_2: "Full Service Agency",
-  stats_label_3: "Client-Centric",
-  stats_label_4: "One-Stop Agency",
+  slider_images: JSON.stringify(DEFAULT_IMGS),
 };
 
-const inputCls = "w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors min-h-[48px]";
-const textareaCls = "w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors resize-none";
+const IC = "w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors min-h-[48px]";
+const TA = "w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors resize-none";
 
 export default function AdminHomepagePage() {
-  const [settings, setSettings] = useState<SiteSettings>(defaultSettings);
-  const [saving, setSaving]     = useState(false);
-  const [saved, setSaved]       = useState(false);
-  const [saveError, setSaveError] = useState(false);
-  const [activeTab, setActiveTab] = useState<"hero" | "contact" | "social">("hero");
+  const [s, setS]           = useState<Settings>(DEF);
+  const [imgs, setImgs]     = useState<Img[]>(DEFAULT_IMGS);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved]   = useState(false);
+  const [err, setErr]       = useState(false);
+  const [tab, setTab]       = useState<"hero" | "slider">("hero");
+  const [newUrl, setNewUrl] = useState("");
+  const [newAlt, setNewAlt] = useState("");
+  const [editIdx, setEditIdx] = useState<number | null>(null);
+  const dragIdxRef = useRef<number | null>(null);
 
-  // Load saved settings on mount
   useEffect(() => {
-    fetch(apiUrl("/api/admin/get-settings.php"))
-      .then(r => r.ok ? r.json() : null)
-      .then(data => { if (data && typeof data === "object" && Object.keys(data).length > 0) {
-        setSettings(prev => ({ ...prev, ...data }));
-      }})
-      .catch(() => {});
+    fetch("/api/admin/settings").then(r => r.ok ? r.json() : null).then(d => {
+      if (d && Object.keys(d).length > 0) {
+        setS(p => ({ ...p, ...d }));
+        try {
+          const i = JSON.parse(d.slider_images || "");
+          if (Array.isArray(i) && i.length > 0) setImgs(i);
+        } catch {}
+      }
+    }).catch(() => {});
   }, []);
 
-  // onChange handler — stable reference, no re-render of inputs
-  const handleChange = useCallback((key: keyof SiteSettings, value: string) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
-  }, []);
+  const set = useCallback((k: keyof Settings, v: string) => setS(p => ({ ...p, [k]: v })), []);
 
-  const handleSave = async () => {
-    setSaving(true); setSaveError(false);
+  const saveImgs = (i: Img[]) => {
+    setImgs(i);
+    setS(p => ({ ...p, slider_images: JSON.stringify(i) }));
+  };
+
+  const addImg  = () => { if (!newUrl.trim()) return; saveImgs([...imgs, { src: newUrl.trim(), alt: newAlt.trim() || "IREY PROD event" }]); setNewUrl(""); setNewAlt(""); };
+  const delImg  = (i: number) => { if (imgs.length <= 1) { alert("Must keep at least 1 image."); return; } saveImgs(imgs.filter((_, j) => j !== i)); };
+  const updImg  = (i: number, f: "src" | "alt", v: string) => saveImgs(imgs.map((img, j) => j === i ? { ...img, [f]: v } : img));
+
+  const save = async () => {
+    setSaving(true); setErr(false);
     try {
-      const res = await fetch(apiUrl("/api//api/admin/save-settings.php"), {
+      const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings),
+        body: JSON.stringify({ ...s, slider_images: JSON.stringify(imgs) }),
       });
-      if (res.ok) {
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
-      } else {
-        setSaveError(true);
-      }
-    } catch {
-      // In local dev without PHP, save to localStorage as fallback
-      try {
-        localStorage.setItem("irey_settings", JSON.stringify(settings));
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
-      } catch { setSaveError(true); }
-    }
+      if (res.ok) { setSaved(true); setTimeout(() => setSaved(false), 3000); }
+      else setErr(true);
+    } catch { setErr(true); }
     setSaving(false);
   };
 
-  const tabs = [
-    { id: "hero" as const,    label: "Hero & Text" },
-    { id: "contact" as const, label: "Contact Info" },
-    { id: "social" as const,  label: "Social Links" },
+  const TABS = [
+    { id: "hero"   as const, label: "Hero & Text" },
+    { id: "slider" as const, label: `Slider (${imgs.length})` },
   ];
 
   return (
@@ -108,133 +95,142 @@ export default function AdminHomepagePage() {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             Preview
           </a>
-          <button onClick={handleSave} disabled={saving}
-            className={`flex items-center gap-2 px-5 py-2.5 text-[11px] font-semibold tracking-[0.15em] uppercase rounded-sm transition-all disabled:opacity-50 ${saved ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-foreground text-background hover:bg-accent"}`}>
+          <button onClick={save} disabled={saving}
+            className={`px-5 py-2.5 text-[11px] font-semibold tracking-[0.15em] uppercase rounded-sm transition-all disabled:opacity-50 ${saved ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-foreground text-background hover:bg-accent"}`}>
             {saving ? "Saving..." : saved ? "✓ Saved!" : "Save Changes"}
           </button>
         </div>
       </div>
 
-      {saveError && (
+      {err && (
         <div className="mb-4 p-4 border border-red-500/20 bg-red-500/5 rounded-sm">
-          <p className="text-[12px] text-red-400 font-medium mb-1">Could not reach PHP server</p>
-          <p className="text-[11px] text-foreground/40">This is normal in local dev. On cPanel, changes will save correctly. Settings saved to browser storage as fallback.</p>
+          <p className="text-[12px] text-red-400">Failed to save. Check Neon DB connection.</p>
         </div>
       )}
 
-      <div className="mb-6 p-4 border border-accent/20 bg-accent/5 rounded-sm">
-        <p className="text-[12px] text-accent/80 font-medium mb-1">How it works</p>
-        <p className="text-[11px] text-foreground/50 leading-relaxed">
-          Changes saved here update <code className="bg-foreground/10 px-1 rounded">data/settings.json</code> on your cPanel server and go live instantly — no rebuild needed.
-        </p>
-      </div>
-
       {/* Tabs */}
       <div className="flex border border-foreground/10 rounded-sm w-fit mb-6 overflow-hidden">
-        {tabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-            className={`px-5 py-2.5 text-[11px] font-semibold tracking-[0.15em] uppercase transition-all ${activeTab === tab.id ? "bg-foreground text-background" : "text-foreground/40 hover:text-foreground hover:bg-foreground/5"}`}>
-            {tab.label}
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)}
+            className={`px-4 py-2.5 text-[11px] font-semibold tracking-[0.15em] uppercase transition-all whitespace-nowrap ${tab === t.id ? "bg-foreground text-background" : "text-foreground/40 hover:text-foreground hover:bg-foreground/5"}`}>
+            {t.label}
           </button>
         ))}
       </div>
 
-      {/* Tab: Hero & Text */}
-      {activeTab === "hero" && (
+      {/* Hero Tab */}
+      {tab === "hero" && (
         <div className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-6 space-y-5">
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Hero Headline Line 1</label>
-            <input type="text" value={settings.hero_headline_1}
-              onChange={e => handleChange("hero_headline_1", e.target.value)}
-              placeholder="Your Gateway to" className={inputCls} />
-            <p className="text-[10px] text-foreground/25 mt-1">Appears as the first line of the homepage hero title</p>
-          </div>
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Hero Headline Line 2</label>
-            <input type="text" value={settings.hero_headline_2}
-              onChange={e => handleChange("hero_headline_2", e.target.value)}
-              placeholder="Unforgettable Experiences." className={inputCls} />
-          </div>
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Hero Subtext</label>
-            <textarea value={settings.hero_subtext}
-              onChange={e => handleChange("hero_subtext", e.target.value)}
-              rows={4} placeholder="IREY PROD — A dynamic agency..."
-              className={textareaCls} />
-            <p className="text-[10px] text-foreground/25 mt-1">Short description shown below the main title</p>
-          </div>
-          <div className="pt-4 border-t border-foreground/8">
-            <p className="text-[10px] text-foreground/30 uppercase tracking-widest font-semibold mb-4">Stats Section Labels</p>
-            <div className="grid grid-cols-2 gap-4">
-              {(["stats_label_1", "stats_label_2", "stats_label_3", "stats_label_4"] as const).map((key, i) => (
-                <div key={key}>
-                  <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Stat {i + 1} Label</label>
-                  <input type="text" value={settings[key]}
-                    onChange={e => handleChange(key, e.target.value)}
-                    placeholder={defaultSettings[key]} className={inputCls} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Tab: Contact Info */}
-      {activeTab === "contact" && (
-        <div className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-6 space-y-5">
-          <div className="p-4 bg-blue-400/5 border border-blue-400/15 rounded-sm mb-2">
-            <p className="text-[12px] text-blue-400/80 font-medium mb-1">📧 Contact Form Email</p>
-            <p className="text-[11px] text-foreground/50 leading-relaxed">
-              The <strong>Contact Email</strong> below is where enquiries from the contact form are sent. Change this to receive messages at a different address.
-            </p>
-          </div>
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Contact Email (form sends here)</label>
-            <input type="email" value={settings.contact_email}
-              onChange={e => handleChange("contact_email", e.target.value)}
-              placeholder="booking@ireyprod.com" className={inputCls} />
-          </div>
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Phone Number</label>
-            <input type="text" value={settings.phone}
-              onChange={e => handleChange("phone", e.target.value)}
-              placeholder="+230 5 788 20 14" className={inputCls} />
-          </div>
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Office Hours</label>
-            <input type="text" value={settings.office_hours}
-              onChange={e => handleChange("office_hours", e.target.value)}
-              placeholder="Mon – Fri · 10am – 5pm" className={inputCls} />
-          </div>
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Location</label>
-            <input type="text" value={settings.location}
-              onChange={e => handleChange("location", e.target.value)}
-              placeholder="Mauritius Island, Indian Ocean" className={inputCls} />
-          </div>
-        </div>
-      )}
-
-      {/* Tab: Social Links */}
-      {activeTab === "social" && (
-        <div className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-6 space-y-5">
-          {(["instagram", "facebook", "youtube", "tiktok"] as const).map(key => (
-            <div key={key}>
-              <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">{key.charAt(0).toUpperCase() + key.slice(1)} URL</label>
-              <input type="url" value={settings[key]}
-                onChange={e => handleChange(key, e.target.value)}
-                placeholder={defaultSettings[key]} className={inputCls} />
+          {(["hero_headline_1", "hero_headline_2"] as const).map((k, i) => (
+            <div key={k}>
+              <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">
+                {i === 0 ? "Hero Headline — Line 1" : "Hero Headline — Line 2"}
+              </label>
+              <input type="text" value={s[k]} onChange={e => set(k, e.target.value)} className={IC} />
             </div>
           ))}
+          <div>
+            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Hero Subtext</label>
+            <textarea value={s.hero_subtext} onChange={e => set("hero_subtext", e.target.value)} rows={4} className={TA} />
+          </div>
         </div>
       )}
 
-      <div className="mt-5 flex justify-end">
-        <button onClick={handleSave} disabled={saving}
-          className={`px-8 py-3 text-[11px] font-semibold tracking-[0.2em] uppercase rounded-sm transition-all disabled:opacity-50 ${saved ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-foreground text-background hover:bg-accent"}`}>
-          {saving ? "Saving..." : saved ? "✓ Saved!" : "Save Changes"}
-        </button>
-      </div>
+      {/* Slider Tab */}
+      {tab === "slider" && (
+        <div className="space-y-4">
+          <div className="p-4 border border-accent/20 bg-accent/5 rounded-sm">
+            <p className="text-[12px] text-accent/80 font-medium mb-1">Homepage Slideshow</p>
+            <p className="text-[11px] text-foreground/50">Drag to reorder. Add, edit or delete images. Always keep at least 1. Hit Save Changes to apply.</p>
+          </div>
+
+          {/* Image list */}
+          <div className="space-y-2">
+            {imgs.map((img, i) => (
+              <div key={i} draggable
+                onDragStart={() => { dragIdxRef.current = i; }}
+                onDragOver={e => {
+                  e.preventDefault();
+                  const from = dragIdxRef.current;
+                  if (from === null || from === i) return;
+                  const a = [...imgs];
+                  const [m] = a.splice(from, 1);
+                  a.splice(i, 0, m);
+                  dragIdxRef.current = i;
+                  setImgs(a);
+                  setS(p => ({ ...p, slider_images: JSON.stringify(a) }));
+                }}
+                onDragEnd={() => { dragIdxRef.current = null; }}
+                className="bg-foreground/[0.02] border border-foreground/8 rounded-sm overflow-hidden cursor-grab active:cursor-grabbing hover:border-foreground/20 transition-all">
+                {editIdx === i ? (
+                  <div className="p-4 space-y-3">
+                    <div>
+                      <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-1.5">Image URL</label>
+                      <input type="url" value={img.src} onChange={e => updImg(i, "src", e.target.value)} className={IC} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-1.5">Alt Text</label>
+                      <input type="text" value={img.alt} onChange={e => updImg(i, "alt", e.target.value)} className={IC} />
+                    </div>
+                    <button onClick={() => setEditIdx(null)}
+                      className="px-4 py-2 bg-foreground text-background text-[11px] font-semibold tracking-[0.15em] uppercase rounded-sm hover:bg-accent transition-all">
+                      Done
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3 p-3">
+                    <div className="w-16 h-10 flex-shrink-0 rounded-sm overflow-hidden bg-foreground/5">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img.src} alt={img.alt} className="w-full h-full object-cover"
+                        onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[11px] text-foreground/60 truncate">{img.src}</p>
+                      <p className="text-[10px] text-foreground/30 truncate mt-0.5">{img.alt}</p>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                      <span className="text-[10px] text-foreground/20 mr-1">#{i + 1}</span>
+                      <div className="p-1.5 text-foreground/20 cursor-grab" title="Drag to reorder">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                          <circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/>
+                          <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+                          <circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/>
+                        </svg>
+                      </div>
+                      <button onClick={() => setEditIdx(i)}
+                        className="px-2.5 py-1.5 border border-blue-400/20 rounded-sm text-blue-400/60 hover:text-blue-400 hover:border-blue-400/40 transition-all text-[10px] font-semibold tracking-widest uppercase">
+                        Edit
+                      </button>
+                      <button onClick={() => delImg(i)} disabled={imgs.length <= 1}
+                        className="px-2.5 py-1.5 border border-red-500/20 rounded-sm text-red-400/60 hover:text-red-400 hover:border-red-500/40 transition-all text-[10px] font-semibold tracking-widest uppercase disabled:opacity-20">
+                        Del
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Add new */}
+          <div className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-5 space-y-3">
+            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40">Add New Image</p>
+            <div>
+              <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 mb-1.5">Image URL *</label>
+              <input type="url" value={newUrl} onChange={e => setNewUrl(e.target.value)} placeholder="https://example.com/image.jpg" className={IC} />
+            </div>
+            <div>
+              <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 mb-1.5">Alt Text</label>
+              <input type="text" value={newAlt} onChange={e => setNewAlt(e.target.value)} placeholder="Description of the image" className={IC} />
+            </div>
+            <button onClick={addImg} disabled={!newUrl.trim()}
+              className="flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-[11px] font-semibold tracking-[0.15em] uppercase rounded-sm hover:bg-accent transition-all disabled:opacity-40">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 5v14M5 12h14"/></svg>
+              Add Image
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

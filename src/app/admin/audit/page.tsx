@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { apiUrl } from "@/lib/apiConfig";
 
 interface AuditEntry { id: number; action: string; resource: string; user: string; created_at: string; details?: string; }
 
@@ -9,7 +8,7 @@ export default function AdminAuditPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(apiUrl("/api/admin/get-audit.php"))
+    fetch("/api/admin/audit")
       .then(r => r.ok ? r.json() : [])
       .then(data => { setLogs(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => setLoading(false));

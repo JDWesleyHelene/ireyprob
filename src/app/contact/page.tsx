@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
 import { useSettings } from "@/lib/useLiveData";
-import { apiUrl } from "@/lib/apiConfig";
 
 const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/ireyprod/", handle: "@ireyprod" },
@@ -14,12 +14,133 @@ const socialLinks = [
   { label: "TikTok",    href: "https://www.tiktok.com/@ireyprod",     handle: "@ireyprod" },
 ];
 
-interface Errors { name?: string; email?: string; project?: string; }
+interface Errors { name?: string; email?: string; subject?: string; project?: string; }
+
+function ContactForm() {
+  const searchParams = useSearchParams();
+  const prefillSubject = searchParams.get("subject") || "";
+
+  const [formData, setFormData] = useState({
+    name: "", email: "", subject: prefillSubject, project: "",
+  });
+  const [errors, setErrors]       = useState<Errors>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading]     = useState(false);
+  const [activeField, setActiveField] = useState<string | null>(null);
+
+  const validate = (): boolean => {
+    const e: Errors = {};
+    if (!formData.name.trim())    e.name    = "Name is required";
+    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = "Valid email required";
+    if (!formData.subject.trim()) e.subject = "Subject is required";
+    if (!formData.project.trim()) e.project = "Please describe your project";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(p => ({ ...p, [name]: value }));
+    if (errors[name as keyof Errors]) setErrors(p => ({ ...p, [name]: undefined }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setLoading(true);
+    try {
+      await fetch("/api/admin/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    } catch { /* ignore */ }
+    setLoading(false);
+    setSubmitted(true);
+  };
+
+  const inputCls = (field: string) =>
+    `w-full bg-foreground/[0.03] border rounded-sm px-4 py-3.5 text-[13px] text-white placeholder-foreground/25 focus:outline-none transition-all duration-300 ${
+      errors[field as keyof Errors] ? "border-red-500/60" : activeField === field ? "border-foreground/40 bg-foreground/[0.05]" : "border-foreground/10"
+    }`;
+
+  return submitted ? (
+    <div className="flex flex-col items-center justify-center py-20 text-center">
+      <div className="w-20 h-20 rounded-full border border-accent/40 flex items-center justify-center mb-6 relative">
+        <div className="absolute inset-0 rounded-full border border-accent/20 animate-ping" />
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent"><polyline points="20 6 9 17 4 12" /></svg>
+      </div>
+      <h3 className="font-display text-3xl font-light italic text-white mb-3">Message Sent!</h3>
+      <p className="text-[14px] text-white/40 font-light max-w-sm leading-relaxed">
+        Thank you for your enquiry. Our team will review your project and get back to you within 48 hours.
+      </p>
+      <button onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", subject: "", project: "" }); }}
+        className="mt-8 px-8 py-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300">
+        Send Another
+      </button>
+    </div>
+  ) : (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+      {prefillSubject && (
+        <div className="px-4 py-3 bg-accent/10 border border-accent/20 rounded-sm">
+          <p className="text-[11px] text-accent/80">Enquiry pre-filled: <strong>{prefillSubject}</strong></p>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Name *</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange}
+            onFocus={() => setActiveField("name")} onBlur={() => setActiveField(null)}
+            placeholder="Your name" className={inputCls("name")} />
+          {errors.name && <p className="text-[11px] text-red-400 mt-1">{errors.name}</p>}
+        </div>
+        <div>
+          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Email *</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange}
+            onFocus={() => setActiveField("email")} onBlur={() => setActiveField(null)}
+            placeholder="your@email.com" className={inputCls("email")} />
+          {errors.email && <p className="text-[11px] text-red-400 mt-1">{errors.email}</p>}
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Subject *</label>
+        <input type="text" name="subject" value={formData.subject} onChange={handleChange}
+          onFocus={() => setActiveField("subject")} onBlur={() => setActiveField(null)}
+          placeholder="What is your enquiry about?"
+          className={inputCls("subject")}
+          readOnly={Boolean(prefillSubject)} />
+        {errors.subject && <p className="text-[11px] text-red-400 mt-1">{errors.subject}</p>}
+      </div>
+
+      <div>
+        <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Tell Us About Your Project *</label>
+        <textarea name="project" value={formData.project} onChange={handleChange}
+          onFocus={() => setActiveField("project")} onBlur={() => setActiveField(null)}
+          rows={6} placeholder="Describe your project, event, or idea..."
+          className={inputCls("project") + " resize-none"} />
+        {errors.project && <p className="text-[11px] text-red-400 mt-1">{errors.project}</p>}
+      </div>
+
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <button type="submit" disabled={loading}
+          className="group px-10 py-4 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300 flex items-center gap-3 disabled:opacity-60">
+          {loading ? (
+            <><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Sending...</>
+          ) : (
+            <>Submit Enquiry<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14M12 5l7 7-7 7" /></svg></>
+          )}
+        </button>
+        <p className="text-[11px] text-white/25 font-light">* Required. We respond within 48 hours.</p>
+      </div>
+    </form>
+  );
+}
 
 export default function ContactPage() {
-  // Live settings from admin dashboard (fallback to defaults)
   const liveSettings = useSettings();
-  const phone       = liveSettings.phone        || "+230 5 788 20 14";
+  const phone       = liveSettings.phone         || "+230 5 788 20 14";
   const email       = liveSettings.contact_email || "booking@ireyprod.com";
   const officeHours = liveSettings.office_hours  || "Mon – Fri, 10am – 5pm";
   const location    = liveSettings.location      || "Mauritius Island, Indian Ocean";
@@ -35,53 +156,12 @@ export default function ContactPage() {
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> },
   ];
 
-  const [formData, setFormData] = useState({ name: "", email: "", budget: "", timeframe: "", project: "" });
-  const [errors, setErrors]     = useState<Errors>({});
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading]   = useState(false);
-  const [activeField, setActiveField] = useState<string | null>(null);
-
-  const validate = (): boolean => {
-    const e: Errors = {};
-    if (!formData.name.trim())    e.name    = "Name is required";
-    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = "Valid email required";
-    if (!formData.project.trim()) e.project = "Please describe your project";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(p => ({ ...p, [name]: value }));
-    if (errors[name as keyof Errors]) setErrors(p => ({ ...p, [name]: undefined }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-    setLoading(true);
-    try {
-      await fetch(apiUrl("/api/contact.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-    } catch { /* ignore */ }
-    setLoading(false);
-    setSubmitted(true);
-  };
-
-  const inputCls = (field: string) =>
-    `w-full bg-foreground/[0.03] border rounded-sm px-4 py-3.5 text-[13px] text-white placeholder-foreground/25 focus:outline-none transition-all duration-300 ${
-      errors[field as keyof Errors] ? "border-red-500/60" : activeField === field ? "border-foreground/40 bg-foreground/[0.05]" : "border-foreground/10"
-    }`;
-
   return (
     <>
       <Header />
       <main className="min-h-screen bg-background">
 
-        {/* ── HERO ── */}
+        {/* HERO */}
         <section className="relative h-[60vh] min-h-[480px] overflow-hidden flex items-end">
           <AppImage
             src="https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg"
@@ -90,11 +170,6 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#060606] via-black/50 to-black/20" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
           <div className="absolute inset-0 noise pointer-events-none opacity-30" />
-          <div className="absolute inset-0 pointer-events-none flex justify-between px-8 md:px-24">
-            <div className="relative w-px h-full bg-white/[0.02] overflow-hidden"><div className="beam beam-d1" /></div>
-            <div className="relative w-px h-full bg-white/[0.02] overflow-hidden hidden md:block"><div className="beam beam-d2" /></div>
-            <div className="relative w-px h-full bg-white/[0.02] overflow-hidden"><div className="beam beam-d3" /></div>
-          </div>
           <div className="relative max-w-[1440px] mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-16 pb-14 pt-32">
             <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">— Contact</span>
             <h1 className="font-display text-[3rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7rem] font-light italic text-white leading-[0.88] tracking-tight max-w-4xl">
@@ -106,7 +181,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ── CONTACT STRIP ── */}
+        {/* CONTACT STRIP */}
         <section className="bg-[#040404] border-b border-white/5">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
@@ -124,7 +199,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ── MAIN BODY ── */}
+        {/* MAIN BODY */}
         <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-16 sm:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-20">
 
@@ -136,11 +211,10 @@ export default function ContactPage() {
                   Got questions? Ideas? Fill out the form and our team will get back to you with a tailored proposal.
                 </p>
               </div>
-
               <div>
                 <h3 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40 mb-4">Connect With Us</h3>
                 <div className="flex flex-col gap-1">
-                  {socialLinks.map((s) => (
+                  {socialLinks.map(s => (
                     <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
                       className="group flex items-center justify-between py-3 border-b border-white/5 hover:border-white/20 transition-colors duration-300">
                       <span className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">{s.label}</span>
@@ -152,7 +226,6 @@ export default function ContactPage() {
                   ))}
                 </div>
               </div>
-
               <div className="p-5 border border-white/8 rounded-sm bg-foreground/[0.02] relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
                 <div className="flex items-center gap-2 mb-3">
@@ -167,90 +240,14 @@ export default function ContactPage() {
 
             {/* Form */}
             <div className="lg:col-span-3">
-              {submitted ? (
-                <div className="flex flex-col items-center justify-center py-20 text-center">
-                  <div className="w-20 h-20 rounded-full border border-accent/40 flex items-center justify-center mb-6 relative">
-                    <div className="absolute inset-0 rounded-full border border-accent/20 animate-ping" />
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent"><polyline points="20 6 9 17 4 12" /></svg>
-                  </div>
-                  <h3 className="font-display text-3xl font-light italic text-white mb-3">Message Sent!</h3>
-                  <p className="text-[14px] text-white/40 font-light max-w-sm leading-relaxed">
-                    Thank you for your enquiry. Our team will review your project and get back to you within 48 hours.
-                  </p>
-                  <button onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", budget: "", timeframe: "", project: "" }); }}
-                    className="mt-8 px-8 py-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300">
-                    Send Another
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Name *</label>
-                      <input type="text" name="name" value={formData.name} onChange={handleChange}
-                        onFocus={() => setActiveField("name")} onBlur={() => setActiveField(null)}
-                        placeholder="Your name" className={inputCls("name")} />
-                      {errors.name && <p className="text-[11px] text-red-400 mt-1">{errors.name}</p>}
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Email *</label>
-                      <input type="email" name="email" value={formData.email} onChange={handleChange}
-                        onFocus={() => setActiveField("email")} onBlur={() => setActiveField(null)}
-                        placeholder="your@email.com" className={inputCls("email")} />
-                      {errors.email && <p className="text-[11px] text-red-400 mt-1">{errors.email}</p>}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Your Budget</label>
-                      <select name="budget" value={formData.budget} onChange={handleChange}
-                        onFocus={() => setActiveField("budget")} onBlur={() => setActiveField(null)}
-                        className={inputCls("budget") + " appearance-none"}>
-                        <option value="" className="bg-[#060606]">Select a range</option>
-                        <option value="Under MUR 50,000" className="bg-[#060606]">Under MUR 50,000</option>
-                        <option value="MUR 50,000 – 150,000" className="bg-[#060606]">MUR 50,000 – 150,000</option>
-                        <option value="MUR 150,000 – 500,000" className="bg-[#060606]">MUR 150,000 – 500,000</option>
-                        <option value="MUR 500,000+" className="bg-[#060606]">MUR 500,000+</option>
-                        <option value="To be discussed" className="bg-[#060606]">To be discussed</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Timeframe</label>
-                      <input type="text" name="timeframe" value={formData.timeframe} onChange={handleChange}
-                        onFocus={() => setActiveField("timeframe")} onBlur={() => setActiveField(null)}
-                        placeholder="e.g. 3 months, Q3 2026" className={inputCls("timeframe")} />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Tell Us About Your Project *</label>
-                    <textarea name="project" value={formData.project} onChange={handleChange}
-                      onFocus={() => setActiveField("project")} onBlur={() => setActiveField(null)}
-                      rows={6} placeholder="Describe your project, event, or idea..."
-                      className={inputCls("project") + " resize-none"} />
-                    {errors.project && <p className="text-[11px] text-red-400 mt-1">{errors.project}</p>}
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <button type="submit" disabled={loading}
-                      className="group px-10 py-4 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300 flex items-center gap-3 disabled:opacity-60">
-                      {loading ? (
-                        <><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Sending...</>
-                      ) : (
-                        <>Submit Enquiry<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14M12 5l7 7-7 7" /></svg></>
-                      )}
-                    </button>
-                    <p className="text-[11px] text-white/25 font-light">* Required. We respond within 48 hours.</p>
-                  </div>
-                </form>
-              )}
+              <Suspense fallback={<div className="h-96 bg-foreground/5 rounded-sm animate-pulse" />}>
+                <ContactForm />
+              </Suspense>
             </div>
-
           </div>
         </section>
 
-        {/* ── PHONE BAND ── */}
+        {/* PHONE BAND */}
         <section className="border-t border-foreground/5 bg-[#040404] py-12">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
