@@ -27,7 +27,9 @@ export default function AdminArtistsPage() {
     setDeleting(null);
   };
 
-  const all = [...dbArtists, ...return (
+  const all = [...dbArtists];
+
+  return (
     <div className="p-4 sm:p-6 lg:p-8">
       {toast&&<div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-sm text-[12px] font-medium border ${toast.ok?"bg-foreground/10 border-foreground/20 text-foreground":"bg-red-500/10 border-red-500/20 text-red-400"}`}>{toast.msg}</div>}
       <div className="flex items-center justify-between mb-8">
