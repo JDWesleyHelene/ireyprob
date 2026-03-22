@@ -40,14 +40,15 @@
   },
   "scripts": {
     "dev": "next dev -p 4028",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "node server.js",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
     "serve": "node server.js",
     "type-check": "tsc --noEmit",
-    "seed": "npx prisma db seed"
+    "seed": "npx prisma db seed",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.14",
