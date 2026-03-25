@@ -2,10 +2,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 
 interface SM { [k: string]: string; }
-type Tab = "branding"|"email"|"social"|"contact";
+type Tab = "branding"|"email"|"social"|"contact"|"typography";
 
 const tabs: { id: Tab; label: string }[] = [
-  { id:"branding", label:"Site Branding" },
+  { id:"branding",    label:"Site Branding" },
+  { id:"typography",  label:"Typography" },
   { id:"email",    label:"Email Settings" },
   { id:"social",   label:"Social Media" },
   { id:"contact",  label:"Contact Info" },
@@ -162,6 +163,38 @@ export default function AdminSettingsPage() {
 
           {tab==="social"&&<SocialTab settings={settings} set={set}/>}
 
+          {tab==="typography"&&(
+            <div className="space-y-8">
+              <div><h2 className="text-[13px] font-semibold tracking-[0.15em] uppercase text-foreground mb-1">Typography</h2>
+                <p className="text-[12px] text-foreground/40">Control font sizes across the website. Values in rem (1rem = 16px).</p></div>
+              <div className="p-4 bg-accent/5 border border-accent/20 rounded-sm">
+                <p className="text-[11px] text-foreground/50">Changes apply site-wide after saving. Reload the page to see updates.</p>
+              </div>
+              <div className="space-y-6">
+                {[
+                  {key:"font_h1",label:"H1 — Hero Headings",default:"5rem",hint:"Main page titles"},
+                  {key:"font_h2",label:"H2 — Section Headings",default:"3rem",hint:"Section titles"},
+                  {key:"font_h3",label:"H3 — Card Titles",default:"1.5rem",hint:"Card and sub-section titles"},
+                  {key:"font_body",label:"Body Text",default:"0.9375rem",hint:"Paragraphs and descriptions"},
+                  {key:"font_small",label:"Small / Labels",default:"0.75rem",hint:"Tags, labels, captions"},
+                ].map(({key,label,default:def,hint})=>(
+                  <div key={key} className="flex items-center gap-4">
+                    <div className="flex-1">
+                      <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-1">{label}</label>
+                      <p className="text-[10px] text-foreground/25">{hint}</p>
+                    </div>
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <input type="text" value={settings[key]||def} onChange={e=>set(key,e.target.value)}
+                        className="w-24 bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-2 text-[13px] text-foreground text-center font-mono focus:outline-none focus:border-foreground/30"/>
+                      <span className="text-[10px] text-foreground/30 w-8">
+                        {settings[key]||def}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           {tab==="contact"&&(
             <div className="space-y-6">
               <div><h2 className="text-[13px] font-semibold tracking-[0.15em] uppercase text-foreground mb-1">Contact Information</h2>

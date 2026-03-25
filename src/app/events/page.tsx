@@ -105,7 +105,7 @@ export default async function EventsPage({
               Events
             </span>
 
-            <h1 className="font-display text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-light italic text-white leading-[0.9] tracking-tight mb-4">
+            <h1 className="font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-4">
               Live Events
             </h1>
 

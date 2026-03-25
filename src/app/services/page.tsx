@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
 import { services as allServices } from "@/lib/data";
+import { useSettings } from "@/lib/useLiveData";
 
 const whyUs = [
   { title: "Creativity", desc: "We think outside the box to deliver unique, memorable experiences for every client and artist." },
@@ -17,6 +18,7 @@ const whyUs = [
 ];
 
 export default function ServicesPage() {
+  const settings = useSettings();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function ServicesPage() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent" />
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">— Services</span>
-            <h1 className="reveal font-display text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-light italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">What We Do</h1>
+            <h1 className="reveal font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">What We Do</h1>
             <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">
               IREY PROD is a multi-faceted agency operating in the entertainment and events industry, with a focus on music and performing arts. Four core service pillars — Bookings, Tours, Events, and Productions.
             </p>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
-import { useArtists } from "@/lib/useLiveData";
+import { useArtists, useSettings } from "@/lib/useLiveData";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface FormErrors { fullName?: string; email?: string; address?: string; dateTime?: string; }
@@ -111,6 +111,7 @@ function BookingModal({ artist, onClose }: { artist: any; onClose: () => void })
 }
 
 export default function BookingsPage() {
+  const pageSettings = useSettings();
   const [selectedArtist, setSelectedArtist] = useState<any | null>(null);
   const { t } = useLanguage();
   const { artists: liveArtists, loading: artistsLoading } = useArtists();
@@ -133,8 +134,8 @@ export default function BookingsPage() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent" />
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-3">— Bookings</span>
-            <h1 className="bookings-hero-title font-display text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-light italic text-white leading-[0.9] tracking-tight mb-4">{t.bookings.pageTitle}</h1>
-            <p className="bookings-hero-sub text-[13px] sm:text-[14px] text-white/40 font-light max-w-lg leading-relaxed">{t.bookings.pageSubtitle}</p>
+            <h1 className="bookings-hero-title font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-4">{pageSettings.bookings_hero_heading || t.bookings.pageTitle}</h1>
+            <p className="bookings-hero-sub text-[13px] sm:text-[14px] text-white/40 font-light max-w-lg leading-relaxed">{pageSettings.bookings_hero_sub || t.bookings.pageSubtitle}</p>
           </div>
         </section>
 

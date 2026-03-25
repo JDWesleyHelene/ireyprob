@@ -7,6 +7,7 @@ import GoogleAnalytics from '@/components/GoogleAnalytics';
 import SplashScreen from '@/components/SplashScreen';
 import CookieBanner from '@/components/CookieBanner';
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import FontController from '@/components/FontController';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <GoogleAnalytics />
         </Suspense>
         <SplashScreen />
+        <FontController />
         <LanguageProvider>
           {children}
         </LanguageProvider>

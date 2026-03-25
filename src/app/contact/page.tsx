@@ -172,7 +172,7 @@ export default function ContactPage() {
           <div className="absolute inset-0 noise pointer-events-none opacity-30" />
           <div className="relative max-w-[1440px] mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-16 pb-14 pt-32">
             <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">— Contact</span>
-            <h1 className="font-display text-[3rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7rem] font-light italic text-white leading-[0.88] tracking-tight max-w-4xl">
+            <h1 className="font-display text-[2.2rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] font-light italic text-white leading-[0.88] tracking-tight max-w-4xl">
               Let&apos;s Start<br /><span className="text-white/40">Right Now!</span>
             </h1>
             <p className="mt-4 text-[14px] text-white/60 font-light max-w-md leading-relaxed">

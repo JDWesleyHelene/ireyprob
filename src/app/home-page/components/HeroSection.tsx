@@ -127,7 +127,7 @@ export default function HeroSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-accent pulse-dot" />
             <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white">Booking Agency · Mauritius Island</span>
           </div>
-          <h1 className="hero-headline font-display text-[2.8rem] sm:text-[4rem] lg:text-[5.5rem] font-light italic text-white leading-[0.92] tracking-tight overflow-hidden">
+          <h1 className="hero-headline font-display text-[2.2rem] sm:text-[3.2rem] lg:text-[4.2rem] font-light italic text-white leading-[0.92] tracking-tight overflow-hidden">
             <span className="block">{headline1}</span>
             <span className="block">{headline2}</span>
           </h1>

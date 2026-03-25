@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
+import { useSettings } from "@/lib/useLiveData";
 
 const stats = [
 { value: "4", label: "Core Services" },
@@ -78,6 +79,7 @@ const team = [
 
 
 export default function AboutPage() {
+  const settings = useSettings();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -135,7 +137,7 @@ export default function AboutPage() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent" />
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">— About Agency</span>
-            <h1 className="about-hero-title font-display text-[2.8rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-light italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">
+            <h1 className="about-hero-title font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">
               The One-Stop Agency<br />You'll Ever Need
             </h1>
             <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">
@@ -192,7 +194,7 @@ export default function AboutPage() {
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {stats?.map((stat, i) => (
                   <div key={i} className={`reveal delay-${i * 100} text-center p-6 sm:p-8 border border-white/10 rounded-sm bg-background/50`}>
-                    <span className="font-display text-[2.5rem] sm:text-[3.5rem] md:text-[4rem] font-light italic text-white block leading-none mb-2">{stat?.value}</span>
+                    <span className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.2rem] font-light italic text-white block leading-none mb-2">{stat?.value}</span>
                     <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-white/60">{stat?.label}</span>
                   </div>
                 ))}
