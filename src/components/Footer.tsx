@@ -36,7 +36,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-1 flex flex-col gap-4 items-start">
-            <Link href="/"><AppImage src="https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png" alt="IREY PROD" width={120} height={44} className="h-9 w-auto object-contain opacity-90" unoptimized/></Link>
+            <Link href="/"><AppImage src="https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png" alt="IREY PROD" width={120} height={44} className="h-9 w-auto object-contain opacity-90" unoptimized/></Link>
             <p className="text-[12px] text-white/50 leading-relaxed font-light">Booking agency & production for music and performing arts. Based in Mauritius Island.</p>
             <div className="space-y-1">
               <a href={`tel:${phone.replace(/[^+0-9]/g,"")}`} className="block text-[13px] text-white/60 hover:text-accent transition-colors">{phone}</a>

@@ -1,19 +1,31 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AppImage from "@/components/ui/AppImage";
+import { useSettings } from "@/lib/useLiveData";
 
-const navLinks = [
-  { label: "Events",   href: "/events" },
-  { label: "Artists",  href: "/bookings" },
-  { label: "Services", href: "/services" },
-  { label: "About",    href: "/about" },
-  { label: "Contact",  href: "/contact" },
+const DEFAULT_NAV = [
+  { label: "Artists",  href: "/bookings", active: true },
+  { label: "About",    href: "/about",    active: true },
+  { label: "Services", href: "/services", active: true },
+  { label: "Contact",  href: "/contact",  active: true },
+  { label: "Events",   href: "/events",   active: true },
 ];
 
 export default function Header() {
+  const settings = useSettings();
+  const navLinks = useMemo(() => {
+    try {
+      if (settings.nav_items) {
+        const items = JSON.parse(settings.nav_items);
+        if (Array.isArray(items) && items.length > 0)
+          return items.filter((i: any) => i.active !== false);
+      }
+    } catch {}
+    return DEFAULT_NAV;
+  }, [settings.nav_items]);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -37,7 +49,7 @@ export default function Header() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0 relative z-[60]">
-            <AppImage src="https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png" alt="IREY PROD logo"
+            <AppImage src="https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png" alt="IREY PROD logo"
               width={120} height={44} priority
               className="h-8 sm:h-10 w-auto object-contain"
               unoptimized />

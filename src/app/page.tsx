@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroSection from "@/app/home-page/components/HeroSection";
 
-const FeaturedEventsSection = dynamic(() => import("@/app/home-page/components/FeaturedEventsSection"), {
+const MasonryGallery = dynamic(() => import("@/app/home-page/components/MasonryGallery"), {
   loading: () => <div className="h-[400px] bg-foreground/5 animate-pulse" />,
 });
 const ArtistRosterSection = dynamic(() => import("@/app/home-page/components/ArtistRosterSection"), {
@@ -36,7 +36,7 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
-        <FeaturedEventsSection />
+        <MasonryGallery />
         <ArtistRosterSection />
         <LegacyStatsSection />
         <LatestNewsSection />
