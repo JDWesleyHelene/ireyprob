@@ -17,18 +17,19 @@ module.exports = {
         'card-bg': 'rgba(240, 237, 232, 0.03)',
       },
       fontFamily: {
-        display: ['var(--font-fraunces)', 'Fraunces', 'serif'],
-        sans: ['var(--font-dm-sans)', 'DM Sans', 'sans-serif'],
+        // Both display and sans use Montserrat — display uses heavier weights
+        display: ['var(--font-montserrat)', 'Montserrat', 'sans-serif'],
+        sans:    ['var(--font-montserrat)', 'Montserrat', 'sans-serif'],
       },
       letterSpacing: {
         widest2: '0.2em',
         widest3: '0.25em',
       },
       animation: {
-        'reveal-up': 'revealUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-        'beam-drop': 'beamDrop 9s cubic-bezier(0.4, 0, 0.2, 1) infinite',
-        'pulse-dot': 'pulseDot 2s ease-in-out infinite',
-        'spin-slow': 'spin 3s linear infinite',
+        'reveal-up':  'revealUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        'beam-drop':  'beamDrop 9s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+        'pulse-dot':  'pulseDot 2s ease-in-out infinite',
+        'spin-slow':  'spin 3s linear infinite',
       },
       backgroundImage: {
         'hero-gradient': 'linear-gradient(to bottom, rgba(6,6,6,0.55) 0%, rgba(6,6,6,0.2) 40%, rgba(6,6,6,0.85) 85%, #060606 100%)',

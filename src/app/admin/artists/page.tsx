@@ -46,11 +46,12 @@ export default function AdminArtistsPage() {
           <thead><tr className="border-b border-foreground/8 bg-foreground/[0.02]">
             <th className="text-left px-5 py-3 text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30">Artist</th>
             <th className="text-left px-5 py-3 text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 hidden md:table-cell">Genre</th>
+            <th className="text-left px-5 py-3 text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 hidden lg:table-cell">Type</th>
             <th className="px-5 py-3 text-right text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30">Actions</th>
           </tr></thead>
           <tbody>
             {all.map(a=>(
-              <tr key={a.id} className="border-b border-foreground/5 last:border-0 hover:bg-foreground/[0.02]">
+              <tr key={a.id} className="border-b border-foreground/5 last:border-0 hover:bg-foreground/[0.02] transition-colors">
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-sm overflow-hidden flex-shrink-0 bg-foreground/5">
@@ -63,13 +64,20 @@ export default function AdminArtistsPage() {
                   </div>
                 </td>
                 <td className="px-5 py-4 hidden md:table-cell"><span className="text-[12px] text-foreground/40">{a.genre}</span></td>
+                <td className="px-5 py-4 hidden lg:table-cell">
+                  <span className={`px-2 py-0.5 text-[9px] tracking-widest uppercase rounded-sm border ${a._source==="static"?"bg-foreground/5 text-foreground/30 border-foreground/10":"bg-blue-400/5 text-blue-400/60 border-blue-400/15"}`}>
+                    {a._source==="static"?"Default":"Custom"}
+                  </span>
+                </td>
                 <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-2">
-                    <Link href={`/bookings/${a.slug}`} target="_blank" className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-foreground/10 rounded-sm text-foreground/30 hover:text-foreground/60 transition-all">View</Link>
-                    <Link href={`/admin/artists/${a.id}/edit`} className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-blue-400/20 rounded-sm text-blue-400/60 hover:text-blue-400 transition-all">Edit</Link>
-                    <button onClick={()=>handleDelete(a.id,a.name)} disabled={deleting===a.id} className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-red-500/20 rounded-sm text-red-400/60 hover:text-red-400 transition-all disabled:opacity-40">
-                      {deleting===a.id?"...":"Delete"}
-                    </button>
+                    <Link href={`/bookings/${a.slug}`} target="_blank" className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-foreground/10 rounded-sm text-foreground/30 hover:text-foreground/60 hover:border-foreground/20 transition-all">View</Link>
+                    {a._source!=="static"&&<>
+                      <Link href={`/admin/artists/${a.id}/edit`} className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-blue-400/20 rounded-sm text-blue-400/60 hover:text-blue-400 hover:border-blue-400/40 transition-all">Edit</Link>
+                      <button onClick={()=>handleDelete(a.id,a.name)} disabled={deleting===a.id} className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-red-500/20 rounded-sm text-red-400/60 hover:text-red-400 hover:border-red-500/40 transition-all disabled:opacity-40">
+                        {deleting===a.id?"...":"Delete"}
+                      </button>
+                    </>}
                   </div>
                 </td>
               </tr>

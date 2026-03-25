@@ -37,9 +37,9 @@ export default function Header() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0 relative z-[60]">
-            <AppImage src="/assets/images/IREY-PROD-BLACK-1773496673088.png" alt="IREY PROD logo"
+            <AppImage src="https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png" alt="IREY PROD logo"
               width={120} height={44} priority
-              className="h-8 sm:h-10 w-auto object-contain brightness-0 invert"
+              className="h-8 sm:h-10 w-auto object-contain"
               unoptimized />
           </Link>
 
