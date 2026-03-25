@@ -10,6 +10,7 @@ const DEFAULT_NAV = [
   { label: "Artists",  href: "/bookings", active: true },
   { label: "About",    href: "/about",    active: true },
   { label: "Services", href: "/services", active: true },
+  { label: "Gallery",  href: "/gallery",  active: true },
   { label: "Contact",  href: "/contact",  active: true },
   { label: "Events",   href: "/events",   active: true },
 ];
