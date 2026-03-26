@@ -21,8 +21,16 @@ export default function Header() {
     try {
       if (settings.nav_items) {
         const items = JSON.parse(settings.nav_items);
-        if (Array.isArray(items) && items.length > 0)
-          return items.filter((i: any) => i.active !== false);
+        if (Array.isArray(items) && items.length > 0) {
+          // Ensure Gallery is always present even in old saved navs
+          const hasGallery = items.some((i: any) => i.href === "/gallery");
+          const merged = hasGallery ? items : [
+            ...items.slice(0, 3),
+            { id:"gallery", label:"Gallery", href:"/gallery", active:true },
+            ...items.slice(3),
+          ];
+          return merged.filter((i: any) => i.active !== false);
+        }
       }
     } catch {}
     return DEFAULT_NAV;
