@@ -81,7 +81,6 @@ export default function AboutPage() {
         gsap.from(".about-story-img", { scale:1.05, opacity:0, duration:1.2, ease:"power3.out", scrollTrigger:{trigger:".about-story-img",start:"top 80%",once:true} });
         gsap.from(".about-story-text > *", { y:30, opacity:0, duration:0.8, stagger:0.12, ease:"power3.out", scrollTrigger:{trigger:".about-story-text",start:"top 80%",once:true} });
         gsap.from(".about-value-item", { y:40, opacity:0, duration:0.7, stagger:0.08, ease:"power3.out", scrollTrigger:{trigger:".about-values-grid",start:"top 80%",once:true} });
-        gsap.from(".about-team-card", { y:50, opacity:0, duration:0.8, stagger:0.15, ease:"power3.out", scrollTrigger:{trigger:".about-team-grid",start:"top 80%",once:true} });
       }, sectionRef);
     };
     initGsap();
@@ -177,7 +176,7 @@ export default function AboutPage() {
             </div>
             <div className="about-team-grid grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
               {team.map((member:any,i:number)=>(
-                <div key={i} className={`about-team-card reveal delay-${i*100} group`}>
+                <div key={i} className="about-team-card group">
                   <div className="relative overflow-hidden rounded-sm h-[260px] sm:h-[320px] mb-4 sm:mb-5 img-zoom-wrap">
                     {member.image ? (
                       <AppImage src={member.image} alt={member.imageAlt||member.name} fill className="img-zoom object-cover grayscale group-hover:grayscale-0 transition-all duration-700" sizes="(max-width:640px)100vw,33vw"/>
