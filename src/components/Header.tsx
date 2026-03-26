@@ -68,7 +68,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}
-                className={`text-[12px] font-medium tracking-[0.18em] uppercase transition-colors duration-300 ${pathname === link.href ? "text-foreground" : "text-foreground/50 hover:text-foreground"}`}>
+                className={`text-[12px] font-medium tracking-[0.18em] uppercase transition-colors duration-300 ${pathname === link.href ? "text-foreground" : "text-white/80 hover:text-white"}`}>
                 {link.label}
               </Link>
             ))}
@@ -85,9 +85,9 @@ export default function Header() {
           {/* Mobile burger */}
           <button className="md:hidden flex flex-col gap-1.5 p-2 -mr-2 relative z-[60]"
             onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-            <span className={`block w-6 h-px bg-foreground/70 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-4 h-px bg-foreground/70 transition-all duration-300 ${menuOpen ? "opacity-0 w-6" : ""}`} />
-            <span className={`block w-6 h-px bg-foreground/70 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-4 h-px bg-white transition-all duration-300 ${menuOpen ? "opacity-0 w-6" : ""}`} />
+            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
         </div>
       </header>
@@ -107,14 +107,14 @@ export default function Header() {
                 className={`group flex items-center gap-4 py-4 border-b border-foreground/5 transition-all duration-300 ${menuOpen ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
                 style={{ transitionDelay: menuOpen ? `${i * 60 + 100}ms` : "0ms" }}
                 onClick={() => setMenuOpen(false)}>
-                <span className="font-display text-[2rem] font-light italic text-foreground/10 w-8 group-hover:text-foreground/20 transition-colors">
+                <span className="font-display text-[1.2rem] font-light italic text-accent/50 w-8 group-hover:text-accent transition-colors">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className={`font-display text-[2.2rem] font-light italic leading-none transition-colors duration-300 ${pathname === link.href ? "text-foreground" : "text-foreground/60 group-hover:text-foreground"}`}>
+                <span className={`font-display text-[1.8rem] font-extrabold italic leading-none transition-colors duration-300 ${pathname === link.href ? "text-foreground" : "text-white group-hover:text-accent"}`}>
                   {link.label}
                 </span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
-                  className="ml-auto text-foreground/20 group-hover:text-foreground/50 group-hover:translate-x-1 transition-all duration-300">
+                  className="ml-auto text-foreground/40 group-hover:text-foreground group-hover:translate-x-1 transition-all duration-300">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
@@ -133,7 +133,7 @@ export default function Header() {
                 { label: "Facebook", href: "https://www.facebook.com/IreyProd" },
                 { label: "YouTube", href: "https://www.youtube.com/@IreyProd" }].map((s) => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                  className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/20 hover:text-foreground/50 transition-colors">
+                  className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/60 hover:text-foreground transition-colors">
                   {s.label}
                 </a>
               ))}

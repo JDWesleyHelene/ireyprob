@@ -71,7 +71,7 @@ function ContactForm() {
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent"><polyline points="20 6 9 17 4 12" /></svg>
       </div>
       <h3 className="font-display text-3xl font-light italic text-white mb-3">Message Sent!</h3>
-      <p className="text-[14px] text-white/40 font-light max-w-sm leading-relaxed">
+      <p className="text-[14px] text-white/80 font-light max-w-sm leading-relaxed">
         Thank you for your enquiry. Our team will review your project and get back to you within 48 hours.
       </p>
       <button onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", subject: "", project: "" }); }}
@@ -89,14 +89,14 @@ function ContactForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Name *</label>
+          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/80 mb-2">Name *</label>
           <input type="text" name="name" value={formData.name} onChange={handleChange}
             onFocus={() => setActiveField("name")} onBlur={() => setActiveField(null)}
             placeholder="Your name" className={inputCls("name")} />
           {errors.name && <p className="text-[11px] text-red-400 mt-1">{errors.name}</p>}
         </div>
         <div>
-          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Email *</label>
+          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/80 mb-2">Email *</label>
           <input type="email" name="email" value={formData.email} onChange={handleChange}
             onFocus={() => setActiveField("email")} onBlur={() => setActiveField(null)}
             placeholder="your@email.com" className={inputCls("email")} />
@@ -105,7 +105,7 @@ function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Subject *</label>
+        <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/80 mb-2">Subject *</label>
         <input type="text" name="subject" value={formData.subject} onChange={handleChange}
           onFocus={() => setActiveField("subject")} onBlur={() => setActiveField(null)}
           placeholder="What is your enquiry about?"
@@ -115,7 +115,7 @@ function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">Tell Us About Your Project *</label>
+        <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-white/80 mb-2">Tell Us About Your Project *</label>
         <textarea name="project" value={formData.project} onChange={handleChange}
           onFocus={() => setActiveField("project")} onBlur={() => setActiveField(null)}
           rows={6} placeholder="Describe your project, event, or idea..."
@@ -171,11 +171,11 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
           <div className="absolute inset-0 noise pointer-events-none opacity-30" />
           <div className="relative max-w-[1440px] mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-16 pb-14 pt-32">
-            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">{liveSettings.contact_hero_label || "— Contact"}</span>
+            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-4">{liveSettings.contact_hero_label || "— Contact"}</span>
             <h1 className="font-display text-[2.2rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] font-light italic text-white leading-[0.88] tracking-tight max-w-4xl">
               {liveSettings.contact_hero_heading || "Let's Start Right Now!"}
             </h1>
-            <p className="mt-4 text-[14px] text-white/60 font-light max-w-md leading-relaxed">
+            <p className="mt-4 text-[14px] text-white/90 font-light max-w-md leading-relaxed">
               {liveSettings.contact_hero_sub || "Got a project in mind? Fill out the form and we'll get back within 48 hours."}
             </p>
           </div>
@@ -188,9 +188,9 @@ export default function ContactPage() {
               {contactDetails.map((detail, i) => (
                 <a key={i} href={detail.href}
                   className="group flex flex-col gap-3 p-5 sm:p-7 bg-[#040404] hover:bg-background transition-colors duration-300">
-                  <div className="text-white/40 group-hover:text-accent transition-colors duration-300">{detail.icon}</div>
+                  <div className="text-white/80 group-hover:text-accent transition-colors duration-300">{detail.icon}</div>
                   <div>
-                    <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-white/30 mb-1">{detail.label}</p>
+                    <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-white/70 mb-1">{detail.label}</p>
                     <p className="text-[13px] text-white/80 group-hover:text-white transition-colors font-light leading-snug">{detail.value}</p>
                   </div>
                 </a>
@@ -207,18 +207,18 @@ export default function ContactPage() {
             <div className="lg:col-span-2 flex flex-col gap-8">
               <div>
                 <h2 className="font-display text-[1.8rem] sm:text-[2.2rem] font-light italic text-white mb-3">{liveSettings.contact_form_heading || "Make an Online Enquiry"}</h2>
-                <p className="text-[13px] sm:text-[14px] text-white/60 font-light leading-relaxed">
+                <p className="text-[13px] sm:text-[14px] text-white/90 font-light leading-relaxed">
                   Got questions? Ideas? Fill out the form and our team will get back to you with a tailored proposal.
                 </p>
               </div>
               <div>
-                <h3 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40 mb-4">Connect With Us</h3>
+                <h3 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/80 mb-4">Connect With Us</h3>
                 <div className="flex flex-col gap-1">
                   {socialLinks.map(s => (
                     <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
                       className="group flex items-center justify-between py-3 border-b border-white/5 hover:border-white/20 transition-colors duration-300">
                       <span className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">{s.label}</span>
-                      <span className="text-[12px] text-white/40 group-hover:text-white/60 transition-colors flex items-center gap-1.5">
+                      <span className="text-[12px] text-white/80 group-hover:text-white/90 transition-colors flex items-center gap-1.5">
                         {s.handle}
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                       </span>
@@ -230,9 +230,9 @@ export default function ContactPage() {
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent pulse-dot" />
-                  <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/40">Response Time</span>
+                  <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/80">Response Time</span>
                 </div>
-                <p className="text-[13px] text-white/50 font-light leading-relaxed">
+                <p className="text-[13px] text-white/85 font-light leading-relaxed">
                   Our team responds within <strong className="text-white/70 font-medium">48 business hours</strong>. Monday – Friday, 10am to 5pm.
                 </p>
               </div>
@@ -258,8 +258,8 @@ export default function ContactPage() {
               </a>
             </div>
             <div className="text-left sm:text-right">
-              <p className="text-[12px] text-white/30 font-light">Monday – Friday</p>
-              <p className="text-[12px] text-white/30 font-light">10 am to 5 pm</p>
+              <p className="text-[12px] text-white/70 font-light">Monday – Friday</p>
+              <p className="text-[12px] text-white/70 font-light">10 am to 5 pm</p>
             </div>
           </div>
         </section>

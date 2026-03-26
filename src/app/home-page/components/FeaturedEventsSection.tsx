@@ -39,10 +39,10 @@ export default function FeaturedEventsSection() {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
         <div className="flex items-end justify-between mb-10 sm:mb-14">
           <div>
-            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-3">— Events</span>
+            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/70 block mb-3">— Events</span>
             <h2 className="font-display text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-light italic text-foreground leading-[0.95]">Latest Events</h2>
           </div>
-          <Link href="/events" className="hidden sm:inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/40 hover:text-foreground transition-colors">
+          <Link href="/events" className="hidden sm:inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/80 hover:text-foreground transition-colors">
             View All <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </Link>
         </div>
@@ -53,7 +53,7 @@ export default function FeaturedEventsSection() {
           </div>
         ) : events.length === 0 ? (
           <div className="py-16 text-center border border-foreground/5 rounded-sm">
-            <p className="text-foreground/30 text-[13px]">No events yet. Add events from the admin dashboard.</p>
+            <p className="text-foreground/70 text-[13px]">No events yet. Add events from the admin dashboard.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -81,7 +81,7 @@ export default function FeaturedEventsSection() {
                         <span className="font-display text-[2rem] font-light italic text-white leading-none">{d.day}</span>
                         <div>
                           <span className="text-[11px] font-semibold tracking-widest uppercase text-accent block">{d.month}</span>
-                          <span className="text-[10px] text-white/50">{d.year}</span>
+                          <span className="text-[10px] text-white/85">{d.year}</span>
                         </div>
                       </div>
                     </div>
@@ -89,7 +89,7 @@ export default function FeaturedEventsSection() {
                   <div>
                     <span className="text-[9px] font-semibold tracking-[0.25em] uppercase text-accent/80 mb-1 block">{event.genre}</span>
                     <h3 className="font-display text-[1.2rem] sm:text-[1.4rem] font-light italic text-foreground group-hover:text-accent transition-colors leading-tight mb-1">{event.title}</h3>
-                    <p className="text-[12px] text-foreground/40">{event.venue} · {event.city}</p>
+                    <p className="text-[12px] text-foreground/80">{event.venue} · {event.city}</p>
                   </div>
                 </Link>
               );
@@ -98,7 +98,7 @@ export default function FeaturedEventsSection() {
         )}
 
         <div className="mt-8 text-center sm:hidden">
-          <Link href="/events" className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/40 hover:text-foreground transition-colors">
+          <Link href="/events" className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/80 hover:text-foreground transition-colors">
             View All Events <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </Link>
         </div>

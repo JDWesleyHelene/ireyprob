@@ -45,13 +45,13 @@ export default function MasonryGallery() {
         {/* Header */}
         <div className="flex items-end justify-between mb-8 sm:mb-12">
           <div>
-            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/40 block mb-3">— Gallery</span>
+            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/80 block mb-3">— Gallery</span>
             <h2 className="font-display text-[2rem] sm:text-[2.5rem] font-extrabold italic text-foreground leading-[0.95]">
               Our World
             </h2>
           </div>
           <Link href="/gallery"
-            className="hidden sm:inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/40 hover:text-foreground transition-colors duration-300 group">
+            className="hidden sm:inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/80 hover:text-foreground transition-colors duration-300 group">
             View Full Gallery
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </Link>
@@ -79,7 +79,7 @@ export default function MasonryGallery() {
 
         {/* CTA button */}
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-foreground/30 sm:hidden">
+          <p className="text-[12px] text-foreground/70 sm:hidden">
             <Link href="/gallery" className="text-accent underline underline-offset-2">View Full Gallery →</Link>
           </p>
           <div className="hidden sm:block"/>
@@ -102,7 +102,7 @@ export default function MasonryGallery() {
           <img src={lightbox.src} alt={lightbox.alt}
             className="max-w-full max-h-[90vh] object-contain rounded-sm"
             onClick={e => e.stopPropagation()}/>
-          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] text-white/40 tracking-widest uppercase">{lightbox.alt}</p>
+          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] text-white/80 tracking-widest uppercase">{lightbox.alt}</p>
         </div>
       )}
     </section>

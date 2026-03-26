@@ -125,7 +125,7 @@ export default function LegacyStatsSection() {
           <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white block mb-3">{t.stats.sectionLabel}</span>
           <h2 className="reveal font-display text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-light italic text-foreground leading-[0.95] tracking-tight mb-5">
             {t.stats.heading1}<br />
-            <span className="text-foreground/40">{t.stats.heading2}</span>
+            <span className="text-foreground/80">{t.stats.heading2}</span>
           </h2>
           <p className="reveal text-[14px] sm:text-[15px] text-white font-light leading-relaxed max-w-lg">
             {t.stats.subtext}

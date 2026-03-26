@@ -55,7 +55,7 @@ export default function ServicesPage() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(240,237,232,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(240,237,232,0.015)_1px,transparent_1px)] bg-[size:10rem_20rem] pointer-events-none"/>
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent"/>
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">— Services</span>
+            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-4">— Services</span>
             <h1 className="reveal font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-extrabold italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">{heroHeading}</h1>
             <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">{heroSub}</p>
           </div>
@@ -82,13 +82,13 @@ export default function ServicesPage() {
                 <div className={`flex flex-col justify-center mt-6 lg:mt-0 ${i%2===1?"lg:order-1 lg:pr-16":"lg:pl-16"}`}>
                   <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-accent block mb-3">— {service.service_number}</span>
                   <h2 className="font-display text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold italic text-white leading-[0.95] mb-4">{service.title}</h2>
-                  <p className="text-[13px] font-semibold tracking-wide text-white/60 mb-4 uppercase">{service.tagline}</p>
+                  <p className="text-[13px] font-semibold tracking-wide text-white/90 mb-4 uppercase">{service.tagline}</p>
                   <p className="text-[14px] text-white/70 font-light leading-relaxed mb-6 sm:mb-8">{service.description}</p>
                   <div className="grid grid-cols-2 gap-2">
                     {service.features?.map((f: string) => (
                       <div key={f} className="flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-accent flex-shrink-0"/>
-                        <span className="text-[12px] text-white/60 font-light">{f}</span>
+                        <span className="text-[12px] text-white/90 font-light">{f}</span>
                       </div>
                     ))}
                   </div>
@@ -102,7 +102,7 @@ export default function ServicesPage() {
         <section className="bg-[#040404] py-16 sm:py-24">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <div className="mb-10 sm:mb-14">
-              <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">— Why Choose Us</span>
+              <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-3">— Why Choose Us</span>
               <h2 className="reveal font-display text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-extrabold italic text-white leading-[0.95]">{whyHeading}</h2>
             </div>
             <div className="why-us-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-foreground/5">
@@ -110,7 +110,7 @@ export default function ServicesPage() {
                 <div key={i} className="why-us-item reveal bg-[#040404] p-7 sm:p-10 hover:bg-background transition-colors duration-300">
                   <div className="w-8 h-px bg-accent mb-5 sm:mb-6"/>
                   <h3 className="text-[15px] font-semibold tracking-wide text-white mb-3">{item.title}</h3>
-                  <p className="text-[13px] text-white/60 font-light leading-relaxed">{item.desc}</p>
+                  <p className="text-[13px] text-white/90 font-light leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>

@@ -106,7 +106,7 @@ export default async function EventsPage({
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent" />
 
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">
+            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-3">
               {pageSettings.events_hero_label || "Events"}
             </span>
 
@@ -137,7 +137,7 @@ export default async function EventsPage({
                       className={`snap-start shrink-0 px-4 sm:px-5 py-2 text-[11px] font-semibold tracking-[0.18em] uppercase rounded-sm border transition-all duration-300 ${
                         activeFilter === f
                           ? 'bg-foreground text-background border-foreground'
-                          : 'bg-transparent text-white/60 border-white/20 hover:border-white/50 hover:text-white'
+                          : 'bg-transparent text-white/90 border-white/20 hover:border-white/50 hover:text-white'
                       }`}
                     >
                       {f}
@@ -158,7 +158,7 @@ export default async function EventsPage({
                     className={`px-4 sm:px-5 py-2 text-[11px] font-semibold tracking-[0.18em] uppercase rounded-sm border transition-all duration-300 ${
                       activeFilter === f
                         ? 'bg-foreground text-background border-foreground'
-                        : 'bg-transparent text-white/60 border-white/20 hover:border-white/50 hover:text-white'
+                        : 'bg-transparent text-white/90 border-white/20 hover:border-white/50 hover:text-white'
                     }`}
                   >
                     {f}
@@ -172,7 +172,7 @@ export default async function EventsPage({
         <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pb-24">
           {filtered.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-white/50 text-[13px]">No events found.</p>
+              <p className="text-white/85 text-[13px]">No events found.</p>
             </div>
           ) : (
             <>
@@ -214,7 +214,7 @@ export default async function EventsPage({
                                 <span className="text-[12px] font-semibold tracking-widest uppercase text-accent">
                                   {d.month}
                                 </span>
-                                <span className="text-[11px] text-white/60">{d.year}</span>
+                                <span className="text-[11px] text-white/90">{d.year}</span>
                               </div>
                             </div>
                           );
@@ -234,7 +234,7 @@ export default async function EventsPage({
                           {extractGenres(featured.genre).map((g) => (
                             <span
                               key={g}
-                              className="text-[10px] text-white/60 border border-white/20 px-2 py-0.5 rounded-sm"
+                              className="text-[10px] text-white/90 border border-white/20 px-2 py-0.5 rounded-sm"
                             >
                               {g}
                             </span>
@@ -293,20 +293,20 @@ export default async function EventsPage({
                             <h3 className="font-display text-[1.1rem] sm:text-[1.3rem] font-light italic text-white group-hover:text-accent transition-colors duration-300 truncate">
                               {event.title}
                             </h3>
-                            <p className="text-[12px] text-white/50 mt-0.5">
+                            <p className="text-[12px] text-white/85 mt-0.5">
                               {[event.venue, event.city].filter(Boolean).join(' · ')}
                             </p>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-4 flex-shrink-0">
-                          <span className="hidden sm:block px-3 py-1 border border-white/15 rounded-sm text-[10px] font-medium tracking-widest uppercase text-white/50">
+                          <span className="hidden sm:block px-3 py-1 border border-white/15 rounded-sm text-[10px] font-medium tracking-widest uppercase text-white/85">
                             {event.genre || 'Event'}
                           </span>
 
                           <Link
                             href={`/events/${event.slug}`}
-                            className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white/50 hover:text-white transition-colors duration-300 flex items-center gap-1.5"
+                            className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white/85 hover:text-white transition-colors duration-300 flex items-center gap-1.5"
                           >
                             View Details
                             <svg

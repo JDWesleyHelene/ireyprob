@@ -37,40 +37,40 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1 flex flex-col gap-4 items-start">
             <Link href="/"><AppImage src="https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png" alt="IREY PROD" width={120} height={44} className="h-9 w-auto object-contain opacity-90" unoptimized/></Link>
-            <p className="text-[12px] text-white/50 leading-relaxed font-light">Booking agency & production for music and performing arts. Based in Mauritius Island.</p>
+            <p className="text-[12px] text-white/80 leading-relaxed font-light">Booking agency & production for music and performing arts. Based in Mauritius Island.</p>
             <div className="space-y-1">
-              <a href={`tel:${phone.replace(/[^+0-9]/g,"")}`} className="block text-[13px] text-white/60 hover:text-accent transition-colors">{phone}</a>
-              <a href={`mailto:${email}`} className="block text-[12px] text-white/40 hover:text-accent transition-colors">{email}</a>
-              <p className="text-[11px] text-white/25">{officeHours}</p>
-              <p className="text-[11px] text-white/25">{location}</p>
+              <a href={`tel:${phone.replace(/[^+0-9]/g,"")}`} className="block text-[13px] text-white/90 hover:text-accent transition-colors">{phone}</a>
+              <a href={`mailto:${email}`} className="block text-[12px] text-white/80 hover:text-accent transition-colors">{email}</a>
+              <p className="text-[11px] text-white/60">{officeHours}</p>
+              <p className="text-[11px] text-white/60">{location}</p>
             </div>
           </div>
 
           {/* Company */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40">Company</h4>
+            <h4 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/70">Company</h4>
             {[{l:"Home",h:"/"},{l:"About",h:"/about"},{l:"Contact",h:"/contact"}].map(x=>(
-              <Link key={x.h} href={x.h} className="text-[13px] text-white/50 hover:text-foreground transition-colors">{x.l}</Link>
+              <Link key={x.h} href={x.h} className="text-[13px] text-white/80 hover:text-white transition-colors">{x.l}</Link>
             ))}
           </div>
 
           {/* Services */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40">Services</h4>
+            <h4 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/70">Services</h4>
             {[{l:"Artists",h:"/bookings"},{l:"Events",h:"/events"},{l:"Productions",h:"/services"}].map(x=>(
-              <Link key={x.l} href={x.h} className="text-[13px] text-white/50 hover:text-foreground transition-colors">{x.l}</Link>
+              <Link key={x.l} href={x.h} className="text-[13px] text-white/80 hover:text-white transition-colors">{x.l}</Link>
             ))}
           </div>
 
           {/* Social — fully dynamic from Settings */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40">Follow Us</h4>
+            <h4 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/70">Follow Us</h4>
             {socialLinks.length === 0 ? (
-              <p className="text-[12px] text-white/20 italic">Add links in Settings → Social Media</p>
+              <p className="text-[12px] text-white/50 italic">Add links in Settings → Social Media</p>
             ) : socialLinks.map(s => (
               <a key={s.key} href={s.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2.5 text-[13px] text-white/50 hover:text-foreground transition-colors capitalize">
-                {SOCIAL_ICONS[s.key] && <span className="text-white/30">{SOCIAL_ICONS[s.key]}</span>}
+                className="flex items-center gap-2.5 text-[13px] text-white/80 hover:text-foreground transition-colors capitalize">
+                {SOCIAL_ICONS[s.key] && <span className="text-white/50">{SOCIAL_ICONS[s.key]}</span>}
                 {s.label}
               </a>
             ))}
@@ -78,8 +78,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="text-[11px] text-white/25 tracking-widest uppercase">© 2026 IREY PROD. All Rights Reserved.</p>
-          <p className="text-[10px] text-white/15">Designed & Developed by <a href="https://www.wesleyhelene.com" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white/50 underline underline-offset-2">Wesley Helene</a></p>
+          <p className="text-[11px] text-white/60 tracking-widest uppercase">© 2026 IREY PROD. All Rights Reserved.</p>
+          <p className="text-[10px] text-white/40">Designed & Developed by <a href="https://www.wesleyhelene.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 underline underline-offset-2">Wesley Helene</a></p>
         </div>
       </div>
     </footer>

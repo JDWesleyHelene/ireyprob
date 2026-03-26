@@ -97,7 +97,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(240,237,232,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(240,237,232,0.015)_1px,transparent_1px)] bg-[size:10rem_20rem] pointer-events-none"/>
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent"/>
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">{heroLabel}</span>
+            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-3">{heroLabel}</span>
             <h1 className="about-hero-title font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-extrabold italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">{heroHeading}</h1>
             <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">{heroSub}</p>
           </div>
@@ -117,7 +117,7 @@ export default function AboutPage() {
             </div>
             <div className="about-story-text flex flex-col gap-6 sm:gap-8">
               <div className="reveal">
-                <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">{storyLabel}</span>
+                <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-4">{storyLabel}</span>
                 <h2 className="font-display text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] font-extrabold italic text-white leading-[1.05] mb-5">
                   {storyHeading.split("\n").map((line,i) => <span key={i}>{line}{i<storyHeading.split("\n").length-1&&<br/>}</span>)}
                 </h2>
@@ -134,7 +134,7 @@ export default function AboutPage() {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div>
-                <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">{missionLabel}</span>
+                <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-4">{missionLabel}</span>
                 <h2 className="reveal font-display text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold italic text-white leading-[0.95] mb-5">{missionHeading}</h2>
                 <p className="reveal text-[14px] text-white/70 font-light leading-relaxed">{missionText}</p>
               </div>
@@ -142,7 +142,7 @@ export default function AboutPage() {
                 {stats.map((stat:any,i:number)=>(
                   <div key={i} className={`reveal delay-${i*100} text-center p-6 sm:p-8 border border-white/10 rounded-sm bg-background/50`}>
                     <span className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.2rem] font-light italic text-white block leading-none mb-2">{stat.value}</span>
-                    <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-white/60">{stat.label}</span>
+                    <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase text-white/90">{stat.label}</span>
                   </div>
                 ))}
               </div>
@@ -153,7 +153,7 @@ export default function AboutPage() {
         {/* Values */}
         <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-16 sm:py-24">
           <div className="mb-10 sm:mb-14">
-            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">{valuesLabel}</span>
+            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-3">{valuesLabel}</span>
             <h2 className="reveal font-display text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-extrabold italic text-white leading-[0.95]">{valuesHeading}</h2>
           </div>
           <div className="about-values-grid grid grid-cols-1 sm:grid-cols-2 gap-px bg-foreground/5">
@@ -161,7 +161,7 @@ export default function AboutPage() {
               <div key={i} className={`about-value-item reveal delay-${i%2*100} bg-background p-7 sm:p-10 hover:bg-[#040404] transition-colors duration-300`}>
                 <span className="font-display text-[2.5rem] sm:text-[3rem] font-light italic text-white/15 block mb-4 leading-none">{v.number}</span>
                 <h3 className="text-[15px] font-semibold tracking-wide text-white mb-3">{v.title}</h3>
-                <p className="text-[13px] text-white/60 font-light leading-relaxed">{v.description}</p>
+                <p className="text-[13px] text-white/90 font-light leading-relaxed">{v.description}</p>
               </div>
             ))}
           </div>
@@ -171,7 +171,7 @@ export default function AboutPage() {
         <section className="bg-[#040404] py-16 sm:py-24">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <div className="mb-10 sm:mb-14">
-              <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">{teamLabel}</span>
+              <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-3">{teamLabel}</span>
               <h2 className="reveal font-display text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-extrabold italic text-white leading-[0.95]">{teamHeading}</h2>
             </div>
             <div className="about-team-grid grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
@@ -190,7 +190,7 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"/>
                   </div>
                   <h3 className="text-[15px] font-semibold text-white mb-1">{member.name}</h3>
-                  <p className="text-[12px] text-white/60 tracking-wide">{member.role}</p>
+                  <p className="text-[12px] text-white/90 tracking-wide">{member.role}</p>
                 </div>
               ))}
             </div>
@@ -202,7 +202,7 @@ export default function AboutPage() {
           <div className="reveal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-8 sm:p-12 border border-foreground/8 rounded-sm bg-foreground/[0.02]">
             <div>
               <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-extrabold italic text-white mb-2">{ctaHeading}</h3>
-              <p className="text-[13px] text-white/40 font-light">{ctaSub}</p>
+              <p className="text-[13px] text-white/80 font-light">{ctaSub}</p>
             </div>
             <Link href="/contact" className="flex-shrink-0 px-8 py-3.5 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300">
               Contact Us

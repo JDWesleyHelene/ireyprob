@@ -54,11 +54,11 @@ export default function GalleryPage() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(240,237,232,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(240,237,232,0.015)_1px,transparent_1px)] bg-[size:10rem_20rem] pointer-events-none"/>
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent"/>
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-4">— Gallery</span>
+            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/70 block mb-4">— Gallery</span>
             <h1 className="font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] font-extrabold italic text-white leading-[0.9] tracking-tight mb-4">
               Our World
             </h1>
-            <p className="text-[14px] text-white/50 font-light max-w-lg">
+            <p className="text-[14px] text-white/85 font-light max-w-lg">
               Behind the scenes, on stage, and everywhere in between.
             </p>
           </div>
@@ -98,14 +98,14 @@ export default function GalleryPage() {
       {lightbox && (
         <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4"
           onClick={() => setLightbox(null)}>
-          <button className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors">
+          <button className="absolute top-6 right-6 text-white/90 hover:text-white transition-colors">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={lightbox.src} alt={lightbox.alt}
             className="max-w-full max-h-[90vh] object-contain rounded-sm"
             onClick={e => e.stopPropagation()}/>
-          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] text-white/40 tracking-widest uppercase">{lightbox.alt}</p>
+          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] text-white/80 tracking-widest uppercase">{lightbox.alt}</p>
         </div>
       )}
     </>

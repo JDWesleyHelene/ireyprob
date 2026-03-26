@@ -59,7 +59,7 @@ function BookingModal({ artist, onClose }: { artist: any; onClose: () => void })
         <div className="relative h-32 overflow-hidden">
           <AppImage src={artist.image} alt={artist.image_alt || artist.name} fill className="object-cover grayscale brightness-40" sizes="512px" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a0a]" />
-          <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border border-foreground/20 rounded-sm text-foreground/50 hover:text-foreground hover:border-foreground/50 transition-all duration-300">
+          <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border border-foreground/20 rounded-sm text-foreground/85 hover:text-foreground hover:border-foreground/50 transition-all duration-300">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
           </button>
         </div>
@@ -74,26 +74,26 @@ function BookingModal({ artist, onClose }: { artist: any; onClose: () => void })
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent"><polyline points="20 6 9 17 4 12" /></svg>
               </div>
               <h4 className="font-display text-xl font-light italic text-foreground mb-2">Request Sent!</h4>
-              <p className="text-[13px] text-foreground/40 font-light">Your booking request for {artist.name} has been submitted. We'll be in touch within 48 hours.</p>
+              <p className="text-[13px] text-foreground/80 font-light">Your booking request for {artist.name} has been submitted. We'll be in touch within 48 hours.</p>
               <button onClick={onClose} className="mt-6 px-6 py-2.5 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300">Close</button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subject</label><input type="text" value={`Booking Request: ${artist.name}`} readOnly className="w-full bg-foreground/[0.05] border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground/50 cursor-not-allowed" /></div>
+              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/80 mb-2">Subject</label><input type="text" value={`Booking Request: ${artist.name}`} readOnly className="w-full bg-foreground/[0.05] border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground/85 cursor-not-allowed" /></div>
               {[{ name: "fullName", label: "Full Name *", placeholder: "Your full name", type: "text" }, { name: "email", label: "Email *", placeholder: "your@email.com", type: "email" }, { name: "address", label: "Address / Venue *", placeholder: "Event venue address", type: "text" }].map(field => (
                 <div key={field.name}>
-                  <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">{field.label}</label>
+                  <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/80 mb-2">{field.label}</label>
                   <input type={field.type} name={field.name} value={formData[field.name as keyof typeof formData]} onChange={handleChange} placeholder={field.placeholder}
                     className={`w-full bg-foreground/[0.03] border rounded-sm px-4 py-3 text-[13px] text-foreground placeholder-foreground/25 focus:outline-none transition-colors duration-300 ${errors[field.name as keyof FormErrors] ? "border-red-500/60" : "border-foreground/10 focus:border-foreground/30"}`} />
                   {errors[field.name as keyof FormErrors] && <p className="text-[11px] text-red-400 mt-1">{errors[field.name as keyof FormErrors]}</p>}
                 </div>
               ))}
-              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Date & Time Needed *</label>
+              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/80 mb-2">Date & Time Needed *</label>
                 <input type="datetime-local" name="dateTime" value={formData.dateTime} onChange={handleChange}
                   className={`w-full bg-foreground/[0.03] border rounded-sm px-4 py-3 text-[13px] text-foreground/60 focus:outline-none transition-colors duration-300 [color-scheme:dark] ${errors.dateTime ? "border-red-500/60" : "border-foreground/10 focus:border-foreground/30"}`} />
                 {errors.dateTime && <p className="text-[11px] text-red-400 mt-1">{errors.dateTime}</p>}
               </div>
-              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Additional Details</label>
+              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/80 mb-2">Additional Details</label>
                 <textarea name="message" value={formData.message} onChange={handleChange} rows={3} placeholder="Tell us more about your event..." className="w-full bg-foreground/[0.03] border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground placeholder-foreground/25 focus:outline-none focus:border-foreground/30 transition-colors duration-300 resize-none" />
               </div>
               {submitError && <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-sm"><p className="text-[12px] text-red-400">{submitError}</p></div>}
@@ -133,9 +133,9 @@ export default function BookingsPage() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(240,237,232,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(240,237,232,0.015)_1px,transparent_1px)] bg-[size:10rem_20rem] pointer-events-none" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent" />
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-3">— Bookings</span>
+            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/70 block mb-3">— Bookings</span>
             <h1 className="bookings-hero-title font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-4">{pageSettings.bookings_hero_heading || t.bookings.pageTitle}</h1>
-            <p className="bookings-hero-sub text-[13px] sm:text-[14px] text-white/40 font-light max-w-lg leading-relaxed">{pageSettings.bookings_hero_sub || t.bookings.pageSubtitle}</p>
+            <p className="bookings-hero-sub text-[13px] sm:text-[14px] text-white/80 font-light max-w-lg leading-relaxed">{pageSettings.bookings_hero_sub || t.bookings.pageSubtitle}</p>
           </div>
         </section>
 
@@ -148,7 +148,7 @@ export default function BookingsPage() {
             </div>
           ) : liveArtists.length === 0 ? (
             <div className="py-20 text-center border border-foreground/5 rounded-sm col-span-3">
-              <p className="text-foreground/30 text-[13px] mb-2">No artists yet.</p>
+              <p className="text-foreground/70 text-[13px] mb-2">No artists yet.</p>
               <p className="text-foreground/20 text-[11px]">Add artists from the admin dashboard.</p>
             </div>
           ) : (
@@ -170,7 +170,7 @@ export default function BookingsPage() {
                     <Link href={`/bookings/${artist.slug}`} className="block group/name mb-1">
                       <h3 className="font-display text-xl sm:text-2xl font-light italic text-foreground group-hover/name:text-accent transition-colors duration-300">{artist.name}</h3>
                     </Link>
-                    <p className="text-[12px] text-foreground/40 mb-4 tracking-wide">{artist.origin}</p>
+                    <p className="text-[12px] text-foreground/80 mb-4 tracking-wide">{artist.origin}</p>
                     <button onClick={() => setSelectedArtist(artist)}
                       className="w-full py-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300 flex items-center justify-center gap-2">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" /></svg>
@@ -183,8 +183,8 @@ export default function BookingsPage() {
           </div>
           )}
           <div className="mt-12 pt-10 border-t border-foreground/5 text-center">
-            <p className="text-[13px] text-foreground/30 font-light mb-2">Don't see who you're looking for?</p>
-            <a href="mailto:booking@ireyprod.com" className="text-[12px] font-semibold tracking-[0.15em] uppercase text-foreground/50 hover:text-accent transition-colors duration-300 border-b border-foreground/20 hover:border-accent pb-0.5">Contact us directly →</a>
+            <p className="text-[13px] text-foreground/70 font-light mb-2">Don't see who you're looking for?</p>
+            <a href="mailto:booking@ireyprod.com" className="text-[12px] font-semibold tracking-[0.15em] uppercase text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-foreground/20 hover:border-accent pb-0.5">Contact us directly →</a>
           </div>
         </section>
       </main>
