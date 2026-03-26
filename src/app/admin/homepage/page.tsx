@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import ImageField from "@/components/ui/ImageField";
 
 interface Settings { hero_headline_1:string; hero_headline_2:string; hero_subtext:string; slider_images:string; }
 interface Img { src:string; alt:string; }

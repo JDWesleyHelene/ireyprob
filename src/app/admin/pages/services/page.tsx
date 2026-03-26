@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import ImageField from "@/components/ui/ImageField";
 
 interface Service { id:string; service_number:string; title:string; tagline:string; description:string; image:string; features:string[]; }
 interface WhyItem { title:string; desc:string; }
@@ -124,18 +125,7 @@ export default function AdminServicesPageEditor() {
                 <input value={s.tagline} onChange={e=>updateService(i,"tagline",e.target.value)} className={IC}/></div>
               <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Description</label>
                 <textarea value={s.description} onChange={e=>updateService(i,"description",e.target.value)} rows={3} className={TA}/></div>
-              <div>
-                <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Image</label>
-                <div className="flex gap-3 items-start">
-                  {s.image && (
-                    <div className="w-20 h-14 flex-shrink-0 rounded-sm overflow-hidden bg-foreground/5">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={s.image} alt={s.title} className="w-full h-full object-cover" onError={e=>{(e.target as HTMLImageElement).style.display="none";}}/>
-                    </div>
-                  )}
-                  <input value={s.image} onChange={e=>updateService(i,"image",e.target.value)} placeholder="https://example.com/image.jpg" className={IC}/>
-                </div>
-              </div>
+              <ImageField label="Image" value={s.image} onChange={v=>updateService(i,"image",v)}/>
               <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Features (4)</label>
                 <div className="grid grid-cols-2 gap-2">
                   {s.features.map((f,fi)=>(

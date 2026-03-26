@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import ImageField from "@/components/ui/ImageField";
 
 interface GImg { id: string; src: string; alt: string; }
 
@@ -145,12 +146,7 @@ export default function AdminGalleryPage() {
       {/* Add new */}
       <div className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-6 space-y-4">
         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40">Add New Image</p>
-        <div>
-          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 mb-1.5">Image URL *</label>
-          <input type="url" value={newUrl} onChange={e=>setNewUrl(e.target.value)}
-            onKeyDown={e => e.key==="Enter" && addImage()}
-            placeholder="https://example.com/photo.jpg" className={IC}/>
-        </div>
+        <ImageField label="Image" value={newUrl} onChange={setNewUrl} hint="Upload a file or paste a URL"/>
         <div>
           <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 mb-1.5">Alt Text</label>
           <input type="text" value={newAlt} onChange={e=>setNewAlt(e.target.value)}
@@ -160,7 +156,7 @@ export default function AdminGalleryPage() {
         <button onClick={addImage} disabled={!newUrl.trim()}
           className="flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-[11px] font-semibold tracking-[0.15em] uppercase rounded-sm hover:bg-accent transition-all disabled:opacity-40">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 5v14M5 12h14"/></svg>
-          Add Image
+          Add to Gallery
         </button>
       </div>
     </div>

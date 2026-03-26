@@ -1,5 +1,6 @@
 "use client";
 import React,{useState,useEffect} from "react";
+import ImageField from "@/components/ui/ImageField";
 import Link from "next/link";
 const IC="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-2.5 text-[13px] text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-foreground/30 transition-colors";
 const TA="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-2.5 text-[13px] text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-foreground/30 transition-colors resize-none";
@@ -42,13 +43,7 @@ export default function AdminContactPage(){
           <h2 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40">Hero Section</h2>
           <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Heading</label><input value={heroHeading} onChange={e=>setHeroHeading(e.target.value)} className={IC}/></div>
           <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subtext</label><textarea value={heroSub} onChange={e=>setHeroSub(e.target.value)} rows={3} className={TA}/></div>
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Background Image</label>
-            <div className="flex gap-3 items-start">
-              {heroBg&&<div className="w-20 h-14 flex-shrink-0 rounded-sm overflow-hidden bg-foreground/5">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={heroBg} alt="bg" className="w-full h-full object-cover"/></div>}
-              <input value={heroBg} onChange={e=>setHeroBg(e.target.value)} placeholder="https://example.com/image.jpg" className={IC}/>
-            </div>
-          </div>
+          <ImageField label="Background Image" value={heroBg} onChange={setHeroBg}/>
         </div>
         <div className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-6 space-y-5">
           <h2 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40">Form Section</h2>
