@@ -43,7 +43,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [adminName, setAdminName]     = useState("Admin");
   const [userRole,  setUserRole]      = useState("editor");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const isLoginPage = pathname === "/admin";
+  const PUBLIC_ADMIN_ROUTES = ["/admin", "/admin/forgot-password", "/admin/reset-password", "/admin/accept-invite"];
+  const isLoginPage = PUBLIC_ADMIN_ROUTES.includes(pathname) || PUBLIC_ADMIN_ROUTES.some(r => pathname.startsWith(r + "?"));
 
   useEffect(() => {
     if (isLoginPage) { setChecking(false); return; }
