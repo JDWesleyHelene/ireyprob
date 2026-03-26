@@ -58,12 +58,17 @@ export async function POST(req: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://ireyprob.vercel.app";
     const inviteUrl = `${baseUrl}/admin/accept-invite?token=${token}&email=${encodeURIComponent(body.email)}`;
 
-    sendInviteEmail({
-      toEmail:   body.email,
-      toName:    body.full_name || body.email,
-      role:      body.role || "editor",
-      inviteUrl,
-    }).catch(err => console.error("Invite email failed:", err));
+    try {
+      await sendInviteEmail({
+        toEmail:   body.email,
+        toName:    body.full_name || body.email,
+        role:      body.role || "editor",
+        inviteUrl,
+      });
+    } catch (emailErr) {
+      console.error("Invite email failed:", emailErr);
+      // Still return success — user was created, just email failed
+    }
 
     // Don't return sensitive fields
     const { invite_token, invite_expires, password_hash, ...safeUser } = newUser;

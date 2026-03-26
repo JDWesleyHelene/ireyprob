@@ -183,11 +183,11 @@ export async function sendInviteEmail(data: {
   await resend.emails.send({
     from:    FROM,
     to:      [data.toEmail],
-    subject: `You\'ve been invited to IREY PROD Dashboard`,
+    subject: `You've been invited to IREY PROD Dashboard`,
     html: `
       <div style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;background:#060606;color:#F0EDE8;border-radius:8px;overflow:hidden;">
         <div style="background:#D4AF37;padding:24px 32px;">
-          <h1 style="margin:0;font-size:22px;font-weight:800;color:#060606;">You\'re Invited!</h1>
+          <h1 style="margin:0;font-size:22px;font-weight:800;color:#060606;">You're Invited!</h1>
           <p style="margin:4px 0 0;font-size:13px;color:#060606;opacity:0.7;">IREY PROD Admin Dashboard</p>
         </div>
         <div style="padding:32px;">
