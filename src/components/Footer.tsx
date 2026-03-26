@@ -79,7 +79,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-[11px] text-white/60 tracking-widest uppercase">© 2026 IREY PROD. All Rights Reserved.</p>
-          <p className="text-[10px] text-white/40">Designed & Developed by <a href="https://www.wesleyhelene.com" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 underline underline-offset-2">Wesley Helene</a></p>
+          <p className="text-[10px] text-white/50">Designed & Developed by <a href="https://www.wesleyhelene.com" target="_blank" rel="noopener noreferrer" className="font-bold text-accent hover:text-accent/80 transition-colors">Wesley Helene</a></p>
         </div>
       </div>
     </footer>
