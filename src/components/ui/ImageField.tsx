@@ -49,8 +49,12 @@ export default function ImageField({ label, value, onChange, hint }: ImageFieldP
           const { url } = await res.json();
           onChange(url);
         } else {
-          // Fallback: use data URL directly (works but large)
-          onChange(dataUrl);
+          const err = await res.json().catch(()=>({}));
+          if (err.tooLarge) {
+            setUploadError(err.error || "Image too large. Compress it or paste a URL instead.");
+          } else {
+            setUploadError("Upload failed. Please paste an image URL instead.");
+          }
         }
         setUploading(false);
       };

@@ -177,11 +177,13 @@ export default function AboutPage() {
             <div className="about-team-grid grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
               {team.map((member:any,i:number)=>(
                 <div key={i} className="about-team-card group">
-                  <div className="relative overflow-hidden rounded-sm h-[260px] sm:h-[320px] mb-4 sm:mb-5 img-zoom-wrap">
+                  <div className="relative overflow-hidden rounded-sm h-[260px] sm:h-[320px] mb-4 sm:mb-5">
                     {member.image ? (
-                      <AppImage src={member.image} alt={member.imageAlt||member.name} fill className="img-zoom object-cover grayscale group-hover:grayscale-0 transition-all duration-700" sizes="(max-width:640px)100vw,33vw"/>
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={member.image} alt={member.imageAlt||member.name}
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>
                     ) : (
-                      <div className="absolute inset-0 bg-foreground/5 flex items-center justify-center">
+                      <div className="w-full h-full bg-foreground/5 flex items-center justify-center">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" className="text-foreground/20"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                       </div>
                     )}
