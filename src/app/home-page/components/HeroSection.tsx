@@ -132,6 +132,13 @@ export default function HeroSection() {
             <span className="block">{headline2}</span>
           </h1>
           <p className="hero-desc text-sm sm:text-base md:text-lg text-white font-light leading-relaxed max-w-xl border-l border-white/30 pl-5">{subtext}</p>
+          {/* Mobile slide dots — shown only on mobile, above stat cards */}
+          <div className="flex lg:hidden gap-1.5 pt-2">
+            {slideshowImages.slice(0, Math.min(slideshowImages.length, 8)).map((_: any, i: number) => (
+              <button key={i} onClick={() => setCurrentSlide(i)}
+                className={`h-1 rounded-full transition-all duration-300 ${i === currentSlide ? "bg-white w-4" : "bg-white/40 w-1"}`}/>
+            ))}
+          </div>
           <div className="hero-ctas flex flex-col sm:flex-row items-start gap-3 pt-1">
             <Link href="/bookings" className="group inline-flex items-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-foreground text-background text-[12px] font-semibold tracking-[0.18em] uppercase rounded-sm hover:bg-accent transition-all duration-300">
               Our Artists <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform duration-300"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -141,7 +148,7 @@ export default function HeroSection() {
             </Link>
           </div>
         </div>
-        <div className="lg:col-span-4 flex flex-row lg:flex-col gap-3 lg:items-end overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+        <div className="lg:col-span-4 flex flex-row lg:flex-col gap-3 lg:items-end overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 scrollbar-hide">
           {[
             { label:"Agency",   value:"One Stop",  sub:"The only agency you'll ever need", icon:<span className="w-1.5 h-1.5 rounded-full bg-accent"/> },
             { label:"Services", value:"4 piliers", sub:"Bookings · Tours · Events · Productions", icon:<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 18V5l12-2v13M6 21c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM18 19c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z"/></svg> },
@@ -160,7 +167,7 @@ export default function HeroSection() {
       </div>
 
       {/* Slide indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
+      <div className="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-3">
         <div className="flex gap-1.5">
           {slideshowImages.slice(0, Math.min(slideshowImages.length, 8)).map((_, i) => (
             <button key={i} onClick={() => setCurrentSlide(i)}
