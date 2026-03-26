@@ -24,7 +24,7 @@ function parseEmails(val?: string): string[] {
   return val.split(",").map(e => e.trim()).filter(Boolean);
 }
 
-const FROM = "IREY PROD <notifications@ireyprod.com>";
+const FROM = process.env.RESEND_FROM_EMAIL || "IREY PROD <onboarding@resend.dev>";
 const FALLBACK_TO = process.env.NOTIFICATION_EMAIL || "info@wesleyhelene.com";
 
 // ── Booking notification ──────────────────────────────────────────────────────
