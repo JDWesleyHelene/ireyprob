@@ -14,7 +14,7 @@ const stats = [
 { value: "1", label: "One-Stop Agency" }];
 
 
-const values = [
+const DEFAULT_VALUES = [
 {
   number: "01",
   title: "Creativity",
@@ -79,7 +79,14 @@ const team = [
 
 
 export default function AboutPage() {
-  const settings = useSettings();
+  const settings  = useSettings();
+  const values = (() => { try { if (settings.about_values) return JSON.parse(settings.about_values); } catch {} return DEFAULT_VALUES; })();
+  const storyHeading = settings.about_story_heading || "About the Agency";
+  const storyText1   = settings.about_story_text1   || "Our agency is a dynamic and forward-thinking organisation specialising in Digital Marketing, Stage and Artist Management, as well as Event Coordination.";
+  const storyText2   = settings.about_story_text2   || "Our mission is to create successful and fulfilling experiences — whether for clients hosting events or artists pursuing their careers.";
+  const valuesHeading = settings.about_values_heading || "Our Values";
+  const ctaHeading   = settings.about_cta_heading   || "Ready to Work Together?";
+  const ctaSub       = settings.about_cta_sub       || "Let's create something extraordinary.";
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -136,12 +143,12 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(240,237,232,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(240,237,232,0.015)_1px,transparent_1px)] bg-[size:10rem_20rem] pointer-events-none" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-transparent via-foreground/20 to-transparent" />
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
-            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">— About Agency</span>
+            <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">{settings.about_hero_label || "— About Agency"}</span>
             <h1 className="about-hero-title font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">
-              The One-Stop Agency<br />You'll Ever Need
+              {settings.about_hero_heading || "The One-Stop Agency You'll Ever Need"}
             </h1>
             <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">
-              Relax &amp; Take It Easy! IREY PROD is a dynamic and forward-thinking organisation based in Mauritius Island, dedicated to emerging and established talents in the entertainment industry.
+              {settings.about_hero_sub || "Relax & Take It Easy! IREY PROD is a dynamic and forward-thinking organisation based in Mauritius Island, dedicated to emerging and established talents in the entertainment industry."}
             </p>
           </div>
         </section>
@@ -165,7 +172,7 @@ export default function AboutPage() {
                   Bookings, Tours,<br />Events, Productions
                 </h2>
                 <p className="text-[14px] text-white/70 font-light leading-relaxed mb-4">
-                  Our agency is a dynamic and forward-thinking organisation specialising in Digital Marketing, Stage and Artist Management, as well as Event Coordination.
+                  {storyText1}
                 </p>
                 <p className="text-[14px] text-white/70 font-light leading-relaxed mb-4">
                   We pride ourselves on our ability to seamlessly blend creativity, innovation, and strategic thinking to provide unparalleled support and services to both emerging and established talents in the entertainment industry.
@@ -188,7 +195,7 @@ export default function AboutPage() {
                   Creating Successful &amp;<br />Fulfilling Experiences
                 </h2>
                 <p className="reveal text-[14px] text-white/70 font-light leading-relaxed">
-                  Our mission is to create successful and fulfilling experiences — whether for clients hosting events or artists pursuing their careers. By doing so, we contribute to the overall success and vibrancy of the entertainment and creative industries.
+                  {storyText2}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">

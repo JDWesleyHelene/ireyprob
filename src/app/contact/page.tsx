@@ -171,12 +171,12 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
           <div className="absolute inset-0 noise pointer-events-none opacity-30" />
           <div className="relative max-w-[1440px] mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-16 pb-14 pt-32">
-            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">— Contact</span>
+            <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-4">{liveSettings.contact_hero_label || "— Contact"}</span>
             <h1 className="font-display text-[2.2rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] font-light italic text-white leading-[0.88] tracking-tight max-w-4xl">
-              Let&apos;s Start<br /><span className="text-white/40">Right Now!</span>
+              {liveSettings.contact_hero_heading || "Let's Start Right Now!"}
             </h1>
             <p className="mt-4 text-[14px] text-white/60 font-light max-w-md leading-relaxed">
-              Got a project in mind? Fill out the form and we&apos;ll get back within 48 hours.
+              {liveSettings.contact_hero_sub || "Got a project in mind? Fill out the form and we'll get back within 48 hours."}
             </p>
           </div>
         </section>
@@ -206,7 +206,7 @@ export default function ContactPage() {
             {/* Sidebar */}
             <div className="lg:col-span-2 flex flex-col gap-8">
               <div>
-                <h2 className="font-display text-[1.8rem] sm:text-[2.2rem] font-light italic text-white mb-3">Make an Online Enquiry</h2>
+                <h2 className="font-display text-[1.8rem] sm:text-[2.2rem] font-light italic text-white mb-3">{liveSettings.contact_form_heading || "Make an Online Enquiry"}</h2>
                 <p className="text-[13px] sm:text-[14px] text-white/60 font-light leading-relaxed">
                   Got questions? Ideas? Fill out the form and our team will get back to you with a tailored proposal.
                 </p>

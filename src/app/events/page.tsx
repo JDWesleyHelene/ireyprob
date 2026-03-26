@@ -50,6 +50,11 @@ export default async function EventsPage({
   const params = await searchParams;
   const activeFilter = params?.genre || 'All';
 
+  // Fetch page settings from DB
+  const settingsRows = await prisma.setting.findMany();
+  const pageSettings: Record<string,string> = {};
+  settingsRows.forEach((r: any) => { if (r.value) pageSettings[r.key] = r.value; });
+
   const dbEvents = await prisma.event.findMany({
     orderBy: { eventDate: 'asc' },
   });
@@ -102,15 +107,15 @@ export default async function EventsPage({
 
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/50 block mb-3">
-              Events
+              {pageSettings.events_hero_label || "Events"}
             </span>
 
             <h1 className="font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-4">
-              Live Events
+              {pageSettings.events_hero_heading || "Live Events"}
             </h1>
 
             <p className="text-[14px] text-white/70 font-light max-w-lg leading-relaxed">
-              Discover our latest events, shows, and experiences.
+              {pageSettings.events_hero_sub || "Discover our latest events, shows, and experiences."}
             </p>
           </div>
         </section>
