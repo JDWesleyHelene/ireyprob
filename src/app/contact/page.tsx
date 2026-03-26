@@ -164,7 +164,7 @@ export default function ContactPage() {
         {/* HERO */}
         <section className="relative h-[60vh] min-h-[480px] overflow-hidden flex items-end">
           <AppImage
-            src="https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg"
+            src={liveSettings.contact_hero_bg || "https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg"}
             alt="IREY PROD event production"
             fill priority className="object-cover object-center" sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#060606] via-black/50 to-black/20" />

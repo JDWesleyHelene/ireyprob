@@ -44,6 +44,7 @@ export default function AdminAboutPage() {
       if (d.about_values_heading)setValuesHeading(d.about_values_heading);
       if (d.about_cta_heading)   setCtaHeading(d.about_cta_heading);
       if (d.about_cta_sub)       setCtaSub(d.about_cta_sub);
+      if (d.about_hero_bg)       setHeroBg(d.about_hero_bg);
       try { if (d.about_values)  setValues(JSON.parse(d.about_values)); } catch {}
     }).catch(()=>{});
   }, []);
@@ -55,7 +56,7 @@ export default function AdminAboutPage() {
         about_hero_heading: heroHeading, about_hero_sub: heroSub,
         about_story_heading: storyHeading, about_story_text1: storyText1, about_story_text2: storyText2,
         about_values_heading: valuesHeading, about_values: JSON.stringify(values),
-        about_cta_heading: ctaHeading, about_cta_sub: ctaSub,
+        about_cta_heading: ctaHeading, about_cta_sub: ctaSub, about_hero_bg: heroBg,
       })});
       if (res.ok) { setSaved(true); setTimeout(()=>setSaved(false),3000); }
     } catch {}
@@ -104,6 +105,14 @@ export default function AdminAboutPage() {
             <input value={heroHeading} onChange={e=>setHeroHeading(e.target.value)} className={IC}/></div>
           <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subtext</label>
             <textarea value={heroSub} onChange={e=>setHeroSub(e.target.value)} rows={3} className={TA}/></div>
+          <div>
+            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Hero Background Image URL</label>
+            <div className="flex gap-3 items-start">
+              {heroBg && <div className="w-20 h-14 flex-shrink-0 rounded-sm overflow-hidden bg-foreground/5">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={heroBg} alt="hero bg" className="w-full h-full object-cover"/></div>}
+              <input value={heroBg} onChange={e=>setHeroBg(e.target.value)} placeholder="https://example.com/image.jpg" className={IC}/>
+            </div>
+            <p className="text-[10px] text-foreground/25 mt-1">Leave empty to use default background</p>
+          </div>
         </div>
       )}
 
