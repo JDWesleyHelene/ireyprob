@@ -10,9 +10,29 @@ function verifyPassword(password: string, stored: string): boolean {
   } catch { return false; }
 }
 
+import crypto from "crypto";
+
+function verifyHash(password: string, stored: string): boolean {
+  try {
+    const [salt, hash] = stored.split(":");
+    const attempt = crypto.scryptSync(password, salt, 64).toString("hex");
+    return attempt === hash;
+  } catch { return false; }
+}
+
 export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
+
+    // Check if super admin has set a new password via reset
+    const SUPER_ADMIN = "info@wesleyhelene.com";
+    if (email.toLowerCase() === SUPER_ADMIN.toLowerCase()) {
+      const resetPwRow = await prisma.setting.findUnique({ where: { key: "super_admin_password" } });
+      if (resetPwRow?.value && verifyHash(password, resetPwRow.value)) {
+        return NextResponse.json({ success: true, email: SUPER_ADMIN, name: "Wesley", role: "super_admin" });
+      }
+      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    }
     if (!email || !password) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }

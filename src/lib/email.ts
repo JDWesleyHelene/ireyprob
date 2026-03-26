@@ -217,3 +217,48 @@ export async function sendInviteEmail(data: {
     `,
   });
 }
+
+// ── Password reset email ──────────────────────────────────────────────────────
+export async function sendPasswordResetEmail(data: {
+  toEmail:   string;
+  toName:    string;
+  resetUrl:  string;
+}) {
+  if (!process.env.RESEND_API_KEY) return;
+  const FROM = process.env.RESEND_FROM_EMAIL || "IREY PROD <onboarding@resend.dev>";
+  await resend.emails.send({
+    from:    FROM,
+    to:      [data.toEmail],
+    subject: "Reset your IREY PROD password",
+    html: `
+      <div style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;background:#060606;color:#F0EDE8;border-radius:8px;overflow:hidden;">
+        <div style="background:#060606;border-bottom:2px solid #D4AF37;padding:24px 32px;">
+          <h1 style="margin:0;font-size:22px;font-weight:800;color:#F0EDE8;">Password Reset</h1>
+          <p style="margin:4px 0 0;font-size:13px;color:rgba(240,237,232,0.4);">IREY PROD Admin Dashboard</p>
+        </div>
+        <div style="padding:32px;">
+          <p style="font-size:15px;color:#F0EDE8;margin-bottom:8px;">Hi ${data.toName},</p>
+          <p style="font-size:14px;color:rgba(240,237,232,0.7);line-height:1.6;margin-bottom:28px;">
+            We received a request to reset your password. Click the button below to choose a new one.
+          </p>
+          <div style="text-align:center;margin:32px 0;">
+            <a href="${data.resetUrl}"
+              style="display:inline-block;padding:14px 32px;background:#D4AF37;color:#060606;font-size:13px;font-weight:700;text-decoration:none;border-radius:4px;letter-spacing:0.1em;text-transform:uppercase;">
+              Reset My Password →
+            </a>
+          </div>
+          <div style="padding:16px;background:rgba(240,237,232,0.04);border:1px solid rgba(240,237,232,0.08);border-radius:6px;margin-top:24px;">
+            <p style="margin:0;font-size:12px;color:rgba(240,237,232,0.4);">
+              This link expires in 1 hour. If you did not request a password reset, you can safely ignore this email.
+            </p>
+          </div>
+          <p style="margin-top:24px;font-size:11px;color:rgba(240,237,232,0.25);text-align:center;">
+            Or copy this link:<br/>
+            <span style="color:rgba(212,175,55,0.6);word-break:break-all;">${data.resetUrl}</span>
+          </p>
+        </div>
+        <div style="padding:16px 32px;border-top:1px solid rgba(240,237,232,0.06);font-size:11px;color:rgba(240,237,232,0.25);text-align:center;">IREY PROD · Mauritius Island</div>
+      </div>
+    `,
+  });
+}

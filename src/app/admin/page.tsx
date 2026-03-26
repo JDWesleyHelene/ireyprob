@@ -93,6 +93,11 @@ export default function AdminLoginPage() {
               className="w-4 h-4 bg-foreground/5 border border-foreground/20 rounded-sm cursor-pointer accent-foreground"/>
             <label htmlFor="remember" className="text-[12px] text-foreground/40 cursor-pointer select-none">Remember me</label>
           </div>
+          <div className="text-right -mt-1">
+            <a href="/admin/forgot-password" className="text-[11px] text-foreground/30 hover:text-foreground/60 transition-colors">
+              Forgot password?
+            </a>
+          </div>
           <button type="submit" disabled={loading}
             className="w-full py-3.5 bg-foreground text-background text-[11px] font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-accent transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-2">
             {loading ? (<><svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>Signing in...</>) : "Sign In"}
