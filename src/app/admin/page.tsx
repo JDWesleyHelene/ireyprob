@@ -29,15 +29,34 @@ export default function AdminLoginPage() {
     setError(null); setLoading(true);
     await new Promise(r => setTimeout(r, 400));
 
+    // Check super admin first
     if (email.trim().toLowerCase() === SUPER_ADMIN.email.toLowerCase() && password === SUPER_ADMIN.password) {
       const sessionData = JSON.stringify({ email: SUPER_ADMIN.email, name: SUPER_ADMIN.name, role: "super_admin" });
       sessionStorage.setItem("irey_admin", sessionData);
       if (remember) localStorage.setItem("irey_admin_remember", sessionData);
       router.push("/admin/dashboard");
-    } else {
-      setError("Incorrect email or password. Please try again.");
-      setLoading(false);
+      return;
     }
+
+    // Check invited users from DB
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        const sessionData = JSON.stringify({ email: data.email, name: data.name, role: data.role });
+        sessionStorage.setItem("irey_admin", sessionData);
+        if (remember) localStorage.setItem("irey_admin_remember", sessionData);
+        router.push("/admin/dashboard");
+        return;
+      }
+    } catch {}
+
+    setError("Incorrect email or password. Please try again.");
+    setLoading(false);
   };
 
   if (checking) return (
