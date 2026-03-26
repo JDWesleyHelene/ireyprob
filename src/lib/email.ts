@@ -168,3 +168,52 @@ export async function sendContactNotification(data: {
     `,
   });
 }
+
+// ── User invite email ─────────────────────────────────────────────────────────
+export async function sendInviteEmail(data: {
+  toEmail:   string;
+  toName:    string;
+  role:      string;
+  inviteUrl: string;
+}) {
+  if (!process.env.RESEND_API_KEY) return;
+
+  const FROM = process.env.RESEND_FROM_EMAIL || "IREY PROD <onboarding@resend.dev>";
+
+  await resend.emails.send({
+    from:    FROM,
+    to:      [data.toEmail],
+    subject: `You\'ve been invited to IREY PROD Dashboard`,
+    html: `
+      <div style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;background:#060606;color:#F0EDE8;border-radius:8px;overflow:hidden;">
+        <div style="background:#D4AF37;padding:24px 32px;">
+          <h1 style="margin:0;font-size:22px;font-weight:800;color:#060606;">You\'re Invited!</h1>
+          <p style="margin:4px 0 0;font-size:13px;color:#060606;opacity:0.7;">IREY PROD Admin Dashboard</p>
+        </div>
+        <div style="padding:32px;">
+          <p style="font-size:15px;color:#F0EDE8;margin-bottom:8px;">Hi ${data.toName || data.toEmail},</p>
+          <p style="font-size:14px;color:rgba(240,237,232,0.7);line-height:1.6;margin-bottom:24px;">
+            You have been invited to access the <strong style="color:#F0EDE8;">IREY PROD</strong> admin dashboard
+            as <strong style="color:#D4AF37;">${data.role.charAt(0).toUpperCase() + data.role.slice(1)}</strong>.
+          </p>
+          <div style="text-align:center;margin:32px 0;">
+            <a href="${data.inviteUrl}"
+              style="display:inline-block;padding:14px 32px;background:#D4AF37;color:#060606;font-size:13px;font-weight:700;text-decoration:none;border-radius:4px;letter-spacing:0.1em;text-transform:uppercase;">
+              Set My Password →
+            </a>
+          </div>
+          <div style="padding:16px;background:rgba(240,237,232,0.04);border:1px solid rgba(240,237,232,0.08);border-radius:6px;margin-top:24px;">
+            <p style="margin:0;font-size:12px;color:rgba(240,237,232,0.4);">
+              This link expires in 48 hours. If you did not expect this invitation, you can ignore this email.
+            </p>
+          </div>
+          <p style="margin-top:24px;font-size:11px;color:rgba(240,237,232,0.25);text-align:center;">
+            Or copy this link: <br/>
+            <span style="color:rgba(212,175,55,0.6);word-break:break-all;">${data.inviteUrl}</span>
+          </p>
+        </div>
+        <div style="padding:16px 32px;border-top:1px solid rgba(240,237,232,0.06);font-size:11px;color:rgba(240,237,232,0.25);text-align:center;">IREY PROD · Mauritius Island</div>
+      </div>
+    `,
+  });
+}

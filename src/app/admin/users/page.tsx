@@ -55,7 +55,7 @@ export default function AdminUsersPage() {
       if (!res.ok) throw new Error();
       const newUser = await res.json();
       setUsers(p=>[newUser,...p]);
-      toast$("User invited successfully");
+      toast$("✓ Invite email sent to " + form.email);
       setForm({email:"",name:"",role:"editor"}); setShowInvite(false);
     } catch { toast$("Failed to invite user",false); }
     setSaving(false);
@@ -193,7 +193,7 @@ export default function AdminUsersPage() {
                   </td>
                   <td className="px-5 py-4 hidden sm:table-cell">
                     <span className={`inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-wide uppercase ${user.is_active?"text-green-400":"text-foreground/30"}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${user.is_active?"bg-green-400":"bg-foreground/20"}`}/>{user.is_active?"Active":"Inactive"}
+                      <span className={`w-1.5 h-1.5 rounded-full ${user.is_active?"bg-green-400":"bg-foreground/20"}`}/>{user.is_active ? "Active" : user.invite_token !== undefined ? "Pending invite" : "Inactive"}
                     </span>
                   </td>
                   <td className="px-5 py-4 hidden md:table-cell">
