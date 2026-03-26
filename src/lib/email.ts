@@ -68,7 +68,7 @@ export async function sendBookingNotification(data: {
             </tr>
             <tr>
               <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(240,237,232,0.4);">Email</td>
-              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:14px;"><a href="mailto:${data.email}" style="color:#D4AF37;">${data.email}</a></td>
+              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:14px;color:#F0EDE8;"><a href="mailto:${data.email}" style="color:#D4AF37;">${data.email}</a></td>
             </tr>
             <tr>
               <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(240,237,232,0.4);">Venue</td>
@@ -101,6 +101,7 @@ export async function sendBookingNotification(data: {
 export async function sendContactNotification(data: {
   name:      string;
   email:     string;
+  subject?:  string;
   project:   string;
   budget:    string;
   timeframe: string;
@@ -129,12 +130,17 @@ export async function sendContactNotification(data: {
           <table style="width:100%;border-collapse:collapse;">
             <tr>
               <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(240,237,232,0.4);width:140px;">Name</td>
-              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:14px;font-weight:600;">${data.name}</td>
+              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:14px;font-weight:600;color:#F0EDE8;">${data.name}</td>
             </tr>
             <tr>
               <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(240,237,232,0.4);">Email</td>
-              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:14px;"><a href="mailto:${data.email}" style="color:#D4AF37;">${data.email}</a></td>
+              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:14px;color:#F0EDE8;"><a href="mailto:${data.email}" style="color:#D4AF37;">${data.email}</a></td>
             </tr>
+            ${data.subject ? `
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(240,237,232,0.4);">Subject</td>
+              <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:14px;color:#F0EDE8;">${data.subject}</td>
+            </tr>` : ""}
             ${data.budget ? `
             <tr>
               <td style="padding:10px 0;border-bottom:1px solid rgba(240,237,232,0.08);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;color:rgba(240,237,232,0.4);">Budget</td>

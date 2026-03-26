@@ -32,6 +32,7 @@ export async function POST(req: Request) {
     sendContactNotification({
       name:      body.name      ?? "",
       email:     body.email     ?? "",
+      subject:   body.subject   ?? "",
       project:   body.project   ?? "",
       budget:    body.budget    ?? "",
       timeframe: body.timeframe ?? "",
