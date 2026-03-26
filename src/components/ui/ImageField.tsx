@@ -111,6 +111,7 @@ export default function ImageField({ label, value, onChange, hint }: ImageFieldP
       </div>
 
       {uploadError && <p className="text-[11px] text-red-400">{uploadError}</p>}
+      <p className="text-[10px] text-foreground/25">Upload a file, paste a URL, or pick from <a href="/admin/media" target="_blank" className="text-accent/70 hover:text-accent underline">Media Library</a></p>
       {hint && <p className="text-[10px] text-foreground/25">{hint}</p>}
     </div>
   );
