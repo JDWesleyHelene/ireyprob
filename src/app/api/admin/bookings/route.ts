@@ -43,3 +43,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (e) { console.error(e); return NextResponse.json({ error: "DB error" }, { status: 500 }); }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { id } = await req.json();
+    if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+    await prisma.bookingSubmission.delete({ where: { id: Number(id) } });
+    return NextResponse.json({ success: true });
+  } catch (e) { console.error(e); return NextResponse.json({ error: "Delete failed" }, { status: 500 }); }
+}
