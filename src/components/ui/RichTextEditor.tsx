@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -29,6 +29,14 @@ const Btn = ({ active, onClick, title, children }: { active?:boolean; onClick:()
   </button>
 );
 
+// Decode HTML entities so stored HTML renders correctly in the editor
+function decodeHtml(html: string): string {
+  if (typeof window === "undefined") return html;
+  const txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
+}
+
 export default function RichTextEditor({ label, value, onChange, rows = 4 }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
@@ -39,7 +47,7 @@ export default function RichTextEditor({ label, value, onChange, rows = 4 }: Ric
       Highlight.configure({ multicolor: true }),
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-    content: value,
+    content: decodeHtml(value),
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
       attributes: {
@@ -48,6 +56,16 @@ export default function RichTextEditor({ label, value, onChange, rows = 4 }: Ric
       },
     },
   });
+
+  // Sync editor when value loads from DB (only if editor content differs)
+  useEffect(() => {
+    if (!editor) return;
+    const current = editor.getHTML();
+    const decoded = decodeHtml(value);
+    if (current !== decoded && decoded) {
+      editor.commands.setContent(decoded, false);
+    }
+  }, [value, editor]);
 
   const setColor = useCallback((color: string) => {
     editor?.chain().focus().setColor(color).run();

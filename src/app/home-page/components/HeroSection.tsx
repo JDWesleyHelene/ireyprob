@@ -131,7 +131,7 @@ export default function HeroSection() {
             <span className="block">{headline1}</span>
             <span className="block">{headline2}</span>
           </h1>
-          <p className="hero-desc text-sm sm:text-base md:text-lg text-white font-light leading-relaxed max-w-xl border-l border-white/30 pl-5">{subtext}</p>
+          <div className="hero-desc text-sm sm:text-base md:text-lg text-white font-light leading-relaxed max-w-xl border-l border-white/30 pl-5 rich-content" dangerouslySetInnerHTML={{__html: subtext}}/>
           {/* Mobile slide dots — shown only on mobile, above stat cards */}
           <div className="flex lg:hidden gap-1.5 pt-2">
             {slideshowImages.slice(0, Math.min(slideshowImages.length, 8)).map((_: any, i: number) => (
