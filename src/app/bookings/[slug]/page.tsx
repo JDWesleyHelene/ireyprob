@@ -133,11 +133,11 @@ export default function ArtistProfilePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"/>
           <div className="absolute inset-0 noise pointer-events-none opacity-30"/>
 
-          <div className="absolute bottom-0 left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pb-14">
-            <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+          <div className="absolute bottom-0 left-0 right-0 max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pb-10 sm:pb-14">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 md:gap-6">
               <div>
                 <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-accent mb-3">{artist.genre}</p>
-                <h1 className="font-display text-[4rem] sm:text-[5rem] md:text-[7rem] font-light italic text-white leading-[0.92] tracking-tight">{artist.name}</h1>
+                <h1 className="font-display text-[2.8rem] sm:text-[4rem] md:text-[7rem] font-light italic text-white leading-[0.92] tracking-tight">{artist.name}</h1>
                 <div className="flex items-center gap-2 mt-3 text-white/50 text-[13px]">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   {artist.origin}
@@ -146,7 +146,7 @@ export default function ArtistProfilePage() {
                   {tags.map((tag: string) => <span key={tag} className="px-2.5 py-1 bg-white/10 backdrop-blur-sm border border-white/15 rounded-sm text-[9px] font-semibold tracking-[0.2em] uppercase text-white/80">{tag}</span>)}
                 </div>
               </div>
-              <button onClick={()=>setShowModal(true)} className="flex-shrink-0 inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background text-[12px] font-semibold tracking-[0.18em] uppercase rounded-sm hover:bg-accent transition-all duration-300">
+              <button onClick={()=>setShowModal(true)} className="w-full md:w-auto flex-shrink-0 inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background text-[12px] font-semibold tracking-[0.18em] uppercase rounded-sm hover:bg-accent transition-all duration-300">
                 Book {artist.name}
               </button>
             </div>

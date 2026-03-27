@@ -123,8 +123,8 @@ export default async function EventDetailPage({ params }: PageProps) {
 
 
 
-          <div className="absolute bottom-0 left-0 right-0 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pb-12">
-            <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+          <div className="absolute bottom-0 left-0 right-0 max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pb-10 sm:pb-12">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 md:gap-6">
               <div>
                 {event.soldOut && (
                   <span className="inline-block mb-3 px-3 py-1 bg-foreground/10 border border-foreground/20 text-[9px] font-semibold tracking-[0.25em] uppercase text-foreground/50 rounded-sm">
@@ -164,7 +164,7 @@ export default async function EventDetailPage({ params }: PageProps) {
               {!event.soldOut && (
                 <Link
                   href="/contact"
-                  className="flex-shrink-0 inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background text-[12px] font-semibold tracking-[0.18em] uppercase rounded-sm hover:bg-accent transition-all duration-300"
+                  className="w-full md:w-auto flex-shrink-0 inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background text-[12px] font-semibold tracking-[0.18em] uppercase rounded-sm hover:bg-accent transition-all duration-300"
                 >
                   Book / Enquire
                   <svg
