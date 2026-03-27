@@ -57,7 +57,7 @@ export default function ServicesPage() {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-4">— Services</span>
             <h1 className="reveal font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-extrabold italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">{heroHeading}</h1>
-            <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">{heroSub}</p>
+            <div className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed rich-content" dangerouslySetInnerHTML={{__html: heroSub}}/>
           </div>
         </section>
 
@@ -83,7 +83,7 @@ export default function ServicesPage() {
                   <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-accent block mb-3">— {service.service_number}</span>
                   <h2 className="font-display text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold italic text-white leading-[0.95] mb-4">{service.title}</h2>
                   <p className="text-[13px] font-semibold tracking-wide text-white/90 mb-4 uppercase">{service.tagline}</p>
-                  <p className="text-[14px] text-white/70 font-light leading-relaxed mb-6 sm:mb-8">{service.description}</p>
+                  <div className="text-[14px] text-white/70 font-light leading-relaxed mb-6 sm:mb-8 rich-content" dangerouslySetInnerHTML={{__html: service.description}}/>
                   <div className="grid grid-cols-2 gap-2">
                     {service.features?.map((f: string) => (
                       <div key={f} className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export default function ServicesPage() {
             <div className="relative z-10">
               <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white block mb-4">— New Project</span>
               <h2 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.5rem] font-extrabold italic text-white leading-[0.95] mb-4">{ctaHeading}</h2>
-              <p className="text-[14px] text-white/70 font-light max-w-lg mx-auto mb-8 sm:mb-10">{ctaSub}</p>
+              <div className="text-[14px] text-white/70 font-light max-w-lg mx-auto mb-8 sm:mb-10 rich-content" dangerouslySetInnerHTML={{__html: ctaSub}}/>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <Link href="/contact" className="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-foreground text-background text-[11px] font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-accent transition-all duration-300">
                   Get In Touch <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

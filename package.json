@@ -69,7 +69,15 @@
     "react-dom": "19.0.3",
     "recharts": "^2.15.2",
     "resend": "^4.0.0",
-    "cloudinary": "^2.5.1"
+    "cloudinary": "^2.5.1",
+    "@tiptap/react": "^2.5.0",
+    "@tiptap/pm": "^2.5.0",
+    "@tiptap/starter-kit": "^2.5.0",
+    "@tiptap/extension-color": "^2.5.0",
+    "@tiptap/extension-text-style": "^2.5.0",
+    "@tiptap/extension-underline": "^2.5.0",
+    "@tiptap/extension-text-align": "^2.5.0",
+    "@tiptap/extension-highlight": "^2.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

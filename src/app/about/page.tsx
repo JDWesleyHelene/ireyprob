@@ -121,9 +121,9 @@ export default function AboutPage() {
                 <h2 className="font-display text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] font-extrabold italic text-white leading-[1.05] mb-5">
                   {storyHeading.split("\n").map((line,i) => <span key={i}>{line}{i<storyHeading.split("\n").length-1&&<br/>}</span>)}
                 </h2>
-                <p className="text-[14px] text-white/70 font-light leading-relaxed mb-4">{storyP1}</p>
-                <p className="text-[14px] text-white/70 font-light leading-relaxed mb-4">{storyP2}</p>
-                <p className="text-[14px] text-white/70 font-light leading-relaxed">{storyP3}</p>
+                <div className="text-[14px] text-white/70 font-light leading-relaxed mb-4 rich-content" dangerouslySetInnerHTML={{__html: storyP1}}/>
+                <div className="text-[14px] text-white/70 font-light leading-relaxed mb-4 rich-content" dangerouslySetInnerHTML={{__html: storyP2}}/>
+                <div className="text-[14px] text-white/70 font-light leading-relaxed rich-content" dangerouslySetInnerHTML={{__html: storyP3}}/>
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function AboutPage() {
               <div>
                 <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-4">{missionLabel}</span>
                 <h2 className="reveal font-display text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold italic text-white leading-[0.95] mb-5">{missionHeading}</h2>
-                <p className="reveal text-[14px] text-white/70 font-light leading-relaxed">{missionText}</p>
+                <div className="reveal text-[14px] text-white/70 font-light leading-relaxed rich-content" dangerouslySetInnerHTML={{__html: missionText}}/>
               </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {stats.map((stat:any,i:number)=>(

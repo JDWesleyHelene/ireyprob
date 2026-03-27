@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import ImageField from "@/components/ui/ImageField";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 interface Service { id:string; service_number:string; title:string; tagline:string; description:string; image:string; features:string[]; }
 interface WhyItem { title:string; desc:string; }
@@ -103,8 +104,7 @@ export default function AdminServicesPageEditor() {
           <h2 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40">Page Header</h2>
           <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Main Heading</label>
             <input value={heroHeading} onChange={e=>setHeroHeading(e.target.value)} placeholder="What We Do" className={IC}/></div>
-          <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subtext</label>
-            <textarea value={heroSub} onChange={e=>setHeroSub(e.target.value)} rows={3} className={TA}/></div>
+          <RichTextEditor label="Subtext" value={heroSub} onChange={setHeroSub} rows={3}/>
         </div>
       )}
 
@@ -123,8 +123,7 @@ export default function AdminServicesPageEditor() {
                 <input value={s.title} onChange={e=>updateService(i,"title",e.target.value)} className={IC}/></div>
               <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Tagline</label>
                 <input value={s.tagline} onChange={e=>updateService(i,"tagline",e.target.value)} className={IC}/></div>
-              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Description</label>
-                <textarea value={s.description} onChange={e=>updateService(i,"description",e.target.value)} rows={3} className={TA}/></div>
+              <RichTextEditor label="Description" value={s.description} onChange={v=>updateService(i,"description",v)} rows={3}/>
               <ImageField label="Image" value={s.image} onChange={v=>updateService(i,"image",v)}/>
               <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Features (4)</label>
                 <div className="grid grid-cols-2 gap-2">
@@ -148,8 +147,7 @@ export default function AdminServicesPageEditor() {
             <div key={i} className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-5 space-y-3">
               <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Title</label>
                 <input value={w.title} onChange={e=>updateWhy(i,"title",e.target.value)} className={IC}/></div>
-              <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Description</label>
-                <textarea value={w.desc} onChange={e=>updateWhy(i,"desc",e.target.value)} rows={2} className={TA}/></div>
+              <RichTextEditor label="Description" value={w.desc} onChange={v=>updateWhy(i,"desc",v)} rows={2}/>
             </div>
           ))}
         </div>
@@ -160,8 +158,7 @@ export default function AdminServicesPageEditor() {
           <h2 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40">CTA Section</h2>
           <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Heading</label>
             <input value={ctaHeading} onChange={e=>setCtaHeading(e.target.value)} className={IC}/></div>
-          <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subtext</label>
-            <textarea value={ctaSub} onChange={e=>setCtaSub(e.target.value)} rows={3} className={TA}/></div>
+          <RichTextEditor label="Subtext" value={ctaSub} onChange={setCtaSub} rows={3}/>
         </div>
       )}
     </div>
