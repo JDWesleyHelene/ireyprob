@@ -61,7 +61,7 @@ function SocialTab({ settings, set }: { settings: SM; set: (k:string,v:string)=>
   );
 }
 
-export default function AdminSettingsPage() {
+function AdminSettingsInner() {
   const [settings, setSettings] = useState<SM>({});
   const [loading,  setLoading]  = useState(true);
   const [saving,   setSaving]   = useState(false);
@@ -219,5 +219,13 @@ export default function AdminSettingsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AdminSettingsPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-foreground/30 text-[13px]">Loading...</div>}>
+      <AdminSettingsInner />
+    </Suspense>
   );
 }
