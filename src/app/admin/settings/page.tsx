@@ -1,4 +1,5 @@
 "use client";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 import React, { useEffect, useState, useCallback } from "react";
 
 interface SM { [k: string]: string; }
@@ -131,7 +132,7 @@ export default function AdminSettingsPage() {
               <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Site Tagline</label>
                 <input type="text" value={settings.site_tagline||""} onChange={e=>set("site_tagline",e.target.value)} placeholder="Booking Agency & Event Production" className={IC}/></div>
               <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Site Description</label>
-                <textarea value={settings.site_description||""} onChange={e=>set("site_description",e.target.value)} rows={4} placeholder="Short description..." className={IC+" resize-none"}/></div>
+                <RichTextEditor label="" value={settings.site_description||""} onChange={v=>set("site_description",v)} rows={4}/></div>
             </div>
           )}
 

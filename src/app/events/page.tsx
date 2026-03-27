@@ -114,9 +114,7 @@ export default async function EventsPage({
               {pageSettings.events_hero_heading || "Live Events"}
             </h1>
 
-            <p className="text-[14px] text-white/70 font-light max-w-lg leading-relaxed">
-              {pageSettings.events_hero_sub || "Discover our latest events, shows, and experiences."}
-            </p>
+            <div className="text-[14px] text-white/80 font-light max-w-lg leading-relaxed rich-content" dangerouslySetInnerHTML={{__html: pageSettings.events_hero_sub || "Discover our latest events, shows, and experiences."}}/>
           </div>
         </section>
 

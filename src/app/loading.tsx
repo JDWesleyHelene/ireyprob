@@ -14,7 +14,7 @@ export default function Loading() {
           <img
             src="https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png"
             alt="IREY PROD"
-            style={{ height: "72px", width: "auto", objectFit: "contain", animation: "pulseLoader 1.4s ease-in-out infinite" }}
+            style={{ height: "110px", width: "auto", objectFit: "contain", animation: "pulseLoader 1.4s ease-in-out infinite" }}
           />
         </div>
 

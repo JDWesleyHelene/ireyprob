@@ -1,4 +1,5 @@
 "use client";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import ImageField from "@/components/ui/ImageField";
 
@@ -130,10 +131,7 @@ export default function AdminHomepagePage() {
               <input type="text" value={s[k]} onChange={e => set(k, e.target.value)} className={IC} />
             </div>
           ))}
-          <div>
-            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Hero Subtext</label>
-            <textarea value={s.hero_subtext} onChange={e => set("hero_subtext", e.target.value)} rows={4} className={TA} />
-          </div>
+          <RichTextEditor label="Hero Subtext" value={s.hero_subtext} onChange={v => set("hero_subtext", v)} rows={4}/>
         </div>
       )}
 

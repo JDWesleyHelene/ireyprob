@@ -309,39 +309,11 @@ export default function AdminNewsPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="news-excerpt"
-                  className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 block mb-1.5"
-                >
-                  Excerpt
-                </label>
-                <textarea
-                  id="news-excerpt"
-                  value={editing.excerpt || ''}
-                  onChange={(e) => setEditing((prev) => ({ ...prev, excerpt: e.target.value }))}
-                  rows={2}
-                  aria-label="Article excerpt"
-                  className="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 resize-none"
-                  placeholder="Short summary..."
-                />
+                <RichTextEditor label="Excerpt" value={editing.excerpt || ''} onChange={(v) => setEditing((prev) => ({ ...prev, excerpt: v }))} rows={2}/>
               </div>
 
               <div>
-                <label
-                  htmlFor="news-content"
-                  className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 block mb-1.5"
-                >
-                  Content (HTML)
-                </label>
-                <textarea
-                  id="news-content"
-                  value={editing.content || ''}
-                  onChange={(e) => setEditing((prev) => ({ ...prev, content: e.target.value }))}
-                  rows={10}
-                  aria-label="Article content in HTML"
-                  className="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-3 text-[13px] text-foreground font-mono focus:outline-none focus:border-foreground/30 resize-y"
-                  placeholder="<p>Article content...</p>"
-                />
+                <RichTextEditor label="Content" value={editing.content || ''} onChange={(v) => setEditing((prev) => ({ ...prev, content: v }))} rows={10}/>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

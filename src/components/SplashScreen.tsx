@@ -49,14 +49,14 @@ export default function SplashScreen() {
           <img
             src="https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png"
             alt="IREY PROD"
-            style={{ height: "120px", width: "auto", objectFit: "contain" }}
+            style={{ height: "150px", width: "auto", objectFit: "contain" }}
           />
         </div>
 
         {/* Tagline */}
         <div style={{ animation: "splashTextIn 0.9s cubic-bezier(0.22,1,0.36,1) 1s both" }}>
-          <p className="text-[10px] font-semibold tracking-[0.35em] uppercase text-foreground/40">
-            Bookings&nbsp;&nbsp;·&nbsp;&nbsp;Tours&nbsp;&nbsp;·&nbsp;&nbsp;Events&nbsp;&nbsp;·&nbsp;&nbsp;Productions
+          <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-white">
+            Bookings · Tours · Events · Productions
           </p>
         </div>
 

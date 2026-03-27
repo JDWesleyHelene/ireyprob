@@ -1,4 +1,5 @@
 "use client";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 import React,{useState,useEffect} from "react";
 import Link from "next/link";
 const IC="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-2.5 text-[13px] text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-foreground/30 transition-colors";
@@ -37,7 +38,7 @@ export default function AdminPageEditor(){
       <div className="bg-foreground/[0.02] border border-foreground/8 rounded-sm p-6 space-y-5">
         <h2 className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40">Page Header</h2>
         <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Main Heading</label><input value={heading} onChange={e=>setHeading(e.target.value)} className={IC}/></div>
-        <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subtext</label><textarea value={sub} onChange={e=>setSub(e.target.value)} rows={3} className={TA}/></div>
+        <RichTextEditor label="Subtext" value={sub} onChange={setSub} rows={3}/>
       </div>
     </div>
   );

@@ -172,8 +172,7 @@ export default function AdminAboutPage() {
             <input value={heroLabel} onChange={e=>setHeroLabel(e.target.value)} placeholder="— About Agency" className={IC}/></div>
           <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Main Heading</label>
             <input value={heroHeading} onChange={e=>setHeroHeading(e.target.value)} className={IC}/></div>
-          <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subtext</label>
-            <textarea value={heroSub} onChange={e=>setHeroSub(e.target.value)} rows={3} className={TA}/></div>
+          <RichTextEditor label="Subtext" value={heroSub} onChange={setHeroSub} rows={3}/>
         </div>
       )}
 
@@ -185,14 +184,11 @@ export default function AdminAboutPage() {
             <ImageField label="Section Image" value={storyImage} onChange={setStoryImage}/>
             <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Label</label>
               <input value={storyLabel} onChange={e=>setStoryLabel(e.target.value)} placeholder="— Who We Are" className={IC}/></div>
-            <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Heading</label>
-              <textarea value={storyHeading} onChange={e=>setStoryHeading(e.target.value)} rows={2} className={TA}/></div>
-            <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Paragraph 1</label>
-              <textarea value={storyP1} onChange={e=>setStoryP1(e.target.value)} rows={3} className={TA}/></div>
+            <RichTextEditor label="Heading" value={storyHeading} onChange={setStoryHeading} rows={2}/>
+            <RichTextEditor label="Paragraph 1" value={storyP1} onChange={setStoryP1} rows={3}/>
             <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Paragraph 2</label>
               <textarea value={storyP2} onChange={e=>setStoryP2(e.target.value)} rows={3} className={TA}/></div>
-            <div><label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Paragraph 3</label>
-              <textarea value={storyP3} onChange={e=>setStoryP3(e.target.value)} rows={3} className={TA}/></div>
+            <RichTextEditor label="Paragraph 3" value={storyP3} onChange={setStoryP3} rows={3}/>
           </div>
         </div>
       )}
