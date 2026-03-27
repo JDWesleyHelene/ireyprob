@@ -176,7 +176,7 @@ export default function ContactPage() {
               {liveSettings.contact_hero_heading || "Let's Start Right Now!"}
             </h1>
             <p className="mt-4 text-[14px] text-white/90 font-light max-w-md leading-relaxed">
-              {liveSettings.contact_hero_sub || "Got a project in mind? Fill out the form and we'll get back within 48 hours."}
+              <span dangerouslySetInnerHTML={{__html: liveSettings.contact_hero_sub || "Got a project in mind? Fill out the form and we'll get back within 48 hours."}}/>
             </p>
           </div>
         </section>

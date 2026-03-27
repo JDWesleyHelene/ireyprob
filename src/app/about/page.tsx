@@ -99,7 +99,7 @@ export default function AboutPage() {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <span className="reveal text-[10px] font-semibold tracking-[0.28em] uppercase text-white/85 block mb-3">{heroLabel}</span>
             <h1 className="about-hero-title font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-extrabold italic text-white leading-[0.9] tracking-tight mb-6 max-w-4xl">{heroHeading}</h1>
-            <p className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed">{heroSub}</p>
+            <div className="reveal text-[14px] sm:text-[15px] text-white/70 font-light max-w-xl leading-relaxed rich-content" dangerouslySetInnerHTML={{__html: heroSub}}/>
           </div>
         </section>
 
@@ -202,7 +202,7 @@ export default function AboutPage() {
           <div className="reveal flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 p-8 sm:p-12 border border-foreground/8 rounded-sm bg-foreground/[0.02]">
             <div>
               <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-extrabold italic text-white mb-2">{ctaHeading}</h3>
-              <p className="text-[13px] text-white/80 font-light">{ctaSub}</p>
+              <div className="text-[13px] text-white/80 font-light rich-content" dangerouslySetInnerHTML={{__html: ctaSub}}/>
             </div>
             <Link href="/contact" className="flex-shrink-0 px-8 py-3.5 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300">
               Contact Us

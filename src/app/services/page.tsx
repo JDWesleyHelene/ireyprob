@@ -124,7 +124,7 @@ export default function ServicesPage() {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(240,237,232,0.02),transparent_70%)]"/>
             <div className="relative z-10">
               <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white block mb-4">— New Project</span>
-              <h2 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.5rem] font-extrabold italic text-white leading-[0.95] mb-4">{ctaHeading}</h2>
+              <div className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.5rem] font-extrabold italic text-white leading-[0.95] mb-4 rich-content" dangerouslySetInnerHTML={{__html: ctaHeading}}/>
               <div className="text-[14px] text-white/70 font-light max-w-lg mx-auto mb-8 sm:mb-10 rich-content" dangerouslySetInnerHTML={{__html: ctaSub}}/>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <Link href="/contact" className="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-foreground text-background text-[11px] font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-accent transition-all duration-300">

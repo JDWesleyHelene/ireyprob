@@ -135,7 +135,7 @@ export default function BookingsPage() {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16">
             <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/70 block mb-3">— Bookings</span>
             <h1 className="bookings-hero-title font-display text-[2.2rem] sm:text-[3rem] md:text-[3.8rem] lg:text-[4.5rem] font-light italic text-white leading-[0.9] tracking-tight mb-4">{pageSettings.bookings_hero_heading || t.bookings.pageTitle}</h1>
-            <p className="bookings-hero-sub text-[13px] sm:text-[14px] text-white/80 font-light max-w-lg leading-relaxed">{pageSettings.bookings_hero_sub || t.bookings.pageSubtitle}</p>
+            <div className="bookings-hero-sub text-[13px] sm:text-[14px] text-white/80 font-light max-w-lg leading-relaxed rich-content" dangerouslySetInnerHTML={{__html: pageSettings.bookings_hero_sub || t.bookings.pageSubtitle}}/>
           </div>
         </section>
 
