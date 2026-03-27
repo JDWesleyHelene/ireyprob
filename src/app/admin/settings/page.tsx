@@ -66,7 +66,11 @@ export default function AdminSettingsPage() {
   const [loading,  setLoading]  = useState(true);
   const [saving,   setSaving]   = useState(false);
   const [saved,    setSaved]    = useState(false);
-  const [tab,      setTab]      = useState<Tab>("branding");
+  const searchParams = useSearchParams();
+  const [tab, setTab] = useState<Tab>(() => {
+    const t = searchParams?.get("tab");
+    return (["branding","email","social","contact","typography"].includes(t||"") ? t : "branding") as Tab;
+  });
 
   const load = useCallback(async () => {
     try {

@@ -7,13 +7,6 @@ import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
 import { useSettings } from "@/lib/useLiveData";
 
-const socialLinks = [
-  { label: "Instagram", href: "https://www.instagram.com/ireyprod/", handle: "@ireyprod" },
-  { label: "Facebook",  href: "https://www.facebook.com/IreyProd",   handle: "IreyProd" },
-  { label: "YouTube",   href: "https://www.youtube.com/@IreyProd",    handle: "@IreyProd" },
-  { label: "TikTok",    href: "https://www.tiktok.com/@ireyprod",     handle: "@ireyprod" },
-];
-
 interface Errors { name?: string; email?: string; subject?: string; project?: string; }
 
 function ContactForm() {
@@ -140,10 +133,19 @@ function ContactForm() {
 
 export default function ContactPage() {
   const liveSettings = useSettings();
-  const phone       = liveSettings.phone         || "+230 5 788 20 14";
-  const email       = liveSettings.contact_email || "booking@ireyprod.com";
-  const officeHours = liveSettings.office_hours  || "Mon – Fri, 10am – 5pm";
-  const location    = liveSettings.location      || "Mauritius Island, Indian Ocean";
+  const phone       = liveSettings.contact_phone   || "+230 5 788 20 14";
+  const email       = liveSettings.contact_email  || "booking@ireyprod.com";
+  const officeHours = liveSettings.office_hours   || "Mon – Fri, 10am – 5pm";
+  const location    = liveSettings.contact_address || "Mauritius Island, Indian Ocean";
+
+  // Social links from Settings → Social Media (same as footer)
+  const socialLinks = Object.entries(liveSettings)
+    .filter(([k, v]) => k.startsWith("social_") && v && v !== "__DELETE__")
+    .map(([k, v]) => ({
+      label:  k.replace("social_", "").replace(/_/g, " ").replace(/\w/g, c => c.toUpperCase()),
+      href:   v as string,
+      handle: (v as string).replace(/https?:\/\/(www\.)?/, "").replace(/\/$/, ""),
+    }));
 
   const contactDetails = [
     { label: "Phone",        value: phone,       href: `tel:${phone.replace(/[^+0-9]/g, "")}`,
