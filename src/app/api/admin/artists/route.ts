@@ -16,7 +16,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true });
     }
     const id = body.id || crypto.randomUUID();
-    const slug = body.slug || body.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    // Always generate clean slug from name — normalize spaces, caps, special chars
+    const rawSlug = body.slug || body.name;
+    const slug = rawSlug.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
     await prisma.artist.upsert({
       where: { id },
       update: { name: body.name, slug, genre: body.genre ?? "", origin: body.origin ?? "", bio: body.bio ?? "", image: body.image ?? "", imageAlt: body.image_alt ?? "", tags: body.tags ?? [], featured: Boolean(body.featured), sortOrder: body.sort_order ?? 0 },

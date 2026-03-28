@@ -22,6 +22,7 @@ export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const liveSettings = useSettings();
+  const settingsLoaded = Object.keys(liveSettings).length > 0;
 
   // ✅ useMemo so images only recalculate when slider_images setting actually changes
   const slideshowImages = useMemo(() => {
@@ -44,7 +45,7 @@ export default function HeroSection() {
   // ✅ Reset to slide 0 when DB images load (so order is respected)
   const prevLengthRef = useRef(0);
   useEffect(() => {
-    if (slideshowImages.length !== prevLengthRef.current) {
+    if (settingsLoaded && slideshowImages.length !== prevLengthRef.current) {
       setCurrentSlide(0);
       prevLengthRef.current = slideshowImages.length;
     }
@@ -70,7 +71,7 @@ export default function HeroSection() {
     if (slideshowImages.length <= 1) return;
     const interval = setInterval(() => setCurrentSlide(p => (p + 1) % slideshowImages.length), 5000);
     return () => clearInterval(interval);
-  }, [slideshowImages.length]);
+  }, [slideshowImages.length, settingsLoaded]);
 
   // Entry animations
   useEffect(() => {
@@ -99,7 +100,11 @@ export default function HeroSection() {
     <section ref={heroRef} className="relative min-h-screen flex flex-col justify-end overflow-hidden" aria-label="Hero">
       {/* Slideshow — renders in DB order */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {slideshowImages.map((img, i) => (
+        {/* Dark bg while images load — prevents flash of wrong image */}
+        {!settingsLoaded && (
+          <div className="absolute inset-0 bg-[#060606]"/>
+        )}
+        {settingsLoaded && slideshowImages.map((img, i) => (
           <div key={`${img.src}-${i}`}
             className={`absolute inset-0 transition-opacity duration-[1500ms] ${i === currentSlide ? "opacity-75" : "opacity-0"}`}>
             {img.src && (

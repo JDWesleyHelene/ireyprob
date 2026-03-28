@@ -105,7 +105,9 @@ export default function ArtistProfilePage() {
 
   useEffect(() => {
     fetch("/api/admin/artists").then(r => r.ok ? r.json() : []).then((all: any[]) => {
-      const found = all.find((a: any) => a.slug === slug);
+// Normalize slug for comparison — handle spaces, capitals, etc.
+      const normalize = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+      const found = all.find((a: any) => normalize(a.slug) === normalize(slug) || normalize(a.name) === normalize(slug));
       if (found) {
         setArtist(found);
         setRelated(all.filter((a: any) => a.id !== found.id).slice(0, 3));

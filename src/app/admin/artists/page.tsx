@@ -71,7 +71,7 @@ export default function AdminArtistsPage() {
                 </td>
                 <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-2">
-                    <Link href={`/bookings/${a.slug}`} target="_blank" className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-foreground/10 rounded-sm text-foreground/30 hover:text-foreground/60 hover:border-foreground/20 transition-all">View</Link>
+                    <Link href={`/bookings/${(a.slug||a.name).toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}`} target="_blank" className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-foreground/10 rounded-sm text-foreground/30 hover:text-foreground/60 hover:border-foreground/20 transition-all">View</Link>
                     {a._source!=="static"&&<>
                       <Link href={`/admin/artists/${a.id}/edit`} className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-blue-400/20 rounded-sm text-blue-400/60 hover:text-blue-400 hover:border-blue-400/40 transition-all">Edit</Link>
                       <button onClick={()=>handleDelete(a.id,a.name)} disabled={deleting===a.id} className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-red-500/20 rounded-sm text-red-400/60 hover:text-red-400 hover:border-red-500/40 transition-all disabled:opacity-40">
