@@ -128,7 +128,13 @@ export default function ArtistProfilePage() {
       <Header/>
       <main className="min-h-screen bg-background">
         <section className="relative h-[75vh] min-h-[540px] overflow-hidden">
-          <AppImage src={artist.image||""} alt={artist.imageAlt||artist.name} fill priority className="object-cover object-top" sizes="100vw"/>
+          {artist.image && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={artist.image} alt={artist.imageAlt||artist.name}
+              className="absolute inset-0 w-full h-full object-cover object-top"
+              loading="eager"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-[#060606] via-black/50 to-black/10"/>
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"/>
           <div className="absolute inset-0 noise pointer-events-none opacity-30"/>
