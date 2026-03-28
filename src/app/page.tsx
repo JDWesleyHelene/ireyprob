@@ -1,5 +1,5 @@
 import React from "react";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description: "IREY PROD is a dynamic booking agency specialising in Artist Management, Tours, Events and Productions. Based in Mauritius Island.",
 };
 
-// Force dynamic so Neon data is always fresh
-export const dynamic = "force-dynamic";
+// Disable caching so Neon data is always fresh
+export const revalidate = 0;
 
-const HeroSection         = dynamic(() => import("@/app/home-page/components/HeroSection"),         { ssr: false });
-const ArtistRosterSection = dynamic(() => import("@/app/home-page/components/ArtistRosterSection"), { ssr: false });
-const MasonryGallery      = dynamic(() => import("@/app/home-page/components/MasonryGallery"),      { ssr: false });
-const LegacyStatsSection  = dynamic(() => import("@/app/home-page/components/LegacyStatsSection"),  { ssr: false });
+const HeroSection         = dynamicImport(() => import("@/app/home-page/components/HeroSection"),         { ssr: false });
+const ArtistRosterSection = dynamicImport(() => import("@/app/home-page/components/ArtistRosterSection"), { ssr: false });
+const MasonryGallery      = dynamicImport(() => import("@/app/home-page/components/MasonryGallery"),      { ssr: false });
+const LegacyStatsSection  = dynamicImport(() => import("@/app/home-page/components/LegacyStatsSection"),  { ssr: false });
 
 export default async function HomePage() {
   // Fetch all data server-side — zero client round-trips on initial load

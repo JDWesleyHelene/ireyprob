@@ -2,7 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import BookingsPageClient from "./page-client";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function BookingsPage() {
   const [settingsRows, dbArtists] = await Promise.all([
