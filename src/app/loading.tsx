@@ -13,7 +13,7 @@ export default function Loading() {
         <div style={{ animation: "splashLogoIn 0.6s cubic-bezier(0.22,1,0.36,1) both" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={toCloudUrl("https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png")}
+            src="https://res.cloudinary.com/dvmhbtiz4/image/upload/ireyprod/LOGO-PNG.png"
             alt="IREY PROD"
             style={{ height: "165px", width: "auto", objectFit: "contain", animation: "pulseLoader 1.4s ease-in-out infinite" }}
           />

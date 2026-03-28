@@ -1,20 +1,24 @@
 /**
  * Auto-converts WordPress image URLs to Cloudinary by matching filename.
- *
- * WP:    https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg
- * Cloud: https://res.cloudinary.com/{cloud}/image/upload/ireyprod/KDC_2394-scaled
- *
- * This works because uploads use the exact filename as public_id.
+ * Falls back to original URL if Cloudinary not configured.
  */
 
-const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
-              process.env.CLOUDINARY_CLOUD_NAME || "";
+function getCloudName(): string {
+  // Check all possible env var names
+  if (typeof process !== "undefined") {
+    return process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
+           process.env.CLOUDINARY_CLOUD_NAME || "";
+  }
+  return "";
+}
 
 export function toCloudUrl(url: string): string {
-  if (!url || !CLOUD) return url;
+  if (!url) return url;
   if (!url.includes("ireyprod.com/wp-content")) return url;
-  // Already Cloudinary
   if (url.includes("res.cloudinary.com")) return url;
+
+  const CLOUD = getCloudName() || "dvmhbtiz4"; // fallback to known cloud name
+  if (!CLOUD) return url; // No cloud name — keep original WP URL working
 
   const filename  = url.split("/").pop() || "";
   const nameNoExt = filename.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
@@ -24,7 +28,7 @@ export function toCloudUrl(url: string): string {
 export function rewriteUrls(text: string): string {
   if (!text || !text.includes("ireyprod.com/wp-content")) return text;
   return text.replace(
-    /https:\/\/ireyprod\.com\/wp-content\/uploads\/[^\s"'`}\]>]+/g,
+    /https:\/\/ireyprod\.com\/wp-content\/uploads\/[^\s"'\`}\]>]+/g,
     match => toCloudUrl(match)
   );
 }

@@ -66,7 +66,7 @@ export default function PageLoader() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(240,237,232,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(240,237,232,0.015)_1px,transparent_1px)] bg-[size:10rem_20rem] pointer-events-none"/>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={toCloudUrl("https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png")}
+          src="https://res.cloudinary.com/dvmhbtiz4/image/upload/ireyprod/LOGO-PNG.png"
           alt="IREY PROD"
           style={{ height: "165px", width: "auto", animation: "pulseLoader 1.2s ease-in-out infinite" }}
         />

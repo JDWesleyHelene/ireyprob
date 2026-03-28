@@ -71,6 +71,15 @@ export default function AdminArtistsPage() {
                 </td>
                 <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-2">
+                    {/* Reorder buttons */}
+                    <button onClick={()=>moveArtist(a.id,"up")} title="Move up"
+                      className="p-1.5 text-foreground/20 hover:text-foreground/60 transition-colors rounded-sm hover:bg-foreground/5">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+                    </button>
+                    <button onClick={()=>moveArtist(a.id,"down")} title="Move down"
+                      className="p-1.5 text-foreground/20 hover:text-foreground/60 transition-colors rounded-sm hover:bg-foreground/5">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
                     <Link href={`/bookings/${(a.slug||a.name).toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}`} target="_blank" className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-foreground/10 rounded-sm text-foreground/30 hover:text-foreground/60 hover:border-foreground/20 transition-all">View</Link>
                     {a._source!=="static"&&<>
                       <Link href={`/admin/artists/${a.id}/edit`} className="px-3 py-1.5 text-[10px] font-semibold tracking-widest uppercase border border-blue-400/20 rounded-sm text-blue-400/60 hover:text-blue-400 hover:border-blue-400/40 transition-all">Edit</Link>
