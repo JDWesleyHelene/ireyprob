@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
@@ -29,9 +29,8 @@ export const metadata: Metadata = {
   },
 };
 
-if (typeof window !== 'undefined') { setTimeout(() => window.dispatchEvent(new Event('page-ready')), 1200); }
-
 export default function HomePage() {
+  useEffect(() => { const t = setTimeout(() => window.dispatchEvent(new Event('page-ready')), 1200); return () => clearTimeout(t); }, []);
   return (
     <>
       <SpotlightCardsInit />
