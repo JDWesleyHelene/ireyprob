@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 import ImageField from "@/components/ui/ImageField";
 import RichTextEditor from "@/components/ui/RichTextEditor";
@@ -32,9 +33,9 @@ const DEF_STATS: StatItem[] = [
 ];
 
 const DEF_TEAM: TeamMember[] = [
-  { name:"Creative Director",      role:"Bookings & Artist Management", image:"https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d024-qetpkvnnuor9fqhufseegetdgswcuflrz3eovw9x60.jpg", imageAlt:"Creative Director" },
-  { name:"Production Manager",     role:"Events & Logistics",           image:"https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d029-qetpkzf0m0weq6cdtu0wqdv7ucdtp80pbm0mt04ch4.jpg", imageAlt:"Production Manager" },
-  { name:"Digital Marketing Lead", role:"Press & Digital Strategy",     image:"https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d005-qetpkgm8tc6o9z3ovlwdcilzymyhf9y2l0yx7gw7xk.jpg", imageAlt:"Digital Marketing Lead" },
+  { name:"Creative Director",      role:"Bookings & Artist Management", image:toCloudUrl("https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d024-qetpkvnnuor9fqhufseegetdgswcuflrz3eovw9x60.jpg"), imageAlt:"Creative Director" },
+  { name:"Production Manager",     role:"Events & Logistics",           image:toCloudUrl("https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d029-qetpkzf0m0weq6cdtu0wqdv7ucdtp80pbm0mt04ch4.jpg"), imageAlt:"Production Manager" },
+  { name:"Digital Marketing Lead", role:"Press & Digital Strategy",     image:toCloudUrl("https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d005-qetpkgm8tc6o9z3ovlwdcilzymyhf9y2l0yx7gw7xk.jpg"), imageAlt:"Digital Marketing Lead" },
 ];
 
 export default function AdminAboutPage() {
@@ -46,7 +47,7 @@ export default function AdminAboutPage() {
   const [heroSub,     setHeroSub]     = useState("Relax & Take It Easy! IREY PROD is a dynamic and forward-thinking organisation based in Mauritius Island.");
 
   // Story
-  const [storyImage,   setStoryImage]   = useState("https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg");
+  const [storyImage,   setStoryImage]   = useState(toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg"));
   const [storyLabel,   setStoryLabel]   = useState("— Who We Are");
   const [storyHeading, setStoryHeading] = useState("Bookings, Tours,\nEvents, Productions");
   const [storyP1,      setStoryP1]      = useState("Our agency is a dynamic and forward-thinking organisation specialising in Digital Marketing, Stage and Artist Management, as well as Event Coordination.");

@@ -1,16 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 
 interface GImg { id: string; src: string; alt: string; }
 
 const DEFAULTS: GImg[] = [
-  { id:"g1", src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg",         alt:"IREY PROD live event" },
-  { id:"g2", src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1597-scaled.jpg",         alt:"IREY PROD concert" },
-  { id:"g3", src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1696-scaled.jpg",         alt:"IREY PROD artist on stage" },
-  { id:"g4", src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg",         alt:"IREY PROD event production" },
-  { id:"g5", src:"https://ireyprod.com/wp-content/uploads/2023/12/319291225_674505520974726_3683712000139163132_n.jpg", alt:"IREY PROD live music" },
-  { id:"g6", src:"https://ireyprod.com/wp-content/uploads/2024/02/278388810_500716275105749_2200913393930678727_n.jpg", alt:"IREY PROD outdoor concert" },
+  { id:"g1", src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg"),         alt:"IREY PROD live event" },
+  { id:"g2", src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1597-scaled.jpg"),         alt:"IREY PROD concert" },
+  { id:"g3", src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1696-scaled.jpg"),         alt:"IREY PROD artist on stage" },
+  { id:"g4", src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg"),         alt:"IREY PROD event production" },
+  { id:"g5", src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/12/319291225_674505520974726_3683712000139163132_n.jpg"), alt:"IREY PROD live music" },
+  { id:"g6", src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/278388810_500716275105749_2200913393930678727_n.jpg"), alt:"IREY PROD outdoor concert" },
 ];
 
 export default function MasonryGallery({ initialSettings = {} }: { initialSettings?: Record<string,string> }) {

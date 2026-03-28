@@ -49,7 +49,7 @@ export default function AdminMediaPage() {
 
     for (const file of files) {
       if (!file.type.startsWith("image/")) { toast$(`${file.name}: not an image`, false); continue; }
-      if (file.size > 10 * 1024 * 1024) { toast$(`${file.name}: max 10MB`, false); continue; }
+      if (file.size > 2 * 1024 * 1024) { toast$(`${file.name}: max 2MB — please compress first`, false); continue; }
 
       try {
         const dataUrl = await new Promise<string>((res, rej) => {
@@ -241,7 +241,7 @@ export default function AdminMediaPage() {
 
       {/* Drop zone hint */}
       <p className="mt-4 text-[11px] text-foreground/20 text-center">
-        Click "Upload Images" to add photos · Select an image to copy its URL · Max 10MB per file
+        Click "Upload Images" to add photos · Select an image to copy its URL · Max 2MB per file
       </p>
     </div>
   );

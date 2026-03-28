@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 import ImageField from "@/components/ui/ImageField";
 import RichTextEditor from "@/components/ui/RichTextEditor";
@@ -12,7 +13,7 @@ export default function AdminContactPageEditor() {
   const [tab, setTab]                   = useState<Tab>("hero");
   const [heroHeading, setHeroHeading]   = useState("Let's Start Right Now!");
   const [heroSub,     setHeroSub]       = useState("Got a project in mind? Fill out the form and we'll get back within 48 hours.");
-  const [heroBg,      setHeroBg]        = useState("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg");
+  const [heroBg,      setHeroBg]        = useState(toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg"));
   const [formHeading, setFormHeading]   = useState("Make an Online Enquiry");
   // Contact info
   const [saving, setSaving] = useState(false);

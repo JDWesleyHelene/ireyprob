@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -23,9 +24,9 @@ const DEF_VALUES = [
   { number:"08", title:"Attention to Detail", description:"The success of an event often depends on meticulous planning and execution." },
 ];
 const DEF_TEAM = [
-  { name:"Creative Director",      role:"Bookings & Artist Management", image:"https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d024-qetpkvnnuor9fqhufseegetdgswcuflrz3eovw9x60.jpg", imageAlt:"Creative Director" },
-  { name:"Production Manager",     role:"Events & Logistics",           image:"https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d029-qetpkzf0m0weq6cdtu0wqdv7ucdtp80pbm0mt04ch4.jpg", imageAlt:"Production Manager" },
-  { name:"Digital Marketing Lead", role:"Press & Digital Strategy",     image:"https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d005-qetpkgm8tc6o9z3ovlwdcilzymyhf9y2l0yx7gw7xk.jpg", imageAlt:"Digital Marketing Lead" },
+  { name:"Creative Director",      role:"Bookings & Artist Management", image:toCloudUrl("https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d024-qetpkvnnuor9fqhufseegetdgswcuflrz3eovw9x60.jpg"), imageAlt:"Creative Director" },
+  { name:"Production Manager",     role:"Events & Logistics",           image:toCloudUrl("https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d029-qetpkzf0m0weq6cdtu0wqdv7ucdtp80pbm0mt04ch4.jpg"), imageAlt:"Production Manager" },
+  { name:"Digital Marketing Lead", role:"Press & Digital Strategy",     image:toCloudUrl("https://ireyprod.com/wp-content/uploads/elementor/thumbs/3d005-qetpkgm8tc6o9z3ovlwdcilzymyhf9y2l0yx7gw7xk.jpg"), imageAlt:"Digital Marketing Lead" },
 ];
 
 function parse<T>(raw: string | undefined, def: T): T {
@@ -44,7 +45,7 @@ export default function AboutPage() {
   const heroLabel      = s.about_hero_label    || "— About Agency";
   const heroHeading    = s.about_hero_heading  || "The One-Stop Agency You'll Ever Need";
   const heroSub        = s.about_hero_sub      || "Relax & Take It Easy! IREY PROD is a dynamic and forward-thinking organisation based in Mauritius Island.";
-  const storyImage     = s.about_story_image   || "https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg";
+  const storyImage     = s.about_story_image   || toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg");
   const storyLabel     = s.about_story_label   || "— Who We Are";
   const storyHeading   = s.about_story_heading || "Bookings, Tours,\nEvents, Productions";
   const storyP1        = s.about_story_p1      || "Our agency is a dynamic and forward-thinking organisation specialising in Digital Marketing, Stage and Artist Management, as well as Event Coordination.";

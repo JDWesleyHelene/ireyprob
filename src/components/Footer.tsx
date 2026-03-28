@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 import AppImage from "@/components/ui/AppImage";
 import { useSettings } from "@/lib/useLiveData";
@@ -36,7 +37,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-1 flex flex-col gap-4 items-start">
-            <Link href="/"><AppImage src="https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png" alt="IREY PROD" width={120} height={44} className="h-9 w-auto object-contain opacity-90" unoptimized/></Link>
+            <Link href="/"><AppImage src=toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png") alt="IREY PROD" width={120} height={44} className="h-9 w-auto object-contain opacity-90" unoptimized/></Link>
             <p className="text-[12px] text-white/80 leading-relaxed font-light">Booking agency & production for music and performing arts. Based in Mauritius Island.</p>
             <div className="space-y-1">
               <a href={`tel:${phone.replace(/[^+0-9]/g,"")}`} className="block text-[13px] text-white/90 hover:text-accent transition-colors">{phone}</a>

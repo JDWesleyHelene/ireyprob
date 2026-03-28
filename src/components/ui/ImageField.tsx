@@ -25,9 +25,9 @@ export default function ImageField({ label, value, onChange, hint }: ImageFieldP
       setUploadError("Please select an image file.");
       return;
     }
-    // Max 5MB
-    if (file.size > 5 * 1024 * 1024) {
-      setUploadError("Image must be under 5MB.");
+    // Max 2MB
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError("Image must be under 2MB. Please compress it first.");
       return;
     }
 

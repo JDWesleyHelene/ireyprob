@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import { usePathname } from "next/navigation";
 
 export default function SplashScreen() {
@@ -47,7 +48,7 @@ export default function SplashScreen() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png"
+            src=toCloudUrl("https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png")
             alt="IREY PROD"
             style={{ height: "225px", width: "auto", objectFit: "contain" }}
           />

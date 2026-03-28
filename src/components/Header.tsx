@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import AppImage from "@/components/ui/AppImage";
@@ -58,7 +59,7 @@ export default function Header() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0 relative z-[60]">
-            <AppImage src="https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png" alt="IREY PROD logo"
+            <AppImage src=toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png") alt="IREY PROD logo"
               width={120} height={44} priority
               className="h-8 sm:h-10 w-auto object-contain"
               unoptimized />

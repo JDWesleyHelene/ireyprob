@@ -1,21 +1,22 @@
 "use client";
 import React, { useEffect, useRef, useState, useMemo } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 import AppImage from "@/components/ui/AppImage";
 import { homepageContent } from "@/lib/data";
 import { useSettings } from "@/lib/useLiveData";
 
 const DEFAULT_IMAGES = [
-  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg",         alt:"IREY PROD live event" },
-  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1597-scaled.jpg",         alt:"IREY PROD concert" },
-  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1696-scaled.jpg",         alt:"IREY PROD artist on stage" },
-  { src:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg",         alt:"IREY PROD event production" },
-  { src:"https://ireyprod.com/wp-content/uploads/2023/12/319291225_674505520974726_3683712000139163132_n.jpg", alt:"IREY PROD live music" },
-  { src:"https://ireyprod.com/wp-content/uploads/2024/02/278388810_500716275105749_2200913393930678727_n.jpg", alt:"IREY PROD outdoor concert" },
-  { src:"https://ireyprod.com/wp-content/uploads/2024/02/413834455_10229244000198578_5400677520275640617_n.jpg", alt:"IREY PROD festival" },
-  { src:"https://ireyprod.com/wp-content/uploads/2023/11/311725226_1304185260318364_1025836846759200407_n.jpg", alt:"IREY PROD artist" },
-  { src:"https://ireyprod.com/wp-content/uploads/2023/11/136994801_10222394642048905_677808425090284716_n.jpg", alt:"IREY PROD production" },
-  { src:"https://ireyprod.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-21-at-12.32.07_43897a31.jpg",  alt:"IREY PROD backstage" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg"),         alt:"IREY PROD live event" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1597-scaled.jpg"),         alt:"IREY PROD concert" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1696-scaled.jpg"),         alt:"IREY PROD artist on stage" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1951-scaled.jpg"),         alt:"IREY PROD event production" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/12/319291225_674505520974726_3683712000139163132_n.jpg"), alt:"IREY PROD live music" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/278388810_500716275105749_2200913393930678727_n.jpg"), alt:"IREY PROD outdoor concert" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/413834455_10229244000198578_5400677520275640617_n.jpg"), alt:"IREY PROD festival" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/11/311725226_1304185260318364_1025836846759200407_n.jpg"), alt:"IREY PROD artist" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/11/136994801_10222394642048905_677808425090284716_n.jpg"), alt:"IREY PROD production" },
+  { src:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-21-at-12.32.07_43897a31.jpg"),  alt:"IREY PROD backstage" },
 ];
 
 export default function HeroSection({ initialSettings = {} }: { initialSettings?: Record<string,string> }) {

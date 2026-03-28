@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,10 +8,10 @@ import AppImage from "@/components/ui/AppImage";
 import { useSettings } from "@/lib/useLiveData";
 
 const DEFAULT_SERVICES = [
-  { id:"1", service_number:"01", title:"Bookings", tagline:"Connecting Artists & Audiences", description:"We connect world-class artists with venues, festivals, and private events across the Indian Ocean and beyond.", image:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg", image_alt:"IREY PROD bookings", features:["Artist sourcing & negotiation","Contract management","Rider coordination","Travel & logistics"] },
-  { id:"2", service_number:"02", title:"Tours", tagline:"Regional & International Tour Management", description:"Comprehensive tour management for regional and international tours, handling everything from routing and scheduling to on-the-road support.", image:"https://ireyprod.com/wp-content/uploads/2024/02/KDC_1597-scaled.jpg", image_alt:"IREY PROD tours", features:["Tour routing & scheduling","Venue partnerships","Promotion & marketing","On-tour support"] },
-  { id:"3", service_number:"03", title:"Events", tagline:"End-to-End Event Production", description:"End-to-end event production from concept to curtain call — we handle every detail so you can focus on the experience.", image:"https://ireyprod.com/wp-content/uploads/2024/02/413834455_10229244000198578_5400677520275640617_n.jpg", image_alt:"IREY PROD events", features:["Concept development","Venue sourcing","Artist curation","Technical production"] },
-  { id:"4", service_number:"04", title:"Productions", tagline:"Stage & Digital Production", description:"Full-scale stage and digital production services — from sound and lighting design to video production and digital marketing.", image:"https://ireyprod.com/wp-content/uploads/2023/11/311725226_1304185260318364_1025836846759200407_n.jpg", image_alt:"IREY PROD productions", features:["Stage design & build","Sound & lighting","Video production","Digital marketing"] },
+  { id:"1", service_number:"01", title:"Bookings", tagline:"Connecting Artists & Audiences", description:"We connect world-class artists with venues, festivals, and private events across the Indian Ocean and beyond.", image:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_2394-scaled.jpg"), image_alt:"IREY PROD bookings", features:["Artist sourcing & negotiation","Contract management","Rider coordination","Travel & logistics"] },
+  { id:"2", service_number:"02", title:"Tours", tagline:"Regional & International Tour Management", description:"Comprehensive tour management for regional and international tours, handling everything from routing and scheduling to on-the-road support.", image:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/KDC_1597-scaled.jpg"), image_alt:"IREY PROD tours", features:["Tour routing & scheduling","Venue partnerships","Promotion & marketing","On-tour support"] },
+  { id:"3", service_number:"03", title:"Events", tagline:"End-to-End Event Production", description:"End-to-end event production from concept to curtain call — we handle every detail so you can focus on the experience.", image:toCloudUrl("https://ireyprod.com/wp-content/uploads/2024/02/413834455_10229244000198578_5400677520275640617_n.jpg"), image_alt:"IREY PROD events", features:["Concept development","Venue sourcing","Artist curation","Technical production"] },
+  { id:"4", service_number:"04", title:"Productions", tagline:"Stage & Digital Production", description:"Full-scale stage and digital production services — from sound and lighting design to video production and digital marketing.", image:toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/11/311725226_1304185260318364_1025836846759200407_n.jpg"), image_alt:"IREY PROD productions", features:["Stage design & build","Sound & lighting","Video production","Digital marketing"] },
 ];
 
 const DEFAULT_WHY = [

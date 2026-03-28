@@ -22,11 +22,13 @@ export async function POST(req: Request) {
     }
 
     // Upload to Cloudinary
+    // Use exact filename so URL is predictable: ireyprod/{filename}
+    const cleanName = (filename || "image").replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
+    const publicId  = `ireyprod/${cleanName}`;
+
     const result = await cloudinary.uploader.upload(data, {
-      folder:         "ireyprod",
-      use_filename:   true,
-      unique_filename: true,
-      overwrite:      false,
+      public_id:      publicId,
+      overwrite:      true,   // overwrite same filename = same URL always
       resource_type:  "image",
       transformation: [{ quality: "auto", fetch_format: "auto" }],
     });
