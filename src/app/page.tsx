@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
+import PageReady from "@/components/PageReady";
 import Footer from "@/components/Footer";
 import HeroSection from "@/app/home-page/components/HeroSection";
 
@@ -30,11 +31,11 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  useEffect(() => { const t = setTimeout(() => window.dispatchEvent(new Event('page-ready')), 1200); return () => clearTimeout(t); }, []);
   return (
     <>
       <SpotlightCardsInit />
       <Header />
+      <PageReady delay={1200}/>
       <main>
         <HeroSection />
         <ArtistRosterSection />

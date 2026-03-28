@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import PageReady from '@/components/PageReady';
 import Footer from '@/components/Footer';
 import AppImage from '@/components/ui/AppImage';
 import { prisma } from '@/lib/prisma';
@@ -99,6 +100,7 @@ export default async function EventsPage({
   return (
     <>
       <Header />
+      <PageReady delay={800}/>
 
       <main className="min-h-screen bg-background">
         <section className="relative pt-28 pb-8 overflow-hidden">
