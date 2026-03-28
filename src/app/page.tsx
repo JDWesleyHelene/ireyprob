@@ -1,5 +1,4 @@
 import React from "react";
-import dynamicImport from "next/dynamic";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -14,10 +13,10 @@ export const metadata: Metadata = {
 // Disable caching so Neon data is always fresh
 export const revalidate = 0;
 
-const HeroSection         = dynamicImport(() => import("@/app/home-page/components/HeroSection"),         { ssr: false });
-const ArtistRosterSection = dynamicImport(() => import("@/app/home-page/components/ArtistRosterSection"), { ssr: false });
-const MasonryGallery      = dynamicImport(() => import("@/app/home-page/components/MasonryGallery"),      { ssr: false });
-const LegacyStatsSection  = dynamicImport(() => import("@/app/home-page/components/LegacyStatsSection"),  { ssr: false });
+import HeroSection from "@/app/home-page/components/HeroSection";
+import ArtistRosterSection from "@/app/home-page/components/ArtistRosterSection";
+import MasonryGallery from "@/app/home-page/components/MasonryGallery";
+import LegacyStatsSection from "@/app/home-page/components/LegacyStatsSection";
 
 export default async function HomePage() {
   // Fetch all data server-side — zero client round-trips on initial load
