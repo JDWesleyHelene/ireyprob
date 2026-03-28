@@ -45,7 +45,7 @@ function AcceptInviteForm() {
     <div className="w-full max-w-md">
       <div className="text-center mb-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src=toCloudUrl("https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png") alt="IREY PROD"
+        <img src={toCloudUrl("https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png")} alt="IREY PROD"
           style={{ height: "56px", width: "auto", margin: "0 auto 20px" }}/>
         <h1 className="font-display text-3xl font-extrabold italic text-foreground mb-1">Set Your Password</h1>
         <p className="text-[13px] text-foreground/50">You've been invited to <strong className="text-foreground">IREY PROD</strong> Dashboard</p>

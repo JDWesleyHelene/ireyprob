@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
       <div className="relative z-10 w-full max-w-md">
         <div className="text-center mb-10">
           <div className="inline-flex items-center justify-center w-16 h-16 border border-foreground/10 rounded-sm mb-6 bg-foreground/[0.02]">
-            <AppImage src=toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png") alt="IREY PROD" width={40} height={40} className="object-contain"/>
+            <AppImage src={toCloudUrl("https://ireyprod.com/wp-content/uploads/2023/11/IREY-PROD-WHITE.png")} alt="IREY PROD" width={40} height={40} className="object-contain"/>
           </div>
           <h1 className="font-display text-3xl font-light italic text-foreground mb-1">Admin Panel</h1>
           <p className="text-[12px] text-foreground/30 tracking-[0.2em] uppercase">IREY PROD · Content Management</p>
