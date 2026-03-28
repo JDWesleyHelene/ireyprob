@@ -2,48 +2,52 @@ import React from "react";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
-import PageReady from "@/components/PageReady";
 import Footer from "@/components/Footer";
-import HeroSection from "@/app/home-page/components/HeroSection";
-
-const MasonryGallery = dynamic(() => import("@/app/home-page/components/MasonryGallery"), {
-  loading: () => <div className="h-[400px] bg-foreground/5 animate-pulse" />,
-});
-const ArtistRosterSection = dynamic(() => import("@/app/home-page/components/ArtistRosterSection"), {
-  loading: () => <div className="h-[400px] bg-foreground/5 animate-pulse" />,
-});
-const LegacyStatsSection = dynamic(() => import("@/app/home-page/components/LegacyStatsSection"), {
-  loading: () => <div className="h-[200px] bg-foreground/5 animate-pulse" />,
-});
-const LatestNewsSection = dynamic(() => import("@/app/home-page/components/LatestNewsSection"), {
-  loading: () => <div className="h-[300px] bg-foreground/5 animate-pulse" />,
-});
-const SpotlightCardsInit = dynamic(() => import("@/app/home-page/components/SpotlightCardsInit"));
+import PageReady from "@/components/PageReady";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
-  title: "IREY PROD — Booking Agency & Event Production | Mauritius Island",
-  description: "IREY PROD is a dynamic booking agency and event production company based in Mauritius Island, specialising in Bookings, Tours, Events, and Productions.",
-  openGraph: {
-    title: "IREY PROD — Your Gateway to Unforgettable Experiences",
-    description: "Booking agency & event production based in Mauritius Island.",
-    images: [{ url: "/assets/images/IREY-PROD-BLACK-1773496673088.png", width: 1200, height: 630 }],
-  },
+  title: "IREY PROD — Booking Agency · Mauritius Island",
+  description: "IREY PROD is a dynamic booking agency specialising in Artist Management, Tours, Events and Productions. Based in Mauritius Island.",
 };
 
-export default function HomePage() {
+// Force dynamic so Neon data is always fresh
+export const dynamic = "force-dynamic";
+
+const HeroSection         = dynamic(() => import("@/app/home-page/components/HeroSection"),         { ssr: false });
+const ArtistRosterSection = dynamic(() => import("@/app/home-page/components/ArtistRosterSection"), { ssr: false });
+const MasonryGallery      = dynamic(() => import("@/app/home-page/components/MasonryGallery"),      { ssr: false });
+const LegacyStatsSection  = dynamic(() => import("@/app/home-page/components/LegacyStatsSection"),  { ssr: false });
+
+export default async function HomePage() {
+  // Fetch all data server-side — zero client round-trips on initial load
+  const [settingsRows, dbArtists] = await Promise.all([
+    prisma.setting.findMany().catch(() => []),
+    prisma.artist.findMany({ orderBy: { sortOrder: "asc" } }).catch(() => []),
+  ]);
+
+  // Convert settings rows to key-value map
+  const settings: Record<string, string> = {};
+  settingsRows.forEach((r: any) => { if (r.value) settings[r.key] = r.value; });
+
+  // Serialize artists for client
+  const artists = dbArtists.map((a: any) => ({
+    id: a.id, name: a.name, slug: a.slug, genre: a.genre, origin: a.origin,
+    bio: a.bio, image: a.image, imageAlt: a.imageAlt, tags: a.tags,
+    featured: a.featured, sortOrder: a.sortOrder,
+  }));
+
   return (
     <>
-      <SpotlightCardsInit />
-      <Header />
-      <PageReady delay={1200}/>
-      <main>
-        <HeroSection />
-        <ArtistRosterSection />
-        <MasonryGallery />
-        <LegacyStatsSection />
-        <LatestNewsSection />
+      <Header/>
+      <main className="min-h-screen bg-background">
+        <HeroSection initialSettings={settings}/>
+        <ArtistRosterSection initialArtists={artists}/>
+        <MasonryGallery initialSettings={settings}/>
+        <LegacyStatsSection/>
       </main>
-      <Footer />
+      <Footer/>
+      <PageReady delay={400}/>
     </>
   );
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import AppImage from "@/components/ui/AppImage";
 
-export default function ArtistRosterSection() {
+export default function ArtistRosterSection({ initialArtists = [] }: { initialArtists?: any[] }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [artists, setArtists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

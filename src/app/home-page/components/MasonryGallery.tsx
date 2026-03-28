@@ -13,11 +13,20 @@ const DEFAULTS: GImg[] = [
   { id:"g6", src:"https://ireyprod.com/wp-content/uploads/2024/02/278388810_500716275105749_2200913393930678727_n.jpg", alt:"IREY PROD outdoor concert" },
 ];
 
-export default function MasonryGallery() {
+export default function MasonryGallery({ initialSettings = {} }: { initialSettings?: Record<string,string> }) {
   const [images, setImages] = useState<GImg[]>(DEFAULTS);
   const [lightbox, setLightbox] = useState<GImg | null>(null);
 
   useEffect(() => {
+    // Use server-side data first
+    try {
+      const raw = initialSettings.gallery_page_images;
+      if (raw) {
+        const imgs = JSON.parse(raw);
+        if (Array.isArray(imgs) && imgs.length > 0) { setImages(imgs.slice(0, 6)); return; }
+      }
+    } catch {}
+    // Fallback: fetch live
     fetch("/api/admin/settings").then(r => r.ok ? r.json() : {}).then(d => {
       try {
         if (d.gallery_page_images) {
@@ -26,7 +35,7 @@ export default function MasonryGallery() {
         }
       } catch {}
     }).catch(() => {});
-  }, []);
+  }, [initialSettings]);
 
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === "Escape") setLightbox(null); };

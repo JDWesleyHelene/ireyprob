@@ -18,11 +18,13 @@ const DEFAULT_IMAGES = [
   { src:"https://ireyprod.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-21-at-12.32.07_43897a31.jpg",  alt:"IREY PROD backstage" },
 ];
 
-export default function HeroSection() {
+export default function HeroSection({ initialSettings = {} }: { initialSettings?: Record<string,string> }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const liveSettings = useSettings();
-  const settingsLoaded = Object.keys(liveSettings).length > 0;
+  const _liveSettings = useSettings();
+  // Merge: server-side initial data first, then live updates overlay it
+  const liveSettings = Object.keys(_liveSettings).length > 0 ? _liveSettings : initialSettings;
+  const settingsLoaded = true; // Always true — initialSettings pre-loaded server-side
 
   // ✅ useMemo so images only recalculate when slider_images setting actually changes
   const slideshowImages = useMemo(() => {
@@ -100,11 +102,7 @@ export default function HeroSection() {
     <section ref={heroRef} className="relative min-h-screen flex flex-col justify-end overflow-hidden" aria-label="Hero">
       {/* Slideshow — renders in DB order */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Dark bg while images load — prevents flash of wrong image */}
-        {!settingsLoaded && (
-          <div className="absolute inset-0 bg-[#060606]"/>
-        )}
-        {settingsLoaded && slideshowImages.map((img, i) => (
+        {slideshowImages.map((img, i) => (
           <div key={`${img.src}-${i}`}
             className={`absolute inset-0 transition-opacity duration-[1500ms] ${i === currentSlide ? "opacity-75" : "opacity-0"}`}>
             {img.src && (

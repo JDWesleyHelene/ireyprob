@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export function useArtists() {
-  const [artists, setArtists] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+export function useArtists(initial: any[] = []) {
+  const [artists, setArtists] = useState<any[]>(initial);
+  const [loading, setLoading] = useState(initial.length === 0);
   useEffect(() => {
     fetch("/api/admin/artists").then(r => r.ok ? r.json() : []).then(d => {
       if (Array.isArray(d)) setArtists(d.map((a: any) => ({
@@ -42,8 +42,8 @@ export function useNews() {
   return { news };
 }
 
-export function useSettings() {
-  const [settings, setSettings] = useState<Record<string, string>>({});
+export function useSettings(initial: Record<string,string> = {}) {
+  const [settings, setSettings] = useState<Record<string, string>>(initial);
   useEffect(() => {
     fetch("/api/admin/settings").then(r => r.ok ? r.json() : {}).then(d => {
       if (d && typeof d === "object") setSettings(d);
