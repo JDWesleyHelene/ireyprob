@@ -40,6 +40,7 @@ function BookingModal({ artistName, artistImage, onClose }: { artistName: string
       setSubmitted(true);
     } catch { setSubmitted(true); }
     setLoading(false);
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('page-ready'));
   };
 
   const fieldCls = (name: string) => `w-full bg-foreground/[0.03] border rounded-sm px-4 py-3 text-[13px] text-white placeholder-foreground/25 focus:outline-none transition-colors duration-300 ${errors[name as keyof FormErrors] ? "border-red-500/60" : "border-foreground/10 focus:border-foreground/30"}`;
@@ -131,7 +132,7 @@ export default function ArtistProfilePage() {
           {artist.image && (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img src={artist.image} alt={artist.imageAlt||artist.name}
-              className="absolute inset-0 w-full h-full object-cover object-top"
+              className="absolute inset-0 w-full h-full object-cover object-center"
               loading="eager"
             />
           )}
@@ -159,12 +160,32 @@ export default function ArtistProfilePage() {
           </div>
         </section>
 
-        <section className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 py-16 sm:py-20">
+        <section className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-16 sm:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
-            <div className="lg:col-span-2">
-              <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-5">— Biography</span>
-              <p className="text-[15px] sm:text-[16px] text-foreground/70 leading-relaxed font-light">{artist.bio}</p>
+
+            {/* Left — bio + photo */}
+            <div className="lg:col-span-2 flex flex-col gap-10">
+              <div>
+                <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-5">— Biography</span>
+                <p className="text-[15px] sm:text-[16px] text-foreground/70 leading-relaxed font-light">{artist.bio}</p>
+              </div>
+
+              {/* Artist photo — always visible below bio */}
+              {artist.image && (
+                <div>
+                  <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-4">— Photo</span>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={artist.image}
+                    alt={artist.imageAlt || artist.name}
+                    className="w-full rounded-sm object-cover object-top"
+                    style={{ maxHeight: "600px", objectFit: "cover", objectPosition: "center" }}
+                  />
+                </div>
+              )}
             </div>
+
+            {/* Right — details + CTA */}
             <div className="lg:col-span-1">
               <div className="sticky top-28 bg-foreground/[0.02] border border-foreground/8 rounded-sm p-6">
                 <h3 className="text-[10px] font-semibold tracking-[0.25em] uppercase text-foreground/30 mb-5">Artist Details</h3>
@@ -186,6 +207,7 @@ export default function ArtistProfilePage() {
                 </div>
               </div>
             </div>
+
           </div>
         </section>
 

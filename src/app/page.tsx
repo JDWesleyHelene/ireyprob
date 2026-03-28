@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   },
 };
 
+if (typeof window !== 'undefined') { setTimeout(() => window.dispatchEvent(new Event('page-ready')), 1200); }
+
 export default function HomePage() {
   return (
     <>

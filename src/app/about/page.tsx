@@ -35,6 +35,9 @@ function parse<T>(raw: string | undefined, def: T): T {
 
 export default function AboutPage() {
   const s = useSettings();
+  // Signal page is ready to hide loader
+  useEffect(() => { const t = setTimeout(() => { if (typeof window !== 'undefined') window.dispatchEvent(new Event('page-ready')); }, 800); return () => clearTimeout(t); }, []);
+
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // Derive all content from settings with fallbacks

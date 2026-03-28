@@ -158,6 +158,8 @@ export default function ContactPage() {
       icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> },
   ];
 
+  useEffect(() => { const t = setTimeout(() => { if (typeof window !== 'undefined') window.dispatchEvent(new Event('page-ready')); }, 600); return () => clearTimeout(t); }, []);
+
   return (
     <>
       <Header />

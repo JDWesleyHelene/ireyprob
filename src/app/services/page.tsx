@@ -24,6 +24,9 @@ const DEFAULT_WHY = [
 
 export default function ServicesPage() {
   const settings  = useSettings();
+  // Signal page is ready to hide loader
+  useEffect(() => { const t = setTimeout(() => { if (typeof window !== 'undefined') window.dispatchEvent(new Event('page-ready')); }, 800); return () => clearTimeout(t); }, []);
+
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // Read live data from settings — fall back to defaults

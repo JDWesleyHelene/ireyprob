@@ -49,7 +49,7 @@ export default function SplashScreen() {
           <img
             src="https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png"
             alt="IREY PROD"
-            style={{ height: "150px", width: "auto", objectFit: "contain" }}
+            style={{ height: "225px", width: "auto", objectFit: "contain" }}
           />
         </div>
 

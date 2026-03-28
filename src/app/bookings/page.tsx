@@ -49,6 +49,7 @@ function BookingModal({ artist, onClose }: { artist: any; onClose: () => void })
       setSubmitted(true);
     } finally {
       setLoading(false);
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('page-ready'));
     }
   };
 

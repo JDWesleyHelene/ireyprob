@@ -45,6 +45,8 @@ export default function GalleryPage() {
   const col2 = images.filter((_, i) => i % 3 === 1);
   const col3 = images.filter((_, i) => i % 3 === 2);
 
+  useEffect(() => { const t = setTimeout(() => { if (typeof window !== 'undefined') window.dispatchEvent(new Event('page-ready')); }, 600); return () => clearTimeout(t); }, []);
+
   return (
     <>
       <Header />
