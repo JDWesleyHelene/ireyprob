@@ -133,6 +133,22 @@ export default function AdminHomepagePage() {
             </div>
           ))}
           <RichTextEditor label="Hero Subtext" value={s.hero_subtext} onChange={v => set("hero_subtext", v)} rows={4}/>
+
+          <div>
+            <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">
+              Artist Carousel Timing (seconds)
+            </label>
+            <div className="flex items-center gap-3">
+              <input type="range" min="3" max="15" step="1"
+                value={Math.round(parseInt(s.artist_carousel_interval||"7000",10)/1000)}
+                onChange={e=>set("artist_carousel_interval", String(parseInt(e.target.value)*1000))}
+                className="flex-1 accent-accent"/>
+              <span className="text-[13px] text-foreground/60 w-12 text-center font-mono">
+                {Math.round(parseInt(s.artist_carousel_interval||"7000",10)/1000)}s
+              </span>
+            </div>
+            <p className="text-[10px] text-foreground/25 mt-1">How long each artist shows before auto-advancing (3–15 seconds)</p>
+          </div>
         </div>
       )}
 
