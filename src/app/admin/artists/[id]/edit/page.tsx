@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import ImageUpload from "@/components/admin/ImageUpload";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 const IC = "w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors min-h-[48px]";
 const sl = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -110,8 +111,7 @@ export default function EditArtistPage() {
         </div>
 
         <div>
-          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Biography</label>
-          <textarea value={f.bio} onChange={e=>set("bio",e.target.value)} rows={5} className="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors resize-none"/>
+          <RichTextEditor label="Biography" value={f.bio} onChange={v=>set("bio",v)} rows={6}/>
         </div>
 
         <div>

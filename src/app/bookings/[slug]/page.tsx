@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppImage from "@/components/ui/AppImage";
 import Link from "next/link";
+import ShareButtons from "@/components/ui/ShareButtons";
 
 interface FormErrors { fullName?: string; email?: string; address?: string; dateTime?: string; }
 
@@ -169,12 +170,15 @@ export default function ArtistProfilePage() {
             <div className="lg:col-span-2 flex flex-col gap-10">
               <div>
                 <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-5">— Biography</span>
-                <p className="text-[15px] sm:text-[16px] text-foreground/70 leading-relaxed font-light">{artist.bio}</p>
+                <div className="text-[15px] sm:text-[16px] text-foreground/70 leading-relaxed font-light rich-content" dangerouslySetInnerHTML={{__html: artist.bio}}/>
+                <div className="mt-8 pt-6 border-t border-foreground/8">
+                  <ShareButtons url={typeof window!=="undefined"?window.location.href:`https://ireyprob.vercel.app/bookings/${artist.slug}`} title={`${artist.name} — IREY PROD`}/>
+                </div>
               </div>
 
-              {/* Artist photo — always visible below bio */}
+              {/* Artist photo — hidden on mobile (hero shows it), visible on desktop */}
               {artist.image && (
-                <div>
+                <div className="hidden md:block">
                   <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-4">— Photo</span>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
