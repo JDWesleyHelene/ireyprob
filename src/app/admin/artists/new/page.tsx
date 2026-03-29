@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ImageUpload from "@/components/admin/ImageUpload";
 import RichTextEditor from "@/components/ui/RichTextEditor";
+import { ArtistSocialEditor } from "@/components/ui/ArtistSocialLinks";
 
 const IC = "w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors min-h-[48px]";
 const sl = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -11,6 +12,7 @@ const sl = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").rep
 export default function NewArtistPage() {
   const router = useRouter();
   const [f, setF]       = useState({ name:"", genre:"", origin:"", bio:"", image:"", image_alt:"", slug:"", tags:"", featured:false });
+  const [socialLinks, setSocialLinks] = useState<{platform:string;url:string}[]>([]);
   const [slugEditing, setSlugEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error,  setError]  = useState<string|null>(null);
@@ -36,7 +38,7 @@ export default function NewArtistPage() {
     try {
       const res = await fetch("/api/admin/artists", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...f, tags: f.tags.split(",").map(t=>t.trim()).filter(Boolean), slug: f.slug || sl(f.name) }),
+        body: JSON.stringify({ ...f, tags: f.tags.split(",").map(t=>t.trim()).filter(Boolean), slug: f.slug || sl(f.name), socialLinks }),,
       });
       if (!res.ok) throw new Error();
       router.push("/admin/artists");
@@ -123,6 +125,8 @@ export default function NewArtistPage() {
           <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Image Alt Text</label>
           <input type="text" value={f.image_alt} onChange={e=>set("image_alt",e.target.value)} placeholder="Artist performing on stage" className={IC}/>
         </div>
+
+        <ArtistSocialEditor value={socialLinks} onChange={setSocialLinks}/>
 
         <div className="flex items-center gap-3">
           <input type="checkbox" id="feat" checked={f.featured} onChange={e=>set("featured",e.target.checked)} className="w-4 h-4 border border-foreground/20 bg-foreground/5 rounded-sm cursor-pointer"/>

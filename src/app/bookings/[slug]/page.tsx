@@ -28,6 +28,7 @@ export default async function ArtistPage({ params }: Props) {
     image: a.image||"", imageAlt: a.imageAlt||"",
     tags: Array.isArray(a.tags) ? a.tags : [],
     featured: a.featured, sortOrder: a.sortOrder,
+    socialLinks: Array.isArray(a.socialLinks) ? a.socialLinks : [],
   });
 
   return <ArtistDetailClient artist={safe(artist)} related={related.map(safe)}/>;

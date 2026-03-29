@@ -36,8 +36,9 @@ export async function PATCH(req: Request, { params }: Ctx) {
       bio:       body.bio       ?? undefined,
       image:     body.image     ?? undefined,
       imageAlt:  body.image_alt ?? undefined,
-      tags:      body.tags      ?? undefined,
-      featured:  body.featured !== undefined ? Boolean(body.featured) : undefined,
+      tags:        body.tags        ?? undefined,
+      socialLinks: body.socialLinks  ?? undefined,
+      featured:    body.featured !== undefined ? Boolean(body.featured) : undefined,
       sortOrder: body.sort_order !== undefined ? Number(body.sort_order) : undefined,
     }});
     return NextResponse.json(updated);

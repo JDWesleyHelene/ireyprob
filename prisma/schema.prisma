@@ -22,8 +22,9 @@ model Artist {
   bio       String?
   image     String?
   imageAlt  String?
-  tags      Json?
-  featured  Boolean  @default(false)
+  tags        Json?
+  socialLinks Json?
+  featured    Boolean  @default(false)
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
 }

@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import ImageUpload from "@/components/admin/ImageUpload";
 import RichTextEditor from "@/components/ui/RichTextEditor";
+import { ArtistSocialEditor } from "@/components/ui/ArtistSocialLinks";
 
 const IC = "w-full bg-foreground/5 border border-foreground/10 rounded-sm px-4 py-3 text-[13px] text-foreground focus:outline-none focus:border-foreground/30 transition-colors min-h-[48px]";
 const sl = (s: string) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -13,6 +14,7 @@ export default function EditArtistPage() {
   const router   = useRouter();
   const [f, setF]   = useState({ name:"", genre:"", origin:"", bio:"", image:"", image_alt:"", slug:"", tags:"", featured:false });
   const [slugEditing, setSlugEditing] = useState(false);
+  const [socialLinks, setSocialLinks] = useState<{platform:string;url:string}[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving,  setSaving]  = useState(false);
   const [saved,   setSaved]   = useState(false);
@@ -20,7 +22,7 @@ export default function EditArtistPage() {
 
   useEffect(() => {
     fetch(`/api/admin/artists/${id}`).then(r=>r.ok?r.json():null).then(a => {
-      if (a) setF({ name:a.name||"", genre:a.genre||"", origin:a.origin||"", bio:a.bio||"", image:a.image||"", image_alt:a.imageAlt||"", slug: sl(a.slug||a.name||""), tags: Array.isArray(a.tags)?a.tags.join(", "):(a.tags||""), featured:Boolean(a.featured) });
+      if (a) { setF({ name:a.name||"", genre:a.genre||"", origin:a.origin||"", bio:a.bio||"", image:a.image||"", image_alt:a.imageAlt||"", slug: sl(a.slug||a.name||""), tags: Array.isArray(a.tags)?a.tags.join(", "):(a.tags||""), featured:Boolean(a.featured) }); setSocialLinks(Array.isArray(a.socialLinks)?a.socialLinks:[]); }
       else setError("Artist not found");
       setLoading(false);
     }).catch(() => { setError("Failed to load"); setLoading(false); });
@@ -40,7 +42,7 @@ export default function EditArtistPage() {
     try {
       const res = await fetch(`/api/admin/artists/${id}`, {
         method: "PATCH", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...f, tags: f.tags.split(",").map(t=>t.trim()).filter(Boolean), slug: f.slug || sl(f.name) }),
+        body: JSON.stringify({ ...f, tags: f.tags.split(",").map(t=>t.trim()).filter(Boolean), slug: f.slug || sl(f.name), socialLinks }),,
       });
       if (!res.ok) throw new Error();
       setSaved(true); setTimeout(()=>setSaved(false), 3000);
@@ -129,6 +131,8 @@ export default function EditArtistPage() {
           <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Image Alt Text</label>
           <input type="text" value={f.image_alt} onChange={e=>set("image_alt",e.target.value)} placeholder="Artist performing on stage" className={IC}/>
         </div>
+
+        <ArtistSocialEditor value={socialLinks} onChange={setSocialLinks}/>
 
         <div className="flex items-center gap-3">
           <input type="checkbox" id="feat" checked={f.featured} onChange={e=>set("featured",e.target.checked)} className="w-4 h-4 border border-foreground/20 bg-foreground/5 rounded-sm cursor-pointer"/>

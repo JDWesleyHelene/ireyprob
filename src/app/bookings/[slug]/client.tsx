@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ui/ShareButtons";
+import { ArtistSocialDisplay } from "@/components/ui/ArtistSocialLinks";
 
 interface FormErrors { fullName?: string; email?: string; address?: string; dateTime?: string; }
 
@@ -153,6 +154,7 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
                 <div className="mt-8 pt-6 border-t border-foreground/8">
                   <ShareButtons url={shareUrl} title={`${artist.name} — IREY PROD`}/>
                 </div>
+                <ArtistSocialDisplay artistName={artist.name} socialLinks={Array.isArray(artist.socialLinks) ? artist.socialLinks : []}/>
               </div>
               {/* Photo — desktop only */}
               {artist.image && (
