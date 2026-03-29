@@ -157,7 +157,7 @@ export default function BookingsPage({ initialArtists = [], initialSettings = {}
             {liveArtists.map((artist, i) => (
               <div key={artist.id} className="artist-card">
                 <div className="group relative overflow-hidden rounded-sm bg-[#040404] border border-foreground/5 hover:border-foreground/15 transition-all duration-500">
-                  <Link href={`/bookings/${artist.slug}`} className="block">
+                  <Link href={`/bookings/${artist.slug}`} className="block" prefetch={true}>
                     <div className="relative h-[260px] sm:h-[300px] overflow-hidden img-zoom-wrap cursor-pointer">
                       <AppImage src={artist.image || "/assets/images/no_image.png"} alt={artist.image_alt || artist.name} fill className="img-zoom object-cover grayscale group-hover:grayscale-0 transition-all duration-700" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
@@ -168,7 +168,7 @@ export default function BookingsPage({ initialArtists = [], initialSettings = {}
                     </div>
                   </Link>
                   <div className="p-4 sm:p-6">
-                    <Link href={`/bookings/${artist.slug}`} className="block group/name mb-1">
+                    <Link href={`/bookings/${artist.slug}`} className="block group/name mb-1" prefetch={true}>
                       <h3 className="font-display text-xl sm:text-2xl font-light italic text-foreground group-hover/name:text-accent transition-colors duration-300">{artist.name}</h3>
                     </Link>
                     <p className="text-[12px] text-foreground/80 mb-4 tracking-wide">{artist.origin}</p>

@@ -2,13 +2,24 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSettings } from "@/lib/useLiveData";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ArtistRosterSection({ initialArtists = [] }: { initialArtists?: any[] }) {
+  const router = useRouter();
   const [artists,  setArtists]  = useState<any[]>(initialArtists);
   const [loading,  setLoading]  = useState(initialArtists.length === 0);
   const settings = useSettings();
+  // Prefetch all artist pages for instant navigation
+  useEffect(() => {
+    artists.forEach(a => {
+      const slug = (a.slug||a.name||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+      router.prefetch(`/bookings/${slug}`);
+    });
+  }, [artists, router]);
   const intervalMs = Math.max(3000, parseInt(settings.artist_carousel_interval || "7000", 10));
   const [active,   setActive]   = useState(0);
+  const [dir,      setDir]      = useState<'left'|'right'>('right');
+  const [animKey,  setAnimKey]  = useState(0);
   const [dragging, setDragging] = useState(false);
   const startX   = useRef(0);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -31,8 +42,8 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
       .catch(() => setLoading(false));
   }, []);
 
-  const prev = useCallback(() => setActive(p => (p - 1 + artists.length) % artists.length), [artists.length]);
-  const next = useCallback(() => setActive(p => (p + 1) % artists.length), [artists.length]);
+  const prev = useCallback(() => { setDir('left');  setAnimKey(k=>k+1); setActive(p => (p - 1 + artists.length) % artists.length); }, [artists.length]);
+  const next = useCallback(() => { setDir('right'); setAnimKey(k=>k+1); setActive(p => (p + 1) % artists.length); }, [artists.length]);
 
   // Touch/drag swipe
   const onTouchStart = (e: React.TouchEvent) => { startX.current = e.touches[0].clientX; };
@@ -113,7 +124,7 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
                 const a = artists[active];
                 const tags = Array.isArray(a.tags) ? a.tags : [];
                 return (
-                  <Link href={`/bookings/${getSlug(a)}`} className="group relative overflow-hidden rounded-sm h-[380px] sm:h-[480px] block cursor-pointer">
+                  <Link href={`/bookings/${getSlug(a)}`} key={animKey} className="group relative overflow-hidden rounded-sm h-[380px] sm:h-[480px] block cursor-pointer" style={{animation:`slideIn${dir==="right"?"Right":"Left"} 0.45s cubic-bezier(0.25,0.46,0.45,0.94) both`}}>
                     {a.image
                       ? <img src={a.image} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"/>
                       : <div className="absolute inset-0 bg-foreground/10"/>
@@ -163,7 +174,7 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
               {/* Dots */}
               <div className="flex gap-1.5">
                 {artists.map((_,i) => (
-                  <button key={i} onClick={() => setActive(i)}
+                  <button key={i} onClick={() => { setDir(i > active ? 'right' : 'left'); setAnimKey(k=>k+1); setActive(i); }}
                     className={`h-1 rounded-full transition-all duration-300 ${i===active ? "bg-accent w-6" : "bg-foreground/20 w-1.5"}`}/>
                 ))}
               </div>
@@ -189,6 +200,10 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
           </div>
         )}
       </div>
+      <style dangerouslySetInnerHTML={{__html:`
+        @keyframes slideInRight { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes slideInLeft  { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
+      `}}/>
     </section>
   );
 }

@@ -26,7 +26,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ireyprob.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://ireyprob.vercel.app'),
   title: {
     default: 'IREY PROD — Booking Agency & Event Production | Mauritius Island',
     template: '%s — IREY PROD',
