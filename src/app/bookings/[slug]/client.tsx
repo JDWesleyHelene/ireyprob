@@ -110,6 +110,8 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
   const tags = Array.isArray(artist.tags) ? artist.tags : [];
   const BASE = process.env.NEXT_PUBLIC_APP_URL || "https://ireyprob.vercel.app";
   const shareUrl = `${BASE}/bookings/${artist.slug}`;
+  const bioText  = (artist.bio || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const shareDesc = bioText.split(" ").slice(0, 20).join(" ") + (bioText.split(" ").length > 20 ? "..." : "");
 
   return (
     <>
@@ -169,7 +171,7 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
                 <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-5">— Biography</span>
                 <div className="text-[15px] sm:text-[16px] text-foreground/70 leading-relaxed font-light rich-content" dangerouslySetInnerHTML={{__html: artist.bio}}/>
                 <div className="mt-8 pt-6 border-t border-foreground/8">
-                  <ShareButtons url={shareUrl} title={`${artist.name} — IREY PROD`}/>
+                  <ShareButtons url={shareUrl} title={`${artist.name} — IREY PROD`} description={shareDesc}/>
                 </div>
               </div>
               {/* Photo — desktop only */}
