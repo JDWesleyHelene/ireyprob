@@ -77,7 +77,7 @@ export default function Header() {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/bookings"
+            <Link href="/bookings" prefetch={true}
               className="px-5 lg:px-6 py-2.5 text-[11px] font-semibold tracking-[0.2em] uppercase text-background bg-foreground rounded-sm hover:bg-accent transition-all duration-300">
               Book Now
             </Link>
@@ -133,7 +133,7 @@ export default function Header() {
           </nav>
           <div className={`transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
             style={{ transitionDelay: menuOpen ? "500ms" : "0ms" }}>
-            <Link href="/bookings"
+            <Link href="/bookings" prefetch={true}
               className="w-full flex items-center justify-center gap-3 py-4 bg-foreground text-background text-[12px] font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-accent transition-all duration-300"
               onClick={() => setMenuOpen(false)}>
               Book Now

@@ -19,7 +19,10 @@ export default async function ArtistPage({ params }: Props) {
   );
   if (!artist) return notFound();
 
-  const related = all.filter(a => a.id !== artist.id).slice(0, 3);
+  // Shuffle remaining artists randomly so "More Artists" varies each visit
+  const others = all.filter(a => a.id !== artist.id);
+  const shuffled = others.sort(() => Math.random() - 0.5);
+  const related = shuffled.slice(0, 3);
 
   // Serialize (Prisma returns Date objects etc.)
   const safe = (a: any) => ({

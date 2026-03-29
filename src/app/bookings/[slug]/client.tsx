@@ -212,7 +212,7 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
               <h2 className="font-display text-[2rem] sm:text-[2.5rem] font-extrabold italic text-foreground mb-10">More Artists</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {related.map((a:any)=>(
-                  <Link key={a.id} href={`/bookings/${a.slug}`} className="group relative overflow-hidden rounded-sm h-[240px]">
+                  <Link key={a.id} href={`/bookings/${a.slug}`} prefetch={true} className="group relative overflow-hidden rounded-sm h-[240px]">
                     {a.image && <img src={cloudImg(a.image, {w:400})} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"/>
                     <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -226,7 +226,7 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
           </section>
         )}
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-10 border-t border-foreground/5">
-          <Link href="/bookings" className="inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.2em] uppercase text-foreground/40 hover:text-foreground transition-colors duration-300">
+          <Link href="/bookings" prefetch={true} className="inline-flex items-center gap-2 text-[12px] font-semibold tracking-[0.2em] uppercase text-foreground/40 hover:text-foreground transition-colors duration-300">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             Back to All Artists
           </Link>

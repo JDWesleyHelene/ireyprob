@@ -61,39 +61,28 @@ export default function MasonryGallery({ initialSettings = {} }: { initialSettin
               Our World
             </h2>
           </div>
-          <Link href="/gallery"
-            className="hidden sm:inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/80 hover:text-foreground transition-colors duration-300 group">
-            View Full Gallery
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </Link>
+<div/>
         </div>
 
-        {/* 3-col masonry */}
+        {/* Uniform grid — same height/width for all images */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-          {[col1, col2, col3].map((col, ci) => (
-            <div key={ci} className="flex flex-col gap-2 sm:gap-3">
-              {col.map(img => (
-                <button key={img.id} onClick={() => setLightbox(img)}
-                  className="relative overflow-hidden rounded-sm group cursor-zoom-in block w-full">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={cloudImg(img.url||img.src, {w:800})} alt={img.alt}
-                    className="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-                    loading="lazy"/>
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
-                  </div>
-                </button>
-              ))}
-            </div>
+          {images.slice(0, 6).map(img => (
+            <button key={img.id} onClick={() => setLightbox(img)}
+              className="relative overflow-hidden rounded-sm group cursor-zoom-in block w-full aspect-square">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={cloudImg(img.url||img.src, {w:600})} alt={img.alt}
+                className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                loading="lazy"/>
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+              </div>
+            </button>
           ))}
         </div>
 
         {/* CTA button */}
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-foreground/70 sm:hidden">
-            <Link href="/gallery" className="text-accent underline underline-offset-2">View Full Gallery →</Link>
-          </p>
-          <div className="hidden sm:block"/>
+
           <Link href="/gallery"
             className="inline-flex items-center gap-3 px-8 py-4 border border-foreground/20 text-foreground text-[11px] font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-foreground/5 hover:border-foreground/40 transition-all duration-300">
             Explore Full Gallery
