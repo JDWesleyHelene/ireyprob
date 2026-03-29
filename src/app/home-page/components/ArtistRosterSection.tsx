@@ -19,8 +19,6 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
   }, [artists, router]);
   const intervalMs = Math.max(3000, parseInt(settings.artist_carousel_interval || "7000", 10));
   const [active,   setActive]   = useState(0);
-  const [dir,      setDir]      = useState<'left'|'right'>('right');
-  const [animKey,  setAnimKey]  = useState(0);
   const [dragging, setDragging] = useState(false);
   const startX   = useRef(0);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -43,8 +41,8 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
       .catch(() => setLoading(false));
   }, []);
 
-  const prev = useCallback(() => { setDir('left');  setAnimKey(k=>k+1); setActive(p => (p - 1 + artists.length) % artists.length); }, [artists.length]);
-  const next = useCallback(() => { setDir('right'); setAnimKey(k=>k+1); setActive(p => (p + 1) % artists.length); }, [artists.length]);
+  const prev = useCallback(() => setActive(p => (p - 1 + artists.length) % artists.length), [artists.length]);
+  const next = useCallback(() => setActive(p => (p + 1) % artists.length), [artists.length]);
 
   // Touch/drag swipe
   const onTouchStart = (e: React.TouchEvent) => { startX.current = e.touches[0].clientX; };
@@ -98,19 +96,19 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
             onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
             onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseLeave={()=>setDragging(false)}>
 
-            {/* Main carousel — show 3 cards: prev, active, next */}
+            {/* Carousel track — slides smoothly using Tailwind transition+translate */}
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr_1fr] gap-3 sm:gap-4 items-center">
 
-              {/* Prev card (faded) */}
+              {/* Prev card */}
               <div className="hidden md:block">
                 {(() => {
                   const a = artists[(active - 1 + artists.length) % artists.length];
                   return (
-                    <button onClick={prev} className="w-full text-left group opacity-40 hover:opacity-60 transition-opacity cursor-pointer">
-                      <div className="relative overflow-hidden rounded-sm h-[280px] bg-foreground/10">
-                        {a.image && <img src={cloudImg(a.image,{w:500})} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale"/>}
+                    <button onClick={prev} className="w-full text-left group opacity-40 hover:opacity-60 transition-all duration-500 cursor-pointer">
+                      <div className="relative overflow-hidden rounded-sm h-[280px] bg-foreground/10 transition-all duration-500">
+                        {a.image && <img src={cloudImg(a.image,{w:500})} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale transition-all duration-500"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"/>
-                        <div className="absolute bottom-0 left-0 p-5">
+                        <div className="absolute bottom-0 left-0 p-5 transition-all duration-500">
                           <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-accent mb-1">{a.genre}</p>
                           <h3 className="font-display text-lg font-extrabold italic text-white">{a.name}</h3>
                         </div>
@@ -120,46 +118,54 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
                 })()}
               </div>
 
-              {/* Active card (featured) */}
-              {(() => {
-                const a = artists[active];
-                const tags = Array.isArray(a.tags) ? a.tags : [];
-                return (
-                  <Link href={`/bookings/${getSlug(a)}`} key={animKey} className="group relative overflow-hidden rounded-sm h-[380px] sm:h-[480px] block cursor-pointer" style={{animation:`slideIn${dir==="right"?"Right":"Left"} 0.45s cubic-bezier(0.25,0.46,0.45,0.94) both`}}>
-                    {a.image
-                      ? <img src={cloudImg(a.image,{w:900})} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"/>
-                      : <div className="absolute inset-0 bg-foreground/10"/>
-                    }
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent"/>
-                    {tags.length > 0 && (
-                      <div className="absolute top-5 left-5 flex flex-wrap gap-1.5">
-                        {tags.slice(0,2).map((tag:string) => (
-                          <span key={tag} className="px-2.5 py-1 bg-black/60 backdrop-blur-sm border border-white/15 rounded-sm text-[9px] font-semibold tracking-[0.2em] uppercase text-white/80">{tag}</span>
-                        ))}
+              {/* Active card — full sliding track */}
+              <div className="relative overflow-hidden rounded-sm h-[380px] sm:h-[480px]">
+                {/* Track: all cards side by side, translate to show active */}
+                <div
+                  className="flex h-full transition-transform duration-700 ease-in-out"
+                  style={{ width: `${artists.length * 100}%`, transform: `translateX(-${active * (100 / artists.length)}%)` }}>
+                  {artists.map((a, i) => {
+                    const tags = Array.isArray(a.tags) ? a.tags : [];
+                    return (
+                      <div key={a.id} className="relative flex-shrink-0" style={{ width: `${100 / artists.length}%` }}>
+                        <Link href={`/bookings/${getSlug(a)}`} className="group block w-full h-full">
+                          {a.image
+                            ? <img src={cloudImg(a.image,{w:900})} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"/>
+                            : <div className="absolute inset-0 bg-foreground/10"/>
+                          }
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent"/>
+                          {tags.length > 0 && (
+                            <div className="absolute top-5 left-5 flex flex-wrap gap-1.5">
+                              {tags.slice(0,2).map((tag:string) => (
+                                <span key={tag} className="px-2.5 py-1 bg-black/60 backdrop-blur-sm border border-white/15 rounded-sm text-[9px] font-semibold tracking-[0.2em] uppercase text-white/80">{tag}</span>
+                              ))}
+                            </div>
+                          )}
+                          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                            <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-accent mb-1.5">{a.genre}</p>
+                            <h3 className="font-display text-2xl sm:text-3xl font-extrabold italic text-white group-hover:text-accent transition-colors mb-1">{a.name}</h3>
+                            <p className="text-[12px] text-white/70">{a.origin}</p>
+                            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/70 border-b border-white/30 pb-0.5">Book Artist →</span>
+                            </div>
+                          </div>
+                        </Link>
                       </div>
-                    )}
-                    <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                      <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-accent mb-1.5">{a.genre}</p>
-                      <h3 className="font-display text-2xl sm:text-3xl font-extrabold italic text-white group-hover:text-accent transition-colors mb-1">{a.name}</h3>
-                      <p className="text-[12px] text-white/70">{a.origin}</p>
-                      <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/70 border-b border-white/30 pb-0.5">Book Artist →</span>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })()}
+                    );
+                  })}
+                </div>
+              </div>
 
-              {/* Next card (faded) */}
+              {/* Next card */}
               <div className="hidden md:block">
                 {(() => {
                   const a = artists[(active + 1) % artists.length];
                   return (
-                    <button onClick={next} className="w-full text-left group opacity-40 hover:opacity-60 transition-opacity cursor-pointer">
-                      <div className="relative overflow-hidden rounded-sm h-[280px] bg-foreground/10">
-                        {a.image && <img src={cloudImg(a.image,{w:500})} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale"/>}
+                    <button onClick={next} className="w-full text-left group opacity-40 hover:opacity-60 transition-all duration-500 cursor-pointer">
+                      <div className="relative overflow-hidden rounded-sm h-[280px] bg-foreground/10 transition-all duration-500">
+                        {a.image && <img src={cloudImg(a.image,{w:500})} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale transition-all duration-500"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"/>
-                        <div className="absolute bottom-0 left-0 p-5">
+                        <div className="absolute bottom-0 left-0 p-5 transition-all duration-500">
                           <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-accent mb-1">{a.genre}</p>
                           <h3 className="font-display text-lg font-extrabold italic text-white">{a.name}</h3>
                         </div>
@@ -175,7 +181,7 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
               {/* Dots */}
               <div className="flex gap-1.5">
                 {artists.map((_,i) => (
-                  <button key={i} onClick={() => { setDir(i > active ? 'right' : 'left'); setAnimKey(k=>k+1); setActive(i); }}
+                  <button key={i} onClick={() => setActive(i)}
                     className={`h-1 rounded-full transition-all duration-300 ${i===active ? "bg-accent w-6" : "bg-foreground/20 w-1.5"}`}/>
                 ))}
               </div>
@@ -201,10 +207,7 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
           </div>
         )}
       </div>
-      <style dangerouslySetInnerHTML={{__html:`
-        @keyframes slideInRight { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
-        @keyframes slideInLeft  { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
-      `}}/>
+
     </section>
   );
 }
