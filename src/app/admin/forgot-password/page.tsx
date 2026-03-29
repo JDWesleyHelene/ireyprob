@@ -30,7 +30,7 @@ export default function ForgotPasswordPage() {
       <div className="relative z-10 w-full max-w-md">
         <div className="text-center mb-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={toCloudUrl("https://ireyprod.com/wp-content/uploads/2026/03/LOGO-PNG.png")} alt="IREY PROD"
+          <img src="https://res.cloudinary.com/dvmhbtiz4/image/upload/ireyprod/LOGO-PNG.png" alt="IREY PROD"
             style={{ height:"52px", width:"auto", margin:"0 auto 20px" }}/>
           <h1 className="font-display text-3xl font-extrabold italic text-foreground mb-1">Forgot Password</h1>
           <p className="text-[12px] text-foreground/40 tracking-[0.15em]">Enter your email to receive a reset link</p>
