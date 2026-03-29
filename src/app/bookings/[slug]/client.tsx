@@ -170,7 +170,6 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
                 <div className="mt-8 pt-6 border-t border-foreground/8">
                   <ShareButtons url={shareUrl} title={`${artist.name} — IREY PROD`}/>
                 </div>
-                <ArtistSocialDisplay artistName={artist.name} socialLinks={Array.isArray(artist.socialLinks) ? artist.socialLinks : []}/>
               </div>
               {/* Photo — desktop only */}
               {artist.image && (
