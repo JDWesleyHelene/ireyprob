@@ -136,6 +136,22 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {tags.map((tag: string) => <span key={tag} className="px-2.5 py-1 bg-white/10 backdrop-blur-sm border border-white/15 rounded-sm text-[9px] font-semibold tracking-[0.2em] uppercase text-white/80">{tag}</span>)}
                 </div>
+
+                {/* Artist social links — hero */}
+                {Array.isArray(artist.socialLinks) && artist.socialLinks.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <p className="text-[10px] text-white/40 mb-2.5">You can find <span className="text-white/60">{artist.name}</span> also on</p>
+                    <div className="flex flex-wrap gap-2">
+                      {artist.socialLinks.map((s: any, i: number) => (
+                        <a key={i} href={s.url} target="_blank" rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/15 rounded-sm text-white/70 hover:text-white hover:bg-white/20 transition-all text-[11px] font-medium capitalize">
+                          {s.platform}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <button onClick={()=>setShowModal(true)} className="w-full md:w-auto flex-shrink-0 inline-flex items-center justify-center gap-3 px-8 py-4 bg-foreground text-background text-[12px] font-semibold tracking-[0.18em] uppercase rounded-sm hover:bg-accent transition-all duration-300">
                 Book {artist.name}

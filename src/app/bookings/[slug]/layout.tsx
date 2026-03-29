@@ -23,8 +23,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const title = `${artist.name} — IREY PROD`;
     const desc  = excerpt || `${artist.name} · ${artist.genre || "Artist"} · Book via IREY PROD, Mauritius.`;
 
-    // Use artist image for OG — must be absolute URL
-    const image = artist.image?.startsWith("http") ? artist.image : undefined;
+    // Use artist image for OG — must be absolute URL and NOT a logo file
+    const LOGO_PATTERNS = ["LOGO-PNG", "IREY-PROD-WHITE", "IREY-PROD-BLACK"];
+    const isLogo = (url: string) => LOGO_PATTERNS.some(p => url.includes(p));
+    const rawImage = artist.image?.startsWith("http") ? artist.image : undefined;
+    const image = rawImage && !isLogo(rawImage) ? rawImage : undefined;
 
     return {
       title,
