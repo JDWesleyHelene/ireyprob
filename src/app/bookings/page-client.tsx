@@ -1,4 +1,5 @@
 "use client";
+import { cloudImg } from "@/lib/cloudImage";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -58,7 +59,7 @@ function BookingModal({ artist, onClose }: { artist: any; onClose: () => void })
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
       <div className="relative z-10 w-full max-w-lg bg-[#0a0a0a] border border-foreground/10 rounded-sm overflow-hidden max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="relative h-32 overflow-hidden">
-          <AppImage src={artist.image} alt={artist.image_alt || artist.name} fill className="object-cover grayscale brightness-40" sizes="512px" />
+          <AppImage src={cloudImg(artist.image, {w:600})} alt={artist.image_alt || artist.name} fill className="object-cover grayscale brightness-40" sizes="512px" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a0a]" />
           <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border border-foreground/20 rounded-sm text-foreground/85 hover:text-foreground hover:border-foreground/50 transition-all duration-300">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>

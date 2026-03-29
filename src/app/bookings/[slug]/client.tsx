@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { cloudImg } from "@/lib/cloudImage";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -49,7 +50,7 @@ function BookingModal({ artistName, artistImage, onClose }: { artistName: string
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"/>
       <div className="relative z-10 w-full max-w-lg bg-[#0a0a0a] border border-foreground/10 rounded-sm overflow-hidden max-h-[90vh] overflow-y-auto" onClick={e=>e.stopPropagation()}>
         <div className="relative h-32 overflow-hidden flex-shrink-0">
-          {artistImage && <img src={artistImage} alt={artistName} className="absolute inset-0 w-full h-full object-cover grayscale brightness-40"/>}
+          {artistImage && <img src={cloudImg(artistImage, {w:600})} alt={artistName} className="absolute inset-0 w-full h-full object-cover grayscale brightness-40"/>}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0a0a]"/>
           <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border border-foreground/20 rounded-sm text-foreground/50 hover:text-foreground transition-all">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -115,7 +116,7 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
         {/* Hero */}
         <section className="relative h-[75vh] min-h-[540px] overflow-hidden">
           {artist.image && (
-            <img src={artist.image} alt={artist.imageAlt||artist.name}
+            <img src={cloudImg(artist.image, {w:1400})} alt={artist.imageAlt||artist.name}
               className="absolute inset-0 w-full h-full object-cover object-center"
               loading="eager" fetchPriority="high"/>
           )}
@@ -157,7 +158,7 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
               {artist.image && (
                 <div className="hidden md:block">
                   <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-foreground/30 block mb-4">— Photo</span>
-                  <img src={artist.image} alt={artist.imageAlt||artist.name}
+                  <img src={cloudImg(artist.image, {w:900})} alt={artist.imageAlt||artist.name}
                     className="w-full rounded-sm object-cover object-center"
                     style={{maxHeight:"600px",objectFit:"cover",objectPosition:"center"}}/>
                 </div>
@@ -195,7 +196,7 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {related.map((a:any)=>(
                   <Link key={a.id} href={`/bookings/${a.slug}`} className="group relative overflow-hidden rounded-sm h-[240px]">
-                    {a.image && <img src={a.image} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>}
+                    {a.image && <img src={cloudImg(a.image, {w:400})} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"/>
                     <div className="absolute bottom-0 left-0 right-0 p-4">
                       <p className="text-[9px] font-semibold tracking-[0.2em] uppercase text-accent mb-1">{a.genre}</p>

@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'IREY PROD — Your Gateway to Unforgettable Experiences',
     description: 'Booking agency & event production based in Mauritius Island.',
-    images: [{ url: '/assets/images/IREY-PROD-BLACK-1773496673088.png', width: 1200, height: 630 }],
+    // images set per-page in child layouts
     locale: 'en_US',
     type: 'website',
   },

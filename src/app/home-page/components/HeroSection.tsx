@@ -1,4 +1,5 @@
 "use client";
+import { cloudImg } from "@/lib/cloudImage";
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { toCloudUrl } from "@/lib/imageUrl";
 import Link from "next/link";
@@ -107,7 +108,7 @@ export default function HeroSection({ initialSettings = {} }: { initialSettings?
           <div key={`${img.src}-${i}`}
             className={`absolute inset-0 transition-opacity duration-[1500ms] ${i === currentSlide ? "opacity-75" : "opacity-0"}`}>
             {img.src && (
-              <AppImage src={img.src} alt={img.alt} fill priority={i === 0}
+              <AppImage src={cloudImg(img.src, {w:1600})} alt={img.alt} fill priority={i === 0}
                 className="hero-bg-img object-cover object-center" sizes="100vw" />
             )}
           </div>

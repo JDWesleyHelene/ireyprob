@@ -1,4 +1,5 @@
 "use client";
+import { cloudImg } from "@/lib/cloudImage";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSettings } from "@/lib/useLiveData";
 import Link from "next/link";
@@ -107,7 +108,7 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
                   return (
                     <button onClick={prev} className="w-full text-left group opacity-40 hover:opacity-60 transition-opacity cursor-pointer">
                       <div className="relative overflow-hidden rounded-sm h-[280px] bg-foreground/10">
-                        {a.image && <img src={a.image} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale"/>}
+                        {a.image && <img src={cloudImg(a.image,{w:500})} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"/>
                         <div className="absolute bottom-0 left-0 p-5">
                           <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-accent mb-1">{a.genre}</p>
@@ -126,7 +127,7 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
                 return (
                   <Link href={`/bookings/${getSlug(a)}`} key={animKey} className="group relative overflow-hidden rounded-sm h-[380px] sm:h-[480px] block cursor-pointer" style={{animation:`slideIn${dir==="right"?"Right":"Left"} 0.45s cubic-bezier(0.25,0.46,0.45,0.94) both`}}>
                     {a.image
-                      ? <img src={a.image} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"/>
+                      ? <img src={cloudImg(a.image,{w:900})} alt={a.imageAlt||a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"/>
                       : <div className="absolute inset-0 bg-foreground/10"/>
                     }
                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent"/>
@@ -156,7 +157,7 @@ export default function ArtistRosterSection({ initialArtists = [] }: { initialAr
                   return (
                     <button onClick={next} className="w-full text-left group opacity-40 hover:opacity-60 transition-opacity cursor-pointer">
                       <div className="relative overflow-hidden rounded-sm h-[280px] bg-foreground/10">
-                        {a.image && <img src={a.image} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale"/>}
+                        {a.image && <img src={cloudImg(a.image,{w:500})} alt={a.name} className="absolute inset-0 w-full h-full object-cover object-center grayscale"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"/>
                         <div className="absolute bottom-0 left-0 p-5">
                           <p className="text-[9px] font-semibold tracking-[0.25em] uppercase text-accent mb-1">{a.genre}</p>
