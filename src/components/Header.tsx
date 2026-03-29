@@ -61,7 +61,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-3 group flex-shrink-0 relative z-[60]">
             <AppImage src="https://res.cloudinary.com/dvmhbtiz4/image/upload/ireyprod/IREY-PROD-WHITE.png" alt="IREY PROD logo"
               width={120} height={44} priority
-              className="h-8 sm:h-10 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
               unoptimized />
           </Link>
 

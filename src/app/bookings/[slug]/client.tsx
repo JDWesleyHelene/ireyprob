@@ -108,7 +108,8 @@ function BookingModal({ artistName, artistImage, onClose }: { artistName: string
 export default function ArtistDetailClient({ artist, related }: { artist: any; related: any[] }) {
   const [showModal, setShowModal] = useState(false);
   const tags = Array.isArray(artist.tags) ? artist.tags : [];
-  const shareUrl = typeof window !== "undefined" ? window.location.href : `https://ireyprob.vercel.app/bookings/${artist.slug}`;
+  const BASE = process.env.NEXT_PUBLIC_APP_URL || "https://ireyprob.vercel.app";
+  const shareUrl = `${BASE}/bookings/${artist.slug}`;
 
   return (
     <>
@@ -195,9 +196,9 @@ export default function ArtistDetailClient({ artist, related }: { artist: any; r
                   <button onClick={()=>setShowModal(true)} className="w-full flex items-center justify-center gap-2 py-3.5 bg-foreground text-background text-[11px] font-semibold tracking-[0.2em] uppercase rounded-sm hover:bg-accent transition-all">
                     Book {artist.name}
                   </button>
-                  <Link href={`/contact?subject=${encodeURIComponent(`${artist.name} — Enquiry`)}`}
+                  <Link href={`/contact?subject=${encodeURIComponent(`${artist.name} — Enquiry`)}`} prefetch={true}
                     className="w-full flex items-center justify-center py-3 border border-foreground/15 text-foreground/50 text-[11px] font-semibold tracking-[0.2em] uppercase rounded-sm hover:border-foreground/30 hover:text-foreground transition-all">
-                    General Enquiry
+                    Contact Us Directly
                   </Link>
                 </div>
               </div>
