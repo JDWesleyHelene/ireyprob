@@ -38,7 +38,7 @@ export default function NewArtistPage() {
     try {
       const res = await fetch("/api/admin/artists", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...f, tags: f.tags.split(",").map(t=>t.trim()).filter(Boolean), slug: f.slug || sl(f.name), socialLinks }),,
+        body: JSON.stringify({ ...f, tags: f.tags.split(",").map(t=>t.trim()).filter(Boolean), slug: f.slug || sl(f.name), socialLinks }),
       });
       if (!res.ok) throw new Error();
       router.push("/admin/artists");
