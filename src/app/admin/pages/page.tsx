@@ -10,6 +10,7 @@ const PAGES = [
   { id:"bookings", label:"Artists",   href:"/admin/pages/bookings", desc:"Hero heading and subtitle" },
   { id:"events",   label:"Events",    href:"/admin/pages/events",   desc:"Hero heading and subtitle" },
   { id:"gallery",  label:"Gallery",   href:"/admin/gallery",        desc:"Add, remove, reorder gallery images" },
+  { id:"partners", label:"Partners",  href:"/admin/pages/partners", desc:"Homepage partner logos marquee" },
 ];
 
 export default function AdminPagesIndex() {
