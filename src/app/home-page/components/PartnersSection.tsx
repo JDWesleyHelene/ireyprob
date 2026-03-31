@@ -13,7 +13,8 @@ const DUMMY_PARTNERS: Partner[] = [
 ];
 
 export default function PartnersSection({ initialSettings = {} }: { initialSettings?: Record<string,string> }) {
-  const [partners, setPartners] = useState<Partner[]>(DUMMY_PARTNERS);
+  const [partners,    setPartners]    = useState<Partner[]>(DUMMY_PARTNERS);
+  const [settingsLoaded, setSettingsLoaded] = useState(false);
   const [heading,  setHeading]  = useState("Our Partners");
   const [subtext,  setSubtext]  = useState("Trusted by the best in the industry");
   // Speed in seconds for one full loop — lower = faster. Default 20s
@@ -27,8 +28,11 @@ export default function PartnersSection({ initialSettings = {} }: { initialSetti
     };
 
     const apply = (d: Record<string,string>) => {
+      setSettingsLoaded(true);
       const p = d.partners_list ? tryParse(d.partners_list) : null;
-      if (p) setPartners(p);
+      // If DB has a list (even empty), use it — null means key doesn't exist yet (keep dummies)
+      if (d.partners_list !== undefined) setPartners(p ?? []);
+      else if (p) setPartners(p);
       if (d.partners_heading) setHeading(d.partners_heading);
       if (d.partners_subtext) setSubtext(d.partners_subtext);
       if (d.partners_speed)   setSpeed(Math.max(5, Math.min(60, Number(d.partners_speed))));
@@ -37,14 +41,18 @@ export default function PartnersSection({ initialSettings = {} }: { initialSetti
     };
 
     // Initial settings from server
-    if (Object.keys(initialSettings).length > 0) { apply(initialSettings); return; }
+    if (Object.keys(initialSettings).length > 0) { apply(initialSettings); setSettingsLoaded(true); return; }
 
     // Live fetch fallback
     fetch("/api/admin/settings").then(r => r.ok ? r.json() : {}).then(apply).catch(() => {});
   }, [initialSettings]);
 
   // Triple the list so we always have enough items to fill screen during loop
-  const track = [...partners, ...partners, ...partners];
+  // Hide if settings loaded and no partners configured
+  const showDummy  = !settingsLoaded; // show dummies only before settings load
+  const displayList = settingsLoaded ? partners : DUMMY_PARTNERS;
+  if (settingsLoaded && partners.length === 0) return null;
+  const track = [...displayList, ...displayList, ...displayList];
 
   return (
     <section className="py-12 sm:py-16 bg-[#040404] border-t border-foreground/5 overflow-hidden">
@@ -90,7 +98,7 @@ export default function PartnersSection({ initialSettings = {} }: { initialSetti
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes partners-scroll {
           0%   { transform: translateX(0); }
-          100% { transform: translateX(calc(-${partners.length} * ${logoW + 48}px)); }
+          100% { transform: translateX(calc(-${displayList.length} * ${logoW + 48}px)); }
         }
       `}}/>
     </section>
