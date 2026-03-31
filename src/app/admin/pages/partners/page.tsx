@@ -28,6 +28,9 @@ export default function AdminPartnersPage() {
       .then((d: Record<string,string>) => {
         if (d.partners_heading) setHeading(d.partners_heading);
         if (d.partners_subtext) setSubtext(d.partners_subtext);
+        if (d.partners_speed)  setSpeed(Math.max(5, Math.min(60, Number(d.partners_speed))));
+        if (d.partners_logo_w)  setLogoW(Math.max(40, Math.min(300, Number(d.partners_logo_w))));
+        if (d.partners_logo_h)  setLogoH(Math.max(20, Math.min(200, Number(d.partners_logo_h))));
         if (d.partners_list) {
           try {
             const parsed = JSON.parse(d.partners_list);
@@ -86,6 +89,9 @@ export default function AdminPartnersPage() {
         body: JSON.stringify({
           partners_heading: heading,
           partners_subtext: subtext,
+          partners_speed:   String(speed),
+          partners_logo_w:  String(logoW),
+          partners_logo_h:  String(logoH),
           partners_list:    JSON.stringify(partners),
         }),
       });
@@ -142,6 +148,51 @@ export default function AdminPartnersPage() {
         <div>
           <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">Subtext</label>
           <input value={subtext} onChange={e => setSubtext(e.target.value)} placeholder="Trusted by the best in the industry" className={IC}/>
+        </div>
+        <div>
+          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">
+            Scroll Speed — {speed}s per loop <span className="text-foreground/25 normal-case font-normal">(lower = faster)</span>
+          </label>
+          <div className="flex items-center gap-4">
+            <span className="text-[11px] text-foreground/30">Fast</span>
+            <input type="range" min="5" max="60" step="1" value={speed}
+              onChange={e => setSpeed(Number(e.target.value))}
+              className="flex-1 accent-accent"/>
+            <span className="text-[11px] text-foreground/30">Slow</span>
+          </div>
+        </div>
+        <div>
+          <label className="block text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/40 mb-2">
+            Logo Size <span className="text-foreground/25 normal-case font-normal">(width × height in px)</span>
+          </label>
+          <div className="flex items-center gap-3">
+            <div className="flex-1">
+              <label className="block text-[10px] text-foreground/30 mb-1">Width</label>
+              <div className="flex items-center gap-2">
+                <input type="number" min="40" max="300" value={logoW}
+                  onChange={e => setLogoW(Math.max(40, Math.min(300, Number(e.target.value))))}
+                  className="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-2 text-[13px] text-foreground focus:outline-none focus:border-foreground/30"/>
+                <span className="text-[11px] text-foreground/30">px</span>
+              </div>
+            </div>
+            <span className="text-foreground/30 text-lg mt-4">×</span>
+            <div className="flex-1">
+              <label className="block text-[10px] text-foreground/30 mb-1">Height</label>
+              <div className="flex items-center gap-2">
+                <input type="number" min="20" max="200" value={logoH}
+                  onChange={e => setLogoH(Math.max(20, Math.min(200, Number(e.target.value))))}
+                  className="w-full bg-foreground/5 border border-foreground/10 rounded-sm px-3 py-2 text-[13px] text-foreground focus:outline-none focus:border-foreground/30"/>
+                <span className="text-[11px] text-foreground/30">px</span>
+              </div>
+            </div>
+            {/* Live preview */}
+            <div className="flex-shrink-0 mt-4">
+              <div className="bg-foreground/5 border border-foreground/10 rounded-sm flex items-center justify-center"
+                style={{ width: `${Math.min(logoW, 120)}px`, height: `${Math.min(logoH, 60)}px` }}>
+                <span className="text-[9px] text-foreground/25">{logoW}×{logoH}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
