@@ -17,6 +17,7 @@ import HeroSection from "@/app/home-page/components/HeroSection";
 import ArtistRosterSection from "@/app/home-page/components/ArtistRosterSection";
 import MasonryGallery from "@/app/home-page/components/MasonryGallery";
 import LegacyStatsSection from "@/app/home-page/components/LegacyStatsSection";
+import PartnersSection from "@/app/home-page/components/PartnersSection";
 
 export default async function HomePage() {
   // Fetch all data server-side — zero client round-trips on initial load
@@ -42,6 +43,7 @@ export default async function HomePage() {
       <main className="min-h-screen bg-background">
         <HeroSection initialSettings={settings}/>
         <ArtistRosterSection initialArtists={artists}/>
+        <PartnersSection initialSettings={settings}/>
         <MasonryGallery initialSettings={settings}/>
         <LegacyStatsSection/>
       </main>
