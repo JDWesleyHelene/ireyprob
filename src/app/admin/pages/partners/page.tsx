@@ -98,20 +98,26 @@ export default function AdminPartnersPage() {
   const save = async () => {
     setSaving(true);
     try {
+      const payload = {
+        partners_heading: heading,
+        partners_subtext: subtext,
+        partners_speed:   String(speed),
+        partners_logo_w:  String(logoW),
+        partners_logo_h:  String(logoH),
+        partners_list:    JSON.stringify(partners.map(p => ({
+          ...p,
+          // Safety: don't save base64 data URLs — only real URLs
+          logo: p.logo.startsWith("data:") ? "" : p.logo,
+        })).filter(p => p.logo)),
+      };
       const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          partners_heading: heading,
-          partners_subtext: subtext,
-          partners_speed:   String(speed),
-          partners_logo_w:  String(logoW),
-          partners_logo_h:  String(logoH),
-          partners_list:    JSON.stringify(partners),
-        }),
+        body: JSON.stringify(payload),
       });
-      if (res.ok) showToast("✓ Saved successfully");
-      else showToast("Failed to save", false);
+      const data = await res.json();
+      if (res.ok && data.success) showToast("✓ Saved successfully");
+      else showToast(`Save failed: ${data.error || res.status}`, false);
     } catch { showToast("Failed to save", false); }
     setSaving(false);
   };
